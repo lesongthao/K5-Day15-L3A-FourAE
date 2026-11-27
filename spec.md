@@ -4,30 +4,42 @@
 > Đầu mỗi mục ghi bước guide (`02-guide.md` trong repo đề) chỉ cách điền. Mỗi mục ngắn, có số và nguồn; chi tiết để ở file được trỏ tới. Xoá dòng hướng dẫn trong ngoặc vuông khi điền xong.
 
 Track: [ ] A · [ ] B · [x] C · [ ] D · [ ] E — bài toán: C1 · Lịch trình một ngày ở khu vui chơi cho gia đình có trẻ nhỏ
-Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
+Data BTC cấp đã dùng (nếu có — không commit nguyên file): Không có (Track C nhóm tự thu thập: 50 review Google Maps trong `evidence/reviews_anon.csv`, 5 phỏng vấn `P1`–`P5` trong `evidence/interviews/`, và bộ dữ liệu VinWonders Nha Trang lai thật + synthetic trong `data/park/*.json`).
 
 ## §0. Hiện tại việc này diễn ra thế nào *(guide 1.1)*
-- Luồng hiện tại của việc này, trong khoá hoặc trên app thật (3–5 bước; ảnh chụp từ tài khoản của mình, đã che thông tin):
-- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn. Không kiểm được thì ghi "chưa kiểm":
+- Luồng hiện tại của việc này, trong khoá hoặc trên app thật (5 bước, tổng hợp từ phỏng vấn `P1`–`P5` và 3 trang công khai chính thức của VinWonders Nha Trang trong `data/park/park.json`, truy cập `27/11/2026`):
+  1. Tham khảo review trong hội nhóm Facebook, clip TikTok, fanpage hoặc hỏi đại lý vé để nắm kinh nghiệm và giá combo (**10–90 phút** chuẩn bị, `P1`–`P5`).
+  2. Tra rời rạc nhiều trang web chính thức để xem giờ mở cửa (`W_HOURS`), bảng giá vé (`W_PRICE`), quy định trò chơi/chiều cao (`W_RULES`) và chụp màn hình lịch show diễn (`P1`, `P3`).
+  3. Tự ghi chú khung giờ sáng–trưa–chiều trên điện thoại (`P1`, `P3`) hoặc đi tới nơi rồi tính (`P2`, `P4`).
+  4. Qua cổng soát vé, lấy bản đồ giấy / chụp ảnh tấm bản đồ lớn và hỏi nhân viên về trò đang bảo trì (`P1`, `P4`, `P5`).
+  5. Khi gặp sự cố thực tế (mưa dừng trò ngoài trời, lỡ show do tắm tráng/di chuyển lâu, bé không đủ chiều cao, trò bảo trì, đông đúc), tự xoay xở đổi khu hoặc mua thêm dịch vụ lẻ phát sinh (`P1`–`P5`).
+- Công cụ / AI đang được dùng cho việc này (nếu có) + nguồn: App chính hãng khu vui chơi (VinWonders / Sun World — dùng xem giờ show, bản đồ rời rạc; `P1`, `P3` phản ánh khó nhìn dưới nắng và load chậm khi 4G yếu; `P4` ngại tải app mới chỉ cho 1 ngày đi chơi), website `vinwonders.com` (kiểm `27/11/2026`), bản đồ giấy và hỏi nhân viên tại chỗ (`P1`–`P5`). Tính năng AI tự ghép lịch có kiểm tra ràng buộc tích hợp trong app khu vui chơi: *chưa kiểm* (không thấy công bố trên các trang trợ giúp/thông tin chính thức đã đọc ngày `27/11/2026`).
 
 ## §1. Người dùng & bằng chứng *(guide 1.1, 1.2)*
-- Người dùng chính (một vai cụ thể):
-- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI):
-- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ:
-- Pain (KHÔNG chữ AI): ai — đang làm gì — vướng đâu — hậu quả gì:
-- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): __
+- Người dùng chính (một vai cụ thể): Phụ huynh (bố/mẹ) đưa gia đình có trẻ nhỏ (3–10 tuổi, có thể đi cùng ông bà lớn tuổi) đi chơi một ngày tại khu vui chơi tổ hợp lớn (như VinWonders Nha Trang, Sun World Bà Nà Hills).
+- Việc họ cố làm xong (`động từ + đối tượng + bối cảnh`, không có chữ AI): Lập và điều chỉnh lịch trình vui chơi một ngày phù hợp độ tuổi/chiều cao, khung giờ mở cửa–show diễn và ngân sách của gia đình tại khu vui chơi tổ hợp lớn.
+- Hôm nay họ giải bằng gì, hỏng ở đâu, vì sao chưa bỏ: Tự ghép thông tin từ web chính thức, hội nhóm Facebook/TikTok, bản đồ giấy và hỏi nhân viên dọc đường (`P1`–`P5`). Hỏng ở chỗ tốn **30–90 phút** chuẩn bị (`P1`, `P3`, `P5`) nhưng vẫn lỡ show vì thiếu thời gian đệm (`P3`), vướng giới hạn chiều cao hoặc trò bảo trì không báo trước (`P1`, `P5`), bị động khi trời mưa (`P2`) và phát sinh phí lẻ ngoài vé trọn gói (`P2`–`P5`). Chưa bỏ vì bản đồ giấy/ảnh chụp xem nhanh offline dưới nắng và không phải cài app mới (`P1`, `P4`, `P5`).
+- Pain (KHÔNG chữ AI): Phụ huynh đưa trẻ nhỏ đi chơi một ngày tại khu vui chơi tổ hợp lớn phải tự tra và ghép rời rạc giờ mở cửa, lịch show, giới hạn chiều cao/độ tuổi, trạng thái bảo trì và giá vé/dịch vụ lẻ, dẫn đến xếp chồng giờ, trễ show, chọn nhầm trò không hợp trẻ nhỏ, mất công đi bộ quay đầu hoặc phát sinh chi phí ngoài ngân sách.
+- Bằng chứng — số chính + kết luận (chi tiết: `evidence/summary.md`): **2 nguồn đạt ngưỡng kiểm chứng chéo nhau**: (1) Đào data 50 review công khai Google Maps (`evidence/data-mining.md`, `python evidence/count.py`): **20/50 (40.0%)** toàn tập và **9/16 (56.2%)** review gia đình/trẻ nhỏ gặp vướng mắc lịch trình/vận hành (`planning_ops_pain`), trong đó **8/50 (16.0%)** toàn tập và **7/16 (43.8%)** nhóm gia đình gặp pain hẹp về giờ mở cửa/show hoặc chiều cao/tuổi trẻ nhỏ (vượt ngưỡng `≥15%` giả thuyết); (2) Phỏng vấn **5/5** phụ huynh ngoài nhóm (`P1`–`P5`): **3/5** tự lập lịch trước 30–90 phút vẫn vỡ lịch/lỡ show/dính trò bảo trì–chiều cao, **5/5** gặp sự cố đổi điểm hoặc phát sinh chi phí.
 
 ## §2. Impact & quyết định chọn *(guide 1.3)*
 
 | Hướng | Bao nhiêu người gặp | Bao nhiêu lần / tháng | Mỗi lần tốn gì | Impact / tháng | Làm kịp không | Chọn? |
 |---|---|---|---|---|---|---|
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |
+| **C1 · Lập & kiểm tra lịch trình 1 ngày tại khu vui chơi cho gia đình có trẻ nhỏ** | ~5.620 gia đình/tháng tại 1 khu vui chơi lớn *(10.000 gia đình *(tự ước tính)* × 56.2% từ 9/16 review gia đình)* | 1 lượt đi bị ảnh hưởng/gia đình *(tự ước tính)* | ~60 phút lãng phí *(30p chuẩn bị trung vị từ 10–90p + ~30p trễ/quay đầu/chờ đổi khu từ P1–P5)* + phí lẻ phát sinh | **337.200 phút/tháng** (~5.620 giờ ≈ **562 triệu đ/tháng** ở mức 100k đ/giờ *(tự ước tính)*) | Có (dữ liệu thật + synthetic, 5 phỏng vấn + 50 review, người dùng thử ngay trong lớp) | **Chọn** |
+| C2 · Đề xuất đổi / nâng hạng phòng khách sạn cho lễ tân | ~20–50 lễ tân / khách sạn lớn *(tự ước tính)* | ~150 yêu cầu/khách sạn/tháng *(tự ước tính)* | ~10–15 phút tra phòng trống, chính sách & tính phí chênh *(tự ước tính)* | ~1.500–2.250 phút/tháng (~25–37,5 giờ/khách sạn) *(tự ước tính)* | Khó (phải hẹn ≥3 lễ tân thật trong 2 ngày; dữ liệu phòng/giá nội bộ đóng) | Loại |
+| C3 · Hỗ trợ hành khách đổi / hoàn vé khi chuyến bay bị huỷ | ~1–3% hành khách bay bị huỷ chuyến *(tự ước tính)* | Hiếm ở cấp cá nhân (0–1 lần/năm), dồn cục bộ ngày bão *(tự ước tính)* | 30–90 phút xử lý + rủi ro mất đổi miễn phí / chờ hoàn tới 90 ngày *(nguồn: Traveloka & VNA trong file Track C)* | Cao ở từng ca đơn lẻ nhưng ít ca xác minh trực tiếp trong 2 ngày | Khó (ít người vừa bị huỷ chuyến trong lớp để phỏng vấn; hoàn vé không đảo được, rủi ro cao) | Loại |
 
-- **Impact / tháng** của hướng chọn = __ người × __ lần × __ phút = __ — nguồn từng thừa số: __ (không có nguồn thì ghi rõ *(tự ước tính)*)
-- Hướng ĐÃ LOẠI + vì sao (giữ lại, đừng xoá):
-- Số lần / tháng của từng kiểu người dùng (dùng cho persona ở §8):
+- **Impact / tháng** của hướng chọn:
+  - *Quy mô 1 khu vui chơi lớn:* `10.000` gia đình/tháng *(tự ước tính)* × `56.2%` (`9/16` review gia đình gặp `planning_ops_pain`, nguồn `evidence/data-mining.md`) × `1` lượt *(tự ước tính)* × `60` phút (`30` phút chuẩn bị trung vị trong dải 10–90 phút của `P1–P5` + `~30` phút trễ show/tắm tráng 40p/đi bộ quay đầu 10p trong `P1`, `P3`, nguồn `evidence/summary.md`) = **337.200 phút/tháng (~5.620 giờ/tháng)**. Quy đổi giá trị thời gian ở mức `100.000 đ/giờ` *(tự ước tính)* ≈ **562.000.000 đ/tháng**.
+  - *Quy đổi theo 1 người dùng hoạt động / tháng (để so với chi phí ở §8):* `1` lượt *(phổ thông)* đến `2` lượt/tháng *(nhóm hay sửa lịch)* × `60` phút = **60–120 phút/người/tháng** ≈ **100.000–200.000 đ/người/tháng** *(tự ước tính)*.
+- **Hướng ĐÃ LOẠI + vì sao** (giữ lại, không xoá):
+  - *Loại C2 (Lễ tân khách sạn):* Người dùng là lễ tân chuyên môn không có sẵn trong lớp, khó đạt ngưỡng phỏng vấn ≥3 lễ tân thật và kiểm chứng chéo trong 10 giờ hackathon; dữ liệu phòng trống/chính sách nội bộ khó đối chiếu.
+  - *Loại C3 (Chuyến bay bị huỷ):* Tần suất gặp sự cố huỷ chuyến gần đây ở bạn cùng lớp thấp nên khó gom bằng chứng phỏng vấn nhanh; thao tác đổi/hoàn vé có tính chất khó hoặc không đảo ngược (gửi hoàn trên Traveloka không huỷ được), dễ gây rủi ro lớn khi thử nghiệm trong thời gian ngắn.
+- **Số lần / tháng của từng kiểu người dùng** (dùng cho persona ở `cost/personas.yaml` và §8):
+  1. *Gia đình lập lịch nhanh 1 lần trước chuyến đi* (~50% tỷ trọng người dùng): **1 phiên/tháng** (1–2 lượt/phiên) *(tự ước tính từ hành vi chuẩn bị nhanh ở P4, P5)*.
+  2. *Gia đình lên lịch kỹ, chỉnh sửa nhiều lần theo tuổi con và ngân sách* (~35% tỷ trọng): **3 phiên/tháng** (2–3 lượt/phiên) *(tự ước tính từ hành vi chuẩn bị 60–90 phút ở P1, P3)*.
+  3. *Gia đình xếp lại lịch đột xuất do thời tiết mưa / huỷ show / trò bảo trì* (~15% tỷ trọng — tham chiếu `16.0%` review `thoi_tiet_mua` trong `evidence/data-mining.md` và `P2`, `P5`): **2 phiên/tháng** (3–4 lượt/phiên do cần tra lại thời tiết và xếp lại lịch) *(tự ước tính)*.
 
 ## §3. Giải pháp tương tự *(guide 2.1)*
 - **App chính hãng khu vui chơi (VinWonders / Sun World)** *(phản hồi P1, P3, P4)*: đáng học ở việc tập trung giờ show, bản đồ và thông tin chính thức · đáng né ở chỗ chỉ tra cứu rời rạc không tự ghép lịch, load chậm khi 4G yếu, khó xem ngoài nắng và khách đi 1 ngày ngại tải app · mình khác ở chỗ tự ghép lịch kiểm ràng buộc theo độ tuổi/ngân sách, không bắt cài app và xuất lịch gọn một màn hình xem được offline.
