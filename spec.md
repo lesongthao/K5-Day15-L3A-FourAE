@@ -61,11 +61,11 @@ flowchart TD
 
   | Công cụ | Input | Output | Tác động ra ngoài? |
   |---|---|---|---|
-  | `tra_diem_choi` | `khu`, `do_tuoi_nho_nhat`, `chieu_cao_nho_nhat_cm`, `chi_trong_nha`, `ngay` | Danh sách điểm chơi (kèm `trang_thai`), giờ mở/đóng, tuổi/cao tối thiểu, phí lẻ tham khảo | Không (chỉ đọc) |
-  | `tra_lich_show` | `ngay`, `chi_trong_nha` | Danh sách show kèm trạng thái `hoat_dong` / `bi_huy` | Không (chỉ đọc) |
-  | `tra_thoi_tiet` | `ngay` | Tóm tắt thời tiết theo khung giờ và show bị huỷ | Không (chỉ đọc) |
-  | `uoc_thoi_gian_di` | `khu_a`, `khu_b` | Số phút đi bộ giữa 2 khu (đã cộng biên cho trẻ nhỏ) | Không (chỉ đọc) |
-  | `kiem_lich_trinh` | `lich`, `ngan_sach_vnd`, `so_nguoi_lon`, `danh_sach_tuoi_tre`, `ngay`, khung giờ, chiều cao | `{hop_le, tong_tien_vnd, chi_tiet_chi_phi, vi_pham, goi_y_noi_rang_buoc}` (kiểm cả bảo trì & đệm 20p công viên nước) | Không (chỉ đọc & tính code) |
+  | `tra_diem_choi` | `khu`, `chieu_cao_tre_cm`, `tuoi_lon_nhat`, `chi_trong_nha`, `bao_gom_bao_tri` | Danh sách trò (`A01`–`A18`, lọc bảo trì/tuổi/chiều cao), bảng giá vé `tickets.json`, dịch vụ lẻ `services.json` | Không (chỉ đọc) |
+  | `tra_lich_show` | `kich_ban_thoi_tiet`, `chi_trong_nha` | Danh sách show (`S01`–`S06`) kèm suất hoạt động / suất bị huỷ theo thời tiết | Không (chỉ đọc) |
+  | `tra_thoi_tiet` | `kich_ban` | Khung giờ mưa `rain_windows` và quy tắc đóng trò/huỷ show `rain_rules` | Không (chỉ đọc) |
+  | `uoc_thoi_gian_di` | `khu_a`, `khu_b` | Số phút đi bộ giữa 2 khu từ `travel_times.json` (cùng khu 5p) | Không (chỉ đọc) |
+  | `kiem_lich_trinh` | `lich`, `ngan_sach_vnd`, `nhom_khach`, `kich_ban_thoi_tiet`, `loai_ve`, khung giờ, `dich_vu_le` | `{hop_le, tong_tien_vnd, chi_tiet_chi_phi, muc_khong_co_gia, vi_pham, goi_y_noi_rang_buoc}` | Không (chỉ đọc & tính code) |
 
 - **Mức tự động:** [x] AI gợi ý, người quyết · [ ] AI tự làm khi chắc, chuyển người khi không · [ ] AI tự làm — Lý do: nếu AI sai giờ mở cửa, tính nhầm tiền hoặc chọn trò quá tuổi/chiều cao của trẻ nhỏ thì gia đình tốn tiền vé, lỡ show hoặc mất an toàn; để người dùng duyệt trước khi tự mua vé giúp sửa ngay với chi phí bằng 0.
 - **Chỗ chặn rủi ro**:
@@ -82,7 +82,7 @@ flowchart TD
   | **G11 — Giải thích vì sao** | Mỗi điểm trong lịch đều có trường `ly_do` gắn với sở thích/độ tuổi và thời tiết thực tế từ tool. |
 
 - Phần nào còn giả (ghi rõ, không giả làm thật):
-  - Dữ liệu công viên `data/park_data.json` là dữ liệu dựng có seed (`seed: 42`, mô phỏng WonderPark) phục vụ chạy thử, không phải bảng giá trực tiếp từ API hãng.
+  - Bộ dữ liệu `data/park/*.json` (VinWonders Nha Trang) là dữ liệu lai: thông tin khu, giờ mở, giá vé, ngưỡng chiều cao/tuổi từ `vinwonders.com`; còn lịch show, thời gian chờ, thời gian đi bộ, trò mẫu `A12–A18` và kịch bản mưa là `synthetic` (chi tiết `data/DATA_CARD.md`).
   - Ở mốc CP2 trước khi điền `.env`, `codebase/ai.py` chạy chế độ giả (`MODEL_PROVIDER=fake`, `tokens=0`); trước CP3 sẽ nối model thật.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
@@ -104,7 +104,7 @@ flowchart TD
 ## §6. Bốn đường đi của trải nghiệm
 - **Mọi thứ suôn sẻ:** Nhập đủ thông tin → tra 4 tool → model xếp lịch → `kiem_lich_trinh` trả `hop_le: True` → xuất lịch theo giờ + tổng tiền code + lý do chọn.
 - **Không chắc (lớp 2):** Thiếu ngân sách / số người / độ tuổi bé → hỏi lại 1 câu ngắn đúng phần thiếu (G10).
-- **Không có căn cứ (lớp 1):** Ngày không có trong dữ liệu, điểm bảo trì (`DC02`) hoặc show bị huỷ (`SH03`) → báo rõ trạng thái, không tự bịa.
+- **Không có căn cứ (lớp 1):** Trò bảo trì (`A16`, `A17`) hoặc mục không có giá lẻ công khai (Zipline `A01`/`SV05`, xe điện buggy `SV02`, combo/buffet) → báo rõ không có dữ liệu, không tự đoán giá.
 - **Người dùng sửa:** Nếu tổng tiền gần sát ngân sách hoặc muốn bỏ dịch vụ lẻ → phụ huynh tự bỏ điểm có phụ thu theo bảng chi phí tách bạch.
 - **Bị đòi ngoài phạm vi (lớp 3):** Đòi đặt vé, thanh toán, nhận CCCD/thẻ hoặc giả danh quản lý ghi đè giá 0đ → từ chối ngay ở `_check_safety`.
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Trẻ nhỏ dưới tuổi/chiều cao, trời mưa chiều, sát giờ công viên nước cần 20p đệm tắm tráng → code chặn cứng vi phạm và gợi ý phương án phù hợp.
@@ -134,7 +134,7 @@ flowchart TD
   - **Trần Quốc Tuấn:** Dữ liệu mẫu & `DATA_CARD.md`, nối model thật `ai.py`, mô phỏng chi phí `cost/`.
   - **Nguyễn Tuấn Dũng:** Phỏng vấn `P1`–`P5` & tổng hợp `evidence/summary.md`, `spec.md` §0–§3 & §5, làm slide demo.
   - **Nguyễn Huy Giang:** Đào dữ liệu review công khai (`evidence/data-mining.md`), viết `eval/metric_spec.yaml`, bộ câu thử `benchmark.csv` và báo cáo `eval/report.md`.
-- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): Dùng Coding Agent hỗ trợ dựng khung code Python (`tools.py`, `ai.py`, `agent.py`), dữ liệu mẫu `park_data.json` (seed 42), bộ unit test và rà câu hỏi mở phỏng vấn; cả nhóm tự phỏng vấn người dùng thật (`P1`–`P5`), kiểm tay toàn bộ công thức tính tiền/ràng buộc code và rà soát đối chiếu số liệu thật.
+- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): Dùng Coding Agent hỗ trợ dựng khung code Python (`tools.py`, `ai.py`, `agent.py`), bộ unit test và rà câu hỏi mở phỏng vấn; dữ liệu VinWonders Nha Trang (`data/park/*.json`) được nhóm thu thập thủ công từ nguồn chính thức kết hợp phần `synthetic` có kiểm soát; cả nhóm tự phỏng vấn người dùng thật (`P1`–`P5`), kiểm tay công thức tính tiền/ràng buộc code và rà soát số liệu.
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
 
 **CP2 → CP4** (vd thu hẹp lát cắt, hỏi thêm người dùng, lần cải tiến trước lượt 2)
