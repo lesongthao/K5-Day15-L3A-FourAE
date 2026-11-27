@@ -267,6 +267,10 @@ class TestTrackC1VinWonders(unittest.TestCase):
         self.assertEqual(p_natural["adults"], 2)
         self.assertEqual(p_natural["child_heights"], [100])
 
+        p_mixed_age = request_parser.parse_request("2 người lớn, 1 người cao tuổi 68 tuổi, bà 59 tuổi, 1 bé 115cm, ngân sách 5 triệu")
+        chk_mixed = tools.kiem_lich_trinh([], 5_000_000, p_mixed_age["nhom_khach"])
+        self.assertEqual(chk_mixed["tong_tien_vnd"], 4_750_000)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -151,8 +151,8 @@ def parse_request(text: str) -> dict[str, Any]:
     m_seniors = re.search(r"(\d+)\s*(?:người cao tuổi|ông bà|cụ|người già)", low)
     seniors = int(m_seniors.group(1)) if m_seniors else 0
     senior_ages = [int(a) for a in re.findall(r"(?:ông|bà|cụ|người cao tuổi)[^\d]{0,24}(\d{2})\s*tuổi", low)]
-    if senior_ages and seniors == 0:
-        seniors = len(senior_ages)
+    if senior_ages:
+        seniors = max(seniors, len(senior_ages))
 
     child_heights = extract_heights(text)
     child_ages = [int(a) for a in re.findall(r"(?:bé|trẻ|con)\s*(?:gái|trai)?\s*(\d{1,2})\s*tuổi", low)]

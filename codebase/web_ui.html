@@ -401,16 +401,26 @@
       background: var(--surface-soft); border: 1px solid var(--border); display: grid; gap: 8px;
     }
     .sub-person {
-      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 8px; align-items: center; font-size: 0.8rem;
+      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 8px; align-items: end; font-size: 0.8rem;
     }
-    @media (max-width: 500px) { .sub-person { grid-template-columns: 1fr 1fr; } }
-    .sub-person label { font-size: 0.72rem; color: var(--muted); font-weight: 600; margin: 0 0 2px; }
+    .sub-person strong {
+      display: inline-flex; align-items: center; height: 34px; white-space: nowrap; color: var(--primary-deep);
+    }
+    .sub-person.senior-row { grid-template-columns: auto 92px 1fr; }
+    .sub-person.senior-row .tier-badge { justify-self: end; }
+    @media (max-width: 500px) {
+      .sub-person { grid-template-columns: 1fr 1fr; }
+      .sub-person.senior-row { grid-template-columns: auto 1fr; }
+      .sub-person.senior-row .tier-badge { grid-column: 1 / -1; justify-self: start; }
+    }
+    .sub-person label { display: block; font-size: 0.72rem; color: var(--muted); font-weight: 600; margin: 0 0 2px; }
     .sub-person input {
-      width: 100%; border: 1px solid var(--border-strong); border-radius: 8px;
-      background: var(--surface); padding: 5px 8px; font-size: 0.83rem; font-weight: 700;
+      width: 100%; height: 34px; border: 1px solid var(--border-strong); border-radius: 8px;
+      background: var(--surface); padding: 4px 8px; font-size: 0.83rem; font-weight: 700;
     }
     .tier-badge {
-      padding: 3px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      display: inline-flex; align-items: center; min-height: 28px; margin-bottom: 3px;
+      padding: 3px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
       background: var(--primary-soft); color: var(--primary-deep); white-space: nowrap;
     }
     .tier-badge.free { background: var(--emerald-bg); color: var(--emerald); }
@@ -1220,8 +1230,8 @@
             <div class="sub-list" id="childrenList"></div>
             <div class="pop-row">
               <div>
-                <div class="pop-title">Người cao tuổi</div>
-                <div class="pop-rule nums">Từ 60 tuổi: 800.000đ (sau 16h: 550.000đ)</div>
+                <div class="pop-title">Ông bà / Khách lớn tuổi</div>
+                <div class="pop-rule nums">Từ 60 tuổi: 800.000đ (sau 16h: 550.000đ); dưới 60t tính vé người lớn</div>
               </div>
               <div class="stepper">
                 <button type="button" class="step-btn" data-step="seniors:-1" aria-label="Giảm người cao tuổi">−</button>
@@ -2843,15 +2853,28 @@
       return { id: "ADULT", label: "Vé người lớn (≥140cm)", cls: "adult" };
     }
 
+    function getSeniorTier(ageVal) {
+      const a = Number(ageVal || 65);
+      if (a >= 60) return { id: "SENIOR", label: "Vé người cao tuổi (≥60t)", cls: "" };
+      if (a >= 50) return { id: "ADULT", label: "Dưới 60t: vé người lớn (lọc trò ≥50t)", cls: "adult" };
+      return { id: "ADULT", label: "Dưới 60t: tính vé người lớn", cls: "adult" };
+    }
+
+    function updateGuestSummaryText() {
+      const parts = [`${guestState.adults} người lớn`];
+      parts.push(guestState.children.length ? `${guestState.children.length} bé` : "Không có bé");
+      if (guestState.seniors.length) {
+        const allOver60 = guestState.seniors.every((a) => a >= 60);
+        parts.push(allOver60 ? `${guestState.seniors.length} người cao tuổi` : `${guestState.seniors.length} ông/bà (${guestState.seniors.map((a) => `${a}t`).join(", ")})`);
+      }
+      guestSummary.textContent = parts.join(", ");
+    }
+
     function updateGuestUI(syncPrompt = true) {
       valAdults.textContent = String(guestState.adults);
       valChildren.textContent = String(guestState.children.length);
       valSeniors.textContent = String(guestState.seniors.length);
-
-      const parts = [`${guestState.adults} người lớn`];
-      parts.push(guestState.children.length ? `${guestState.children.length} bé` : "Không có bé");
-      if (guestState.seniors.length) parts.push(`${guestState.seniors.length} người cao tuổi`);
-      guestSummary.textContent = parts.join(", ");
+      updateGuestSummaryText();
 
       document.querySelector('[data-step="adults:-1"]').disabled = guestState.adults <= 1;
       document.querySelector('[data-step="adults:1"]').disabled = guestState.adults >= 10;
@@ -2901,19 +2924,41 @@
         seniorsList.innerHTML = "";
       } else {
         seniorsList.classList.remove("hidden");
-        seniorsList.innerHTML = guestState.seniors.map((age, idx) => `
-          <div class="sub-person">
-            <strong>Khách ${idx + 1}</strong>
-            <div><label for="srAge${idx}">Tuổi (≥60)</label><input id="srAge${idx}" class="sr-age-in nums" data-idx="${idx}" type="number" min="60" max="95" value="${age}" /></div>
-            <span class="tier-badge" style="grid-column:span 2;">Giá người cao tuổi (60+)</span>
-          </div>
-        `).join("");
+        seniorsList.innerHTML = guestState.seniors.map((age, idx) => {
+          const st = getSeniorTier(age);
+          return `
+            <div class="sub-person senior-row">
+              <strong>Ông/Bà ${idx + 1}</strong>
+              <div><label for="srAge${idx}">Tuổi</label><input id="srAge${idx}" class="sr-age-in nums" data-idx="${idx}" type="number" min="45" max="99" value="${age}" /></div>
+              <span class="tier-badge ${st.cls}">${st.label}</span>
+            </div>
+          `;
+        }).join("");
         seniorsList.querySelectorAll(".sr-age-in").forEach((el) => {
-          el.addEventListener("input", () => {
+          const applySeniorAge = (clampOnBlur) => {
             const idx = Number(el.dataset.idx);
-            guestState.seniors[idx] = Math.min(95, Math.max(60, Number(el.value || 65)));
-            if (promptAutoSynced) applyBuilderToPrompt(false, false);
-          });
+            const raw = parseInt(el.value, 10);
+            if (Number.isNaN(raw)) {
+              if (!clampOnBlur) return;
+              guestState.seniors[idx] = 65;
+              el.value = "65";
+            } else if (clampOnBlur) {
+              const clamped = Math.min(99, Math.max(18, raw));
+              guestState.seniors[idx] = clamped;
+              el.value = String(clamped);
+            } else {
+              if (raw < 18 || raw > 99) return;
+              guestState.seniors[idx] = raw;
+            }
+            const badge = el.closest(".sub-person").querySelector(".tier-badge");
+            const st = getSeniorTier(guestState.seniors[idx]);
+            badge.className = `tier-badge ${st.cls}`;
+            badge.textContent = st.label;
+            updateGuestSummaryText();
+            refreshEstimate(true);
+          };
+          el.addEventListener("input", () => applySeniorAge(false));
+          el.addEventListener("change", () => applySeniorAge(true));
         });
       }
       refreshEstimate(syncPrompt);
@@ -2926,7 +2971,8 @@
       const prices = isAfter16
         ? { ADULT: 700000, CHILD: 550000, SENIOR: 550000, INFANT: 0 }
         : { ADULT: 1050000, CHILD: 800000, SENIOR: 800000, INFANT: 0 };
-      let total = guestState.adults * prices.ADULT + guestState.seniors.length * prices.SENIOR;
+      let total = guestState.adults * prices.ADULT;
+      guestState.seniors.forEach((age) => { total += prices[getSeniorTier(age).id]; });
       guestState.children.forEach((ch) => { total += prices[getChildTier(ch.height).id]; });
       estTicketType.textContent = isAfter16 ? "Vé sau 16:00" : "Vé cả ngày";
       estGateTotal.textContent = fmtVnd(total);
@@ -2941,10 +2987,12 @@
       const dayPart = day ? `đi ${day.rel_label} (${day.full_date}) ` : "đi ";
       const groupParts = [`${guestState.adults} người lớn`];
       if (guestState.seniors.length === 1) {
-        groupParts.push(`1 người cao tuổi ${guestState.seniors[0]} tuổi`);
+        const a0 = guestState.seniors[0];
+        groupParts.push(a0 >= 60 ? `1 người cao tuổi ${a0} tuổi` : `bà ${a0} tuổi`);
       } else if (guestState.seniors.length > 1) {
-        const srDetail = guestState.seniors.map((a) => `người cao tuổi ${a} tuổi`).join(", ");
-        groupParts.push(`${guestState.seniors.length} người cao tuổi (${srDetail})`);
+        guestState.seniors.forEach((a, idx) => {
+          groupParts.push(a >= 60 ? `ông/bà ${idx + 1} ${a} tuổi` : `bà ${a} tuổi`);
+        });
       }
       if (guestState.children.length > 0) {
         const chText = guestState.children.map((ch) => `bé ${ch.age} tuổi cao ${ch.height}cm`).join(" và ");
