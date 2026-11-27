@@ -352,6 +352,28 @@
       background: var(--emerald-bg); color: var(--emerald);
       font-size: 0.7rem; font-weight: 700; white-space: nowrap;
     }
+    .budget-pretty-pill.warn { background: var(--amber-bg); color: var(--amber); }
+    .budget-assist-pop {
+      position: absolute; left: 0; top: calc(100% + 10px); z-index: 60;
+      width: min(390px, calc(100vw - 36px));
+      background: var(--surface); border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--primary); border-radius: 15px;
+      padding: 12px 13px; box-shadow: var(--shadow-lg);
+    }
+    .budget-assist-status {
+      font-size: 0.78rem; font-weight: 600; color: var(--ink-soft);
+      margin-bottom: 8px; line-height: 1.4;
+    }
+    .budget-assist-status.warn { color: var(--amber); }
+    .budget-chips-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .budget-chip {
+      padding: 5px 10px; border-radius: 999px; border: 1px solid #b8d8df;
+      background: var(--primary-soft); color: var(--primary-deep);
+      font-size: 0.76rem; font-weight: 700; transition: background-color 0.14s ease, color 0.14s ease, border-color 0.14s ease;
+    }
+    .budget-chip:hover { background: var(--primary); color: #ffffff; border-color: var(--primary); }
+    .budget-chip.primary-fix { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+    .budget-chip.primary-fix:hover { background: var(--amber); color: #ffffff; border-color: var(--amber); }
     .booking-cell input {
       width: 100%; border: none; background: transparent; padding: 1px 0;
       color: var(--ink); font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
@@ -1247,7 +1269,7 @@
           </div>
         </div>
 
-        <div class="booking-cell">
+        <div class="booking-cell" id="budgetCell">
           <div class="cell-icon" aria-hidden="true">
             <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
           </div>
@@ -1256,7 +1278,11 @@
               <label for="bBudget">Ngân sách tối đa (VNĐ)</label>
               <span class="budget-pretty-pill nums" id="budgetPretty">3,5 triệu ₫</span>
             </div>
-            <input id="bBudget" class="nums" type="number" min="500000" step="100000" value="3500000" />
+            <input id="bBudget" class="nums" type="text" inputmode="text" autocomplete="off" value="3.500.000" placeholder="VD: 3.500.000 hoặc 3tr5" />
+          </div>
+          <div class="budget-assist-pop hidden" id="budgetAssistPop" role="region" aria-label="Gợi ý chuẩn hóa ngân sách">
+            <div class="budget-assist-status" id="budgetAssistStatus"></div>
+            <div class="budget-chips-row" id="budgetAssistChips"></div>
           </div>
         </div>
 
@@ -1931,13 +1957,41 @@
 
     function fmtCompactBudget(n) {
       const val = Number(n || 0);
-      if (!val || val < 0) return "0 ₫";
+      if (!val || val <= 0) return "Chưa nhập";
       if (val >= 1000000) {
         const tr = val / 1000000;
         const txt = Number.isInteger(tr) ? String(tr) : tr.toFixed(2).replace(/\.?0+$/, "").replace(".", ",");
         return `${txt} triệu ₫`;
       }
-      return `${Math.round(val / 1000).toLocaleString("vi-VN")}k ₫`;
+      if (val >= 1000) return `${Math.round(val / 1000).toLocaleString("vi-VN")} nghìn ₫`;
+      return `${val.toLocaleString("vi-VN")} ₫`;
+    }
+
+    function parseSmartBudget(raw) {
+      const s = String(raw ?? "").trim().toLowerCase();
+      if (!s) return 0;
+      const mHalf = s.match(/^(\d+)\s*(?:tr|triệu|trieu)\s*rưỡi$/);
+      if (mHalf) return Number(mHalf[1]) * 1000000 + 500000;
+      const mTrK = s.match(/^(\d+)\s*(?:tr|triệu|trieu)\s*(\d{3})k?$/);
+      if (mTrK) return Number(mTrK[1]) * 1000000 + Number(mTrK[2]) * 1000;
+      const mTrShort = s.match(/^(\d+)\s*(?:tr|triệu|trieu|t)\s*(\d{1,2})$/);
+      if (mTrShort) return Number(mTrShort[1]) * 1000000 + Number(mTrShort[2].padEnd(2, "0")) * 10000;
+      const mTrDec = s.match(/^(\d+(?:[.,]\d+)?)\s*(?:tr|triệu|trieu|t)$/);
+      if (mTrDec) return Math.round(Number(mTrDec[1].replace(",", ".")) * 1000000);
+      const mK = s.match(/^(\d+(?:[.,]\d+)?)\s*(?:k|nghìn|nghin|ngàn|ngan)$/);
+      if (mK) return Math.round(Number(mK[1].replace(",", ".")) * 1000);
+      const mDotTr = s.match(/^(\d+)[.,](\d{1,2})$/);
+      if (mDotTr) return Math.round(Number(`${mDotTr[1]}.${mDotTr[2]}`) * 1000000);
+      const digits = s.replace(/[^\d]/g, "");
+      return digits ? Number(digits) : 0;
+    }
+
+    function normalizeShorthandBudget(val) {
+      if (!val || val <= 0) return 0;
+      if (val >= 1 && val <= 99) return Math.round(val * 1000000);
+      if (val >= 100 && val <= 999) return Math.round(val * 10000);
+      if (val >= 1000 && val <= 9999) return Math.round(val * 1000);
+      return val;
     }
 
     function toMin(hhmm) {
@@ -1988,8 +2042,13 @@
     const statusPill = document.getElementById("statusPill");
     const statusDot = document.getElementById("statusDot");
     const statusText = document.getElementById("statusText");
+    const budgetCell = document.getElementById("budgetCell");
     const budgetInput = document.getElementById("bBudget");
     const budgetPretty = document.getElementById("budgetPretty");
+    const budgetAssistPop = document.getElementById("budgetAssistPop");
+    const budgetAssistStatus = document.getElementById("budgetAssistStatus");
+    const budgetAssistChips = document.getElementById("budgetAssistChips");
+    let currentGateTotal = 2900000;
 
     let currentData = null;
     let forecastData = null;
@@ -2820,7 +2879,7 @@
             guestState.seniors = [...cfg.guests.seniors];
           }
           document.getElementById("bWindow").value = cfg.window;
-          budgetInput.value = String(cfg.budget);
+          budgetInput.value = Number(cfg.budget).toLocaleString("vi-VN");
           updateGuestUI(false);
           const chosen = getSelectedDay();
           const dateNote = chosen ? `vào ${chosen.rel_label} (${chosen.full_date}), ` : "";
@@ -2973,8 +3032,84 @@
       refreshEstimate(syncPrompt);
     }
 
+    function buildBudgetSuggestions(rawStr, parsedVal, gateTotal) {
+      const suggestions = [];
+      const addSug = (val, label, isFix = false) => {
+        if (!val || val < 500000 || val > 50000000) return;
+        if (!suggestions.some((x) => x.val === val)) suggestions.push({ val, label, isFix });
+      };
+
+      const trimmed = String(rawStr || "").trim().toLowerCase();
+      const digitsOnly = trimmed.replace(/[^\d]/g, "");
+      let statusText = "";
+      let isWarn = false;
+
+      if (!trimmed || parsedVal <= 0) {
+        isWarn = true;
+        statusText = `Chưa nhập ngân sách. Vé cổng hiện tại của đoàn là ${fmtVnd(gateTotal)}.`;
+      } else if (parsedVal < 10000) {
+        const inferred = normalizeShorthandBudget(parsedVal);
+        isWarn = inferred < gateTotal;
+        statusText = `Hiểu nhanh thành ${fmtCompactBudget(inferred)} khi rời ô (hoặc chọn mức bên dưới):`;
+        addSug(inferred, `Chuẩn hóa: ${fmtVnd(inferred)}`, true);
+      } else if (parsedVal < gateTotal) {
+        isWarn = true;
+        const x10 = parsedVal * 10;
+        const x100 = parsedVal * 100;
+        if (x10 >= gateTotal && x10 <= Math.max(12000000, gateTotal * 4)) {
+          statusText = `${fmtCompactBudget(parsedVal)}: Có thể thiếu 1 số 0? (Vé cổng đoàn ${fmtVnd(gateTotal)})`;
+          addSug(x10, `Sửa thành ${fmtVnd(x10)}`, true);
+        } else if (x100 >= gateTotal && x100 <= 12000000) {
+          statusText = `${fmtCompactBudget(parsedVal)}: Có thể thiếu số 0? (Vé cổng đoàn ${fmtVnd(gateTotal)})`;
+          addSug(x100, `Sửa thành ${fmtVnd(x100)}`, true);
+        } else {
+          statusText = `${fmtCompactBudget(parsedVal)}: Thấp hơn vé cổng ${fmtVnd(gateTotal)} (thiếu ${fmtVnd(gateTotal - parsedVal)}).`;
+        }
+      } else if (parsedVal >= 15000000 && Math.round(parsedVal / 10) >= gateTotal && Math.round(parsedVal / 10) <= 12000000) {
+        isWarn = true;
+        const d10 = Math.round(parsedVal / 10);
+        statusText = `${fmtCompactBudget(parsedVal)}: Có thể dư 1 số 0?`;
+        addSug(d10, `Giảm 1 số 0: ${fmtVnd(d10)}`, true);
+      } else {
+        const diff = parsedVal - gateTotal;
+        statusText = diff === 0
+          ? `${fmtCompactBudget(parsedVal)}: Vừa đủ vé cổng của đoàn.`
+          : `${fmtCompactBudget(parsedVal)}: Đủ vé cổng (dư ${fmtVnd(diff)} cho dịch vụ lẻ).`;
+      }
+
+      if (digitsOnly && digitsOnly.length <= 2) {
+        const base = Number(digitsOnly);
+        addSug(base * 100000, fmtVnd(base * 100000));
+        addSug(base * 1000000, fmtVnd(base * 1000000));
+      }
+      addSug(gateTotal, `Bằng vé cổng (${fmtVnd(gateTotal)})`);
+      addSug(gateTotal + 500000, `Thoải mái (${fmtVnd(gateTotal + 500000)})`);
+      return { statusText, isWarn, suggestions: suggestions.slice(0, 4) };
+    }
+
+    function renderBudgetAssist() {
+      const parsedVal = parseSmartBudget(budgetInput.value);
+      const { statusText, isWarn, suggestions } = buildBudgetSuggestions(budgetInput.value, parsedVal, currentGateTotal);
+      budgetAssistStatus.textContent = statusText;
+      budgetAssistStatus.className = `budget-assist-status${isWarn ? " warn" : ""}`;
+      budgetAssistChips.innerHTML = suggestions.map((s) =>
+        `<button type="button" class="budget-chip nums${s.isFix ? " primary-fix" : ""}" data-bval="${s.val}">${esc(s.label)}</button>`
+      ).join("");
+      budgetAssistChips.querySelectorAll(".budget-chip").forEach((btn) => {
+        btn.addEventListener("mousedown", (e) => {
+          e.preventDefault();
+          const chosen = Number(btn.dataset.bval);
+          budgetInput.value = chosen.toLocaleString("vi-VN");
+          refreshEstimate(true);
+          renderBudgetAssist();
+          budgetAssistPop.classList.add("hidden");
+        });
+      });
+    }
+
     function refreshEstimate(syncPrompt = true) {
-      budgetPretty.textContent = fmtCompactBudget(budgetInput.value);
+      const rawVal = parseSmartBudget(budgetInput.value);
+      const effectivePreview = (rawVal > 0 && rawVal < 10000) ? normalizeShorthandBudget(rawVal) : rawVal;
       const win = document.getElementById("bWindow").value;
       const isAfter16 = win.startsWith("16:00");
       const prices = getTicketPrices(isAfter16);
@@ -2999,13 +3134,19 @@
           badge.textContent = ct.label;
         }
       });
+      currentGateTotal = total;
+      budgetPretty.textContent = fmtCompactBudget(effectivePreview);
+      const pillWarn = !effectivePreview || effectivePreview < total || effectivePreview >= 15000000;
+      budgetPretty.className = `budget-pretty-pill nums${pillWarn ? " warn" : ""}`;
       estTicketType.textContent = isAfter16 ? "Vé sau 16:00" : "Vé cả ngày";
       estGateTotal.textContent = fmtVnd(total);
+      if (!budgetAssistPop.classList.contains("hidden")) renderBudgetAssist();
       if (syncPrompt && promptAutoSynced) applyBuilderToPrompt(false, false);
     }
 
     function applyBuilderToPrompt(closePop = true, keepFocus = true) {
-      const budget = Math.max(500000, Number(budgetInput.value || 3500000));
+      const rawBudget = parseSmartBudget(budgetInput.value);
+      const budget = rawBudget > 0 ? normalizeShorthandBudget(rawBudget) : currentGateTotal;
       const win = document.getElementById("bWindow").value;
       const day = getSelectedDay();
       const weather = (day && day.prompt_hint) ? day.prompt_hint : "";
@@ -3046,11 +3187,17 @@
         guestPopover.classList.add("hidden");
         guestTrigger.setAttribute("aria-expanded", "false");
       }
+      if (!budgetCell.contains(e.target)) {
+        budgetAssistPop.classList.add("hidden");
+      }
     });
     document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && !guestPopover.classList.contains("hidden")) {
-        guestPopover.classList.add("hidden");
-        guestTrigger.setAttribute("aria-expanded", "false");
+      if (e.key === "Escape") {
+        if (!guestPopover.classList.contains("hidden")) {
+          guestPopover.classList.add("hidden");
+          guestTrigger.setAttribute("aria-expanded", "false");
+        }
+        budgetAssistPop.classList.add("hidden");
       }
     });
     document.querySelectorAll("[data-step]").forEach((btn) => {
@@ -3069,7 +3216,54 @@
         updateGuestUI();
       });
     });
-    budgetInput.addEventListener("input", () => refreshEstimate(true));
+
+    function commitSmartBudgetInput(closePop) {
+      const rawVal = parseSmartBudget(budgetInput.value);
+      if (rawVal > 0) {
+        const norm = normalizeShorthandBudget(rawVal);
+        budgetInput.value = norm.toLocaleString("vi-VN");
+      } else {
+        budgetInput.value = "";
+      }
+      refreshEstimate(true);
+      if (closePop) budgetAssistPop.classList.add("hidden");
+      else renderBudgetAssist();
+    }
+
+    budgetInput.addEventListener("focus", () => {
+      renderBudgetAssist();
+      budgetAssistPop.classList.remove("hidden");
+    });
+    budgetInput.addEventListener("input", () => {
+      const raw = budgetInput.value;
+      if (/^\d[\d.]*$/.test(raw) && !raw.endsWith(".")) {
+        const digits = raw.replace(/[^\d]/g, "");
+        if (digits.length >= 4 && digits.length <= 9) {
+          const caret = budgetInput.selectionStart || raw.length;
+          const digitsBefore = raw.slice(0, caret).replace(/[^\d]/g, "").length;
+          const formatted = Number(digits).toLocaleString("vi-VN");
+          if (formatted !== raw) {
+            budgetInput.value = formatted;
+            let pos = 0, seen = 0;
+            while (pos < formatted.length && seen < digitsBefore) {
+              if (/\d/.test(formatted[pos])) seen += 1;
+              pos += 1;
+            }
+            budgetInput.setSelectionRange(pos, pos);
+          }
+        }
+      }
+      refreshEstimate(true);
+      renderBudgetAssist();
+      budgetAssistPop.classList.remove("hidden");
+    });
+    budgetInput.addEventListener("blur", () => commitSmartBudgetInput(true));
+    budgetInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        commitSmartBudgetInput(true);
+      }
+    });
     document.getElementById("bWindow").addEventListener("change", () => refreshEstimate(true));
     document.getElementById("applyBuilderBtn").addEventListener("click", () => applyBuilderToPrompt(true, true));
     document.getElementById("popApplyBtn").addEventListener("click", () => applyBuilderToPrompt(true, true));
