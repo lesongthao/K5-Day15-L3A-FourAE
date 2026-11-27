@@ -3,42 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VinWonders Nha Trang - Lập Lịch Trình Gia Đình FourAE</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%230e4d5c'/%3E%3Ccircle cx='18' cy='15' r='7.5' stroke='%23f6d28b' stroke-width='1.8' fill='none'/%3E%3Ccircle cx='18' cy='15' r='2.5' fill='%23f6d28b'/%3E%3Cpath d='M6 25c3-2 6-2 9 0s6 2 9 0 6-2 6-2' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <title>VinWonders Nha Trang - Trợ Lý Lịch Trình Gia Đình Đảo Hòn Tre</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%23084756'/%3E%3Ccircle cx='18' cy='15' r='7.5' stroke='%23f6d28b' stroke-width='1.8' fill='none'/%3E%3Ccircle cx='18' cy='15' r='2.5' fill='%23f6d28b'/%3E%3Cpath d='M6 25c3-2 6-2 9 0s6 2 9 0 6-2 6-2' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap&subset=vietnamese" rel="stylesheet" />
   <style>
     :root {
-      --bg: #faf7f2;
+      --bg: #f4f7f9;
       --surface: #ffffff;
-      --surface-soft: #f5efe6;
-      --surface-tint: #eef5f6;
-      --border: #e6ddd0;
-      --border-strong: #d5c8b6;
-      --ink: #1b2428;
-      --ink-soft: #364349;
-      --muted: #526067;
-      --primary: #0e4d5c;
-      --primary-deep: #093844;
-      --primary-soft: #e6f2f4;
-      --accent: #d96b27;
-      --accent-hover: #b85518;
-      --gold: #c6923a;
-      --gold-light: #f6d28b;
-      --emerald: #0b6e4f;
-      --emerald-bg: #eaf7f2;
-      --emerald-border: #8dd3ba;
-      --amber: #9a5410;
-      --amber-bg: #fef7e8;
-      --amber-border: #f0cb82;
-      --rose: #a61b3a;
-      --rose-bg: #fdf1f4;
-      --rose-border: #f2b4c2;
-      --radius: 16px;
-      --shadow-sm: 0 2px 6px rgba(27, 36, 40, 0.05);
-      --shadow-md: 0 12px 30px rgba(27, 36, 40, 0.08);
-      --shadow-lg: 0 24px 52px rgba(14, 42, 50, 0.14);
+      --surface-soft: #eef3f6;
+      --surface-warm: #faf7f2;
+      --surface-tint: #e8f3f6;
+      --border: #dde6eb;
+      --border-strong: #c5d4dc;
+      --ink: #0f1f26;
+      --ink-soft: #2a3e47;
+      --muted: #4c616b;
+      --primary: #0a586c;
+      --primary-deep: #063846;
+      --primary-soft: #e3f3f7;
+      --primary-border: #b3dbe5;
+      --accent: #e05626;
+      --accent-hover: #c34317;
+      --gold: #c99235;
+      --gold-light: #f9db9d;
+      --emerald: #08684a;
+      --emerald-bg: #e6f6f0;
+      --emerald-border: #9de0c6;
+      --sky: #075985;
+      --sky-bg: #e7f3fb;
+      --sky-border: #b5dcf6;
+      --amber: #944d0b;
+      --amber-bg: #fef5e6;
+      --amber-border: #f2cc88;
+      --rose: #a11b38;
+      --rose-bg: #fdf0f3;
+      --rose-border: #f3b6c4;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow-xs: 0 1px 2px rgba(6, 56, 70, 0.04);
+      --shadow-sm: 0 4px 14px rgba(6, 56, 70, 0.06), 0 1px 3px rgba(6, 56, 70, 0.04);
+      --shadow-md: 0 14px 34px rgba(6, 56, 70, 0.10), 0 3px 8px rgba(6, 56, 70, 0.05);
+      --shadow-lg: 0 26px 64px rgba(6, 42, 54, 0.14), 0 4px 14px rgba(6, 42, 54, 0.06);
     }
 
     * { box-sizing: border-box; }
@@ -47,152 +54,207 @@
       margin: 0;
       color: var(--ink);
       font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
-      line-height: 1.55;
+      line-height: 1.56;
       -webkit-font-smoothing: antialiased;
-      background-color: var(--bg);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Cpath d='M0 40c15-10 30-10 45 0s30 10 45 0 30-10 30-10M0 80c15-10 30-10 45 0s30 10 45 0 30-10 30-10M0 0c15 10 30 10 45 0s30-10 45 0 30 10 30 10' fill='none' stroke='%230e4d5c' stroke-opacity='0.048' stroke-width='1.15'/%3E%3Cpath d='M60 16l4 4-4 4-4-4zM0 56l4 4-4 4-4-4zM120 56l4 4-4 4-4-4z' fill='none' stroke='%23c6923a' stroke-opacity='0.09' stroke-width='1'/%3E%3Ccircle cx='30' cy='20' r='1.3' fill='%23c6923a' fill-opacity='0.11'/%3E%3Ccircle cx='90' cy='60' r='1.3' fill='%230e4d5c' fill-opacity='0.08'/%3E%3C/svg%3E");
-      background-size: 120px 80px;
+      text-rendering: optimizeLegibility;
+      background: linear-gradient(180deg, #eff4f7 0%, #f6f8fa 520px, #f3f6f8 100%);
     }
 
-    .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+    .display {
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", system-ui, sans-serif;
+      letter-spacing: -0.022em;
+    }
     .nums { font-variant-numeric: tabular-nums; }
     .hidden { display: none !important; }
     svg.ico {
       width: 17px; height: 17px; stroke: currentColor; fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+      stroke-width: 1.85; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
     }
 
     button {
-      font-family: inherit; cursor: pointer; border-radius: 10px;
+      font-family: inherit; cursor: pointer; border-radius: 11px;
       transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
     }
     button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible {
-      outline: 3px solid var(--accent); outline-offset: 2px;
+      outline: 2.5px solid var(--accent); outline-offset: 2px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
     }
 
-    /* Editorial Hospitality Header */
+    /* Sticky Glass Topbar */
     .topbar {
-      position: sticky; top: 0; z-index: 40;
-      background: rgba(250, 247, 242, 0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 45;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(18px) saturate(150%);
+      border-bottom: 1px solid rgba(197, 212, 220, 0.72);
+      box-shadow: 0 2px 16px rgba(6, 56, 70, 0.05);
     }
     .topbar-inner {
-      max-width: 1280px; margin: 0 auto; padding: 12px 24px;
-      display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;
+      max-width: 1280px; margin: 0 auto; padding: 10px 24px;
+      display: flex; flex-wrap: nowrap; gap: 12px; align-items: center; justify-content: space-between;
     }
-    @media (max-width: 600px) { .topbar-inner { padding: 10px 14px; } }
-    .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: inherit; }
+    @media (max-width: 1080px) { .topbar-inner { flex-wrap: wrap; } }
+    @media (max-width: 600px) { .topbar-inner { padding: 9px 14px; flex-wrap: nowrap; } }
+    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; min-width: 0; }
     .crest {
-      width: 42px; height: 42px; border-radius: 12px;
-      background: var(--primary); border: 1px solid rgba(198, 146, 58, 0.45);
+      width: 40px; height: 40px; border-radius: 11px;
+      background: linear-gradient(145deg, #0c6379 0%, #063846 100%);
+      border: 1px solid rgba(249, 219, 157, 0.45);
       display: grid; place-items: center;
-      box-shadow: 0 4px 12px rgba(14, 77, 92, 0.20); flex-shrink: 0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 14px rgba(6, 56, 70, 0.22);
+      flex-shrink: 0;
     }
     .brand-title {
-      margin: 0; font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); line-height: 1.15;
+      margin: 0; font-size: 1.08rem; font-weight: 800; color: var(--primary-deep); line-height: 1.15; white-space: nowrap;
     }
-    .brand-title em { font-style: italic; color: var(--accent); font-weight: 600; }
-    .brand-sub { margin: 2px 0 0; font-size: 0.77rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
+    .brand-title span { color: var(--accent); font-weight: 800; }
+    .brand-sub { margin: 2px 0 0; font-size: 0.73rem; color: var(--muted); font-weight: 500; white-space: nowrap; }
+    @media (max-width: 420px) { .brand-sub { display: none; } }
 
-    .top-nav { display: flex; align-items: center; gap: 18px; }
-    @media (max-width: 960px) { .top-nav { display: none; } }
+    .top-nav {
+      display: flex; align-items: center; gap: 2px;
+      padding: 4px; border-radius: 999px;
+      background: var(--surface-soft); border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    @media (max-width: 1080px) { .top-nav { display: none; } }
     .top-nav a {
-      font-size: 0.85rem; font-weight: 600; color: var(--muted); text-decoration: none;
-      padding: 4px 2px; border-bottom: 2px solid transparent;
-      transition: color 0.16s ease, border-color 0.16s ease;
+      font-size: 0.8rem; font-weight: 600; color: var(--muted); text-decoration: none;
+      padding: 6px 11px; border-radius: 999px; white-space: nowrap;
+      transition: background-color 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
     }
-    .top-nav a:hover, .top-nav a.active { color: var(--primary); border-bottom-color: var(--gold); }
+    .top-nav a:hover { color: var(--primary-deep); }
+    .top-nav a.active {
+      background: var(--surface); color: var(--primary-deep); font-weight: 700;
+      box-shadow: 0 2px 6px rgba(6, 56, 70, 0.09);
+    }
 
-    .top-actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
-    .status-inline {
-      display: inline-flex; align-items: center; gap: 7px; padding-right: 6px;
-      font-size: 0.82rem; font-weight: 600; color: var(--muted);
+    .top-actions { display: flex; flex-wrap: nowrap; gap: 7px; align-items: center; flex-shrink: 0; }
+    @media (max-width: 680px) {
+      #copyBtn, #printBtn { display: none; }
     }
-    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); }
+    .status-inline {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 5px 11px; border-radius: 999px;
+      background: var(--emerald-bg); border: 1px solid var(--emerald-border);
+      font-size: 0.78rem; font-weight: 700; color: var(--emerald);
+    }
+    .status-inline.is-busy { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+    .status-inline.is-err { background: var(--rose-bg); border-color: var(--rose-border); color: var(--rose); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); }
     .dot.busy { background: var(--amber); }
     .dot.err { background: var(--rose); }
 
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px;
-      font-size: 0.83rem; font-weight: 600; background: var(--surface);
-      border: 1px solid var(--border-strong); color: var(--ink);
+      font-size: 0.82rem; font-weight: 600; background: var(--surface);
+      border: 1px solid var(--border-strong); color: var(--ink-soft);
+      box-shadow: var(--shadow-xs);
     }
-    .btn-ghost:hover:not(:disabled) { background: var(--surface-soft); border-color: var(--primary); color: var(--primary-deep); }
-    .btn-ghost:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--surface-soft); border-color: var(--primary); color: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+    .btn-ghost:disabled { opacity: 0.42; cursor: not-allowed; box-shadow: none; }
 
-    /* Hero */
+    /* Cinematic Coastal Resort Hero */
     .hero {
-      position: relative; min-height: 404px; overflow: hidden;
-      display: flex; align-items: flex-end; background: #0a2d36;
+      position: relative; min-height: 468px; overflow: hidden;
+      display: flex; align-items: flex-end; background: #062b36;
     }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+    .hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 40%;
+      filter: saturate(1.08) contrast(1.03);
+    }
     .hero-scrim {
       position: absolute; inset: 0;
       background:
-        linear-gradient(96deg, rgba(9, 34, 42, 0.88) 0%, rgba(14, 56, 67, 0.62) 48%, rgba(14, 77, 92, 0.12) 100%),
-        linear-gradient(180deg, rgba(9, 34, 42, 0.14) 0%, rgba(9, 34, 42, 0.56) 100%);
+        linear-gradient(98deg, rgba(4, 29, 38, 0.90) 0%, rgba(7, 46, 58, 0.72) 44%, rgba(8, 64, 78, 0.16) 82%, rgba(8, 64, 78, 0.06) 100%),
+        linear-gradient(180deg, rgba(4, 24, 32, 0.18) 0%, rgba(4, 24, 32, 0.05) 45%, rgba(6, 36, 46, 0.72) 100%);
     }
     .hero-content {
       position: relative; z-index: 2; max-width: 1280px; width: 100%; margin: 0 auto;
-      padding: 44px 24px 92px; color: #ffffff;
+      padding: 52px 24px 104px; color: #ffffff;
     }
-    @media (max-width: 600px) { .hero-content { padding: 34px 16px 84px; } }
-    .hero-location {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold-light); margin-bottom: 12px;
+    @media (max-width: 600px) { .hero-content { padding: 36px 16px 92px; } }
+    .hero-badge-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 16px; }
+    .hero-eyebrow-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 13px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.26);
+      backdrop-filter: blur(10px);
+      font-size: 0.78rem; font-weight: 700; color: var(--gold-light);
     }
-    .hero-location::before { content: ""; width: 28px; height: 1.5px; background: var(--gold-light); }
-    .hero h2 {
-      margin: 0; max-width: 680px; font-size: clamp(1.78rem, 3.3vw, 2.68rem);
-      font-weight: 700; line-height: 1.15; letter-spacing: -0.015em;
+    .hero-live-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(8, 104, 74, 0.65); border: 1px solid rgba(157, 224, 198, 0.42);
+      backdrop-filter: blur(8px);
+      font-size: 0.77rem; font-weight: 600; color: #eafff7;
     }
-    .hero h2 em { font-style: italic; color: var(--gold-light); font-weight: 600; }
+    .hero-live-dot { width: 7px; height: 7px; border-radius: 50%; background: #5ef2be; box-shadow: 0 0 8px #5ef2be; }
+    .hero h1 {
+      margin: 0; max-width: 720px;
+      font-size: clamp(1.95rem, 3.6vw, 3.05rem);
+      font-weight: 800; line-height: 1.13; letter-spacing: -0.03em;
+      text-shadow: 0 2px 20px rgba(4, 24, 32, 0.35);
+    }
+    .hero h1 span {
+      background: linear-gradient(92deg, #ffe5ae 0%, #ffc76b 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
     .hero-sub {
-      margin: 12px 0 20px; max-width: 600px; font-size: 0.95rem;
-      color: rgba(250, 247, 242, 0.92); font-weight: 400;
+      margin: 14px 0 24px; max-width: 630px; font-size: 0.98rem; line-height: 1.6;
+      color: rgba(244, 249, 251, 0.94); font-weight: 400;
     }
-    .hero-metrics {
-      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px;
-      padding-top: 13px; border-top: 1px solid rgba(255, 255, 255, 0.24);
-      font-size: 0.84rem; color: rgba(250, 247, 242, 0.92);
+    .hero-capsules { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .hero-capsule {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 8px 14px; border-radius: 12px;
+      background: rgba(8, 38, 48, 0.62); border: 1px solid rgba(255, 255, 255, 0.20);
+      backdrop-filter: blur(10px);
+      font-size: 0.82rem; color: rgba(246, 250, 252, 0.95);
     }
-    .hero-metric { display: inline-flex; align-items: baseline; gap: 6px; }
-    .hero-metric strong { font-size: 1.03rem; font-weight: 700; color: #ffffff; }
-    .hero-sep { width: 1px; height: 14px; background: rgba(255, 255, 255, 0.28); }
-    @media (max-width: 560px) { .hero-sep { display: none; } }
+    .hero-capsule svg { width: 16px; height: 16px; color: var(--gold-light); flex-shrink: 0; }
+    .hero-capsule strong { font-weight: 700; color: #ffffff; }
 
-    /* Shell + Concierge Dock + 7-Day Weather Strip */
-    .shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 56px; }
-    @media (max-width: 600px) { .shell { padding: 0 14px 44px; } }
+    /* Main Shell + Elevated Flagship Booking Dock */
+    .shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 64px; }
+    @media (max-width: 600px) { .shell { padding: 0 14px 48px; } }
     .concierge-dock {
-      position: relative; z-index: 12; margin-top: -62px; margin-bottom: 22px;
-      background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--gold);
-      border-radius: 20px; padding: 18px 20px; box-shadow: var(--shadow-lg);
+      position: relative; z-index: 15; margin-top: -72px; margin-bottom: 26px;
+      background: var(--surface);
+      border: 1px solid rgba(197, 212, 220, 0.85);
+      border-radius: 24px; padding: 22px 24px;
+      box-shadow: var(--shadow-lg);
       min-width: 0; max-width: 100%; scroll-margin-top: 84px;
     }
-    @media (max-width: 600px) { .concierge-dock { padding: 14px 13px; border-radius: 16px; } }
+    @media (max-width: 600px) { .concierge-dock { padding: 15px 14px; border-radius: 18px; margin-top: -58px; } }
 
+    /* 8-Day Weather Strip inside Recessed Tray */
     .date-weather-shell {
-      margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--border);
+      margin-bottom: 16px; padding: 13px 14px;
+      background: #f3f7fa; border: 1px solid #e1ebf0; border-radius: 16px;
       min-width: 0; max-width: 100%;
     }
     .date-strip-head {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 8px; margin-bottom: 9px;
+      gap: 8px; margin-bottom: 10px;
     }
     .date-strip-title {
-      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
-      color: var(--primary-deep); display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.82rem; font-weight: 700; color: var(--primary-deep);
+      display: inline-flex; align-items: center; gap: 7px;
     }
+    .date-strip-title svg { color: var(--primary); }
     .weather-src-badge {
-      font-size: 0.74rem; font-weight: 600; color: var(--primary);
-      background: var(--primary-soft); border: 1px solid #b8d8df;
-      padding: 3px 9px; border-radius: 999px;
+      font-size: 0.73rem; font-weight: 600; color: var(--primary);
+      background: var(--surface); border: 1px solid var(--primary-border);
+      padding: 3px 10px; border-radius: 999px; box-shadow: var(--shadow-xs);
     }
     .date-cards-row {
-      display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 7px;
+      display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px;
       min-width: 0; max-width: 100%;
     }
     @media (max-width: 1080px) {
@@ -202,232 +264,317 @@
       .date-cards-row {
         grid-template-columns: none;
         grid-auto-flow: column;
-        grid-auto-columns: minmax(112px, 1fr);
+        grid-auto-columns: minmax(118px, 1fr);
         overflow-x: auto;
         padding-bottom: 4px;
         -webkit-overflow-scrolling: touch;
       }
     }
     .date-card {
-      text-align: left; padding: 8px 10px; border-radius: 12px;
-      background: var(--bg); border: 1.5px solid var(--border);
-      display: flex; flex-direction: column; gap: 4px; color: var(--ink);
-      min-width: 0;
+      position: relative; text-align: left; padding: 9px 10px; border-radius: 13px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      display: flex; flex-direction: column; gap: 5px; color: var(--ink);
+      min-width: 0; box-shadow: var(--shadow-xs);
     }
-    .date-card:hover { border-color: var(--primary); background: var(--surface-soft); }
+    .date-card:hover { border-color: var(--primary); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
     .date-card.active {
-      background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff;
-      box-shadow: 0 6px 16px rgba(9, 56, 68, 0.22);
+      background: linear-gradient(150deg, #0c6278 0%, #063846 100%);
+      border-color: #063846; color: #ffffff;
+      box-shadow: 0 10px 22px rgba(6, 56, 70, 0.26);
     }
     .dc-top { display: flex; align-items: baseline; justify-content: space-between; gap: 4px; }
     .dc-rel { font-size: 0.79rem; font-weight: 700; white-space: nowrap; }
-    .dc-date { font-size: 0.73rem; opacity: 0.82; }
+    .dc-date { font-size: 0.72rem; color: var(--muted); font-weight: 600; }
+    .date-card.active .dc-date { color: rgba(255, 255, 255, 0.80); }
     .dc-mid { display: flex; align-items: center; gap: 6px; margin: 1px 0; }
-    .dc-temp { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+    .dc-temp { font-size: 0.82rem; font-weight: 700; white-space: nowrap; }
     .dc-tag {
       display: inline-block; align-self: flex-start;
-      padding: 2px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 999px; font-size: 0.69rem; font-weight: 700;
       background: var(--emerald-bg); color: var(--emerald);
     }
-    .dc-tag.rain { background: var(--amber-bg); color: var(--amber); }
+    .dc-tag.rain { background: var(--sky-bg); color: var(--sky); }
+    .dc-tag.amber { background: var(--amber-bg); color: var(--amber); }
     .dc-tag.heavy { background: var(--rose-bg); color: var(--rose); }
-    .date-card.active .dc-tag { background: rgba(255, 255, 255, 0.16); color: var(--gold-light); }
+    .date-card.active .dc-tag {
+      background: rgba(255, 255, 255, 0.18); color: var(--gold-light);
+    }
     .selected-date-note {
-      margin-top: 8px; padding: 7px 11px; border-radius: 10px;
-      background: var(--surface-tint); border: 1px solid #cfe2e6;
-      font-size: 0.81rem; color: var(--primary-deep); font-weight: 500;
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px;
+      margin-top: 10px; padding: 8px 12px; border-radius: 11px;
+      background: var(--surface); border: 1px solid #d4e5ec;
+      font-size: 0.81rem; color: var(--ink-soft); font-weight: 500;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .selected-date-note strong { color: var(--primary-deep); }
+    .selected-advice-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--primary); font-weight: 600; font-size: 0.79rem;
     }
 
-    .w-ico { width: 18px; height: 18px; flex-shrink: 0; }
-    .w-ico.sun { color: #d9821f; }
-    .w-ico.rain { color: #167288; }
-    .w-ico.heavy { color: #0e4d5c; }
+    .w-ico { width: 19px; height: 19px; flex-shrink: 0; }
+    .w-ico.sun { color: #e58e1a; }
+    .w-ico.rain { color: #0b74a8; }
+    .w-ico.heavy { color: #9f1c38; }
     .date-card.active .w-ico { color: var(--gold-light); }
 
-    /* Booking Strip */
+    /* Segmented Hospitality Parameter Bar */
     .booking-strip {
-      display: grid; grid-template-columns: 1.55fr 1fr 1.35fr auto;
-      border: 1px solid var(--border); border-radius: 13px; overflow: visible;
-      background: var(--surface); margin-bottom: 13px;
+      display: grid; grid-template-columns: 1.45fr 1.15fr 1.35fr auto;
+      border: 1.5px solid var(--border-strong); border-radius: 16px; overflow: visible;
+      background: var(--surface); margin-bottom: 14px;
+      box-shadow: var(--shadow-xs);
     }
-    @media (max-width: 960px) { .booking-strip { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 560px) { .booking-strip { grid-template-columns: 1fr; } }
+    @media (max-width: 980px) { .booking-strip { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 580px) { .booking-strip { grid-template-columns: 1fr; } }
     .booking-cell {
-      position: relative; padding: 8px 13px; border-right: 1px solid var(--border);
+      position: relative; padding: 10px 15px; border-right: 1px solid var(--border);
+      display: flex; align-items: center; gap: 11px;
       transition: background-color 0.15s ease; min-width: 0;
     }
-    .booking-cell:hover, .booking-cell:focus-within { background: var(--surface-soft); }
-    @media (max-width: 960px) { .booking-cell { border-bottom: 1px solid var(--border); } }
-    @media (max-width: 560px) { .booking-cell { border-right: none; } }
-    .booking-cell label {
-      display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    .booking-cell:hover, .booking-cell:focus-within { background: #f7fafc; }
+    @media (max-width: 980px) { .booking-cell { border-bottom: 1px solid var(--border); } }
+    @media (max-width: 580px) { .booking-cell { border-right: none; } }
+    .cell-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--primary-soft); color: var(--primary);
+      display: grid; place-items: center; flex-shrink: 0;
     }
-    .booking-cell input, .booking-cell select {
-      width: 100%; border: none; background: transparent; padding: 2px 0;
-      color: var(--ink); font-family: inherit; font-size: 0.9rem; font-weight: 600;
+    .cell-main { flex: 1; min-width: 0; }
+    .cell-label-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 2px;
+    }
+    .booking-cell label {
+      display: block; font-size: 0.73rem; font-weight: 700;
+      color: var(--muted); margin: 0; white-space: nowrap;
+    }
+    .budget-pretty-pill {
+      padding: 1px 7px; border-radius: 999px;
+      background: var(--emerald-bg); color: var(--emerald);
+      font-size: 0.7rem; font-weight: 700; white-space: nowrap;
+    }
+    .booking-cell input {
+      width: 100%; border: none; background: transparent; padding: 1px 0;
+      color: var(--ink); font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+    }
+    .select-wrap { position: relative; display: flex; align-items: center; }
+    .booking-cell select {
+      width: 100%; border: none; background: transparent; padding: 1px 22px 1px 0;
+      color: var(--ink); font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 0.93rem; font-weight: 700; appearance: none; cursor: pointer;
+    }
+    .select-chevron {
+      position: absolute; right: 0; pointer-events: none; width: 15px; height: 15px; color: var(--muted);
     }
     .guest-trigger {
-      width: 100%; text-align: left; border: none; background: transparent; padding: 2px 0;
-      color: var(--ink); font-size: 0.9rem; font-weight: 600;
+      width: 100%; text-align: left; border: none; background: transparent; padding: 1px 0;
+      color: var(--ink); font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 0.95rem; font-weight: 700;
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
     .guest-popover {
-      position: absolute; left: 0; top: calc(100% + 10px); z-index: 60;
-      width: min(460px, calc(100vw - 36px));
+      position: absolute; left: 0; top: calc(100% + 10px); z-index: 65;
+      width: min(470px, calc(100vw - 34px));
       background: var(--surface); border: 1px solid var(--border-strong);
-      border-top: 3px solid var(--primary); border-radius: 16px;
-      padding: 16px; box-shadow: var(--shadow-lg);
+      border-top: 3px solid var(--primary); border-radius: 18px;
+      padding: 18px; box-shadow: var(--shadow-lg);
     }
     .pop-head {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;
+      padding-bottom: 11px; border-bottom: 1px solid var(--border); margin-bottom: 10px;
     }
-    .pop-head strong { font-size: 0.94rem; color: var(--primary-deep); }
-    .pop-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; }
-    .pop-title { font-size: 0.89rem; font-weight: 700; color: var(--ink); }
-    .pop-rule { font-size: 0.77rem; color: var(--muted); margin-top: 1px; }
-    .stepper { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; }
+    .pop-head strong { font-size: 0.95rem; color: var(--primary-deep); }
+    .pop-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 0; }
+    .pop-title { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+    .pop-rule { font-size: 0.77rem; color: var(--muted); margin-top: 2px; }
+    .stepper { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .step-btn {
-      width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-strong);
+      width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border-strong);
       background: var(--surface); color: var(--ink); font-size: 1rem; font-weight: 700;
       display: grid; place-items: center; padding: 0;
     }
     .step-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
-    .step-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-    .step-val { min-width: 22px; text-align: center; font-weight: 700; font-size: 0.92rem; }
+    .step-btn:disabled { opacity: 0.32; cursor: not-allowed; }
+    .step-val { min-width: 22px; text-align: center; font-weight: 800; font-size: 0.95rem; }
     .sub-list {
-      margin: 4px 0 10px; padding: 9px 11px; border-radius: 11px;
+      margin: 4px 0 10px; padding: 10px 12px; border-radius: 12px;
       background: var(--surface-soft); border: 1px solid var(--border); display: grid; gap: 8px;
     }
     .sub-person {
-      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 7px; align-items: center; font-size: 0.8rem;
+      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 8px; align-items: center; font-size: 0.8rem;
     }
     @media (max-width: 500px) { .sub-person { grid-template-columns: 1fr 1fr; } }
-    .sub-person label { font-size: 0.72rem; color: var(--muted); text-transform: none; letter-spacing: 0; margin: 0; }
+    .sub-person label { font-size: 0.72rem; color: var(--muted); font-weight: 600; margin: 0 0 2px; }
     .sub-person input {
-      width: 100%; border: 1px solid var(--border-strong); border-radius: 7px;
-      background: var(--surface); padding: 4px 7px; font-size: 0.82rem; font-weight: 600;
+      width: 100%; border: 1px solid var(--border-strong); border-radius: 8px;
+      background: var(--surface); padding: 5px 8px; font-size: 0.83rem; font-weight: 700;
     }
     .tier-badge {
-      padding: 3px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      padding: 3px 9px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
       background: var(--primary-soft); color: var(--primary-deep); white-space: nowrap;
     }
     .tier-badge.free { background: var(--emerald-bg); color: var(--emerald); }
     .tier-badge.adult { background: var(--amber-bg); color: var(--amber); }
     .pop-foot {
-      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+      margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
-    .pop-est { font-size: 0.82rem; color: var(--muted); }
-    .pop-est strong { color: var(--primary-deep); font-size: 0.94rem; }
+    .pop-est { font-size: 0.83rem; color: var(--muted); }
+    .pop-est strong { color: var(--primary-deep); font-size: 0.98rem; font-weight: 800; }
     .booking-apply-cell {
       display: flex; align-items: center; justify-content: center; padding: 8px 12px;
-      background: var(--primary-soft); border-radius: 0 12px 12px 0;
+      background: #f5f9fb; border-radius: 0 15px 15px 0;
     }
-    @media (max-width: 960px) { .booking-apply-cell { border-radius: 0 0 12px 12px; } }
+    @media (max-width: 980px) { .booking-apply-cell { border-radius: 0 0 15px 15px; } }
     .btn-apply-cfg {
-      border: none; background: transparent; color: var(--primary-deep);
-      font-size: 0.84rem; font-weight: 700; padding: 8px 10px; white-space: nowrap;
+      border: 1px solid var(--primary-border); background: var(--primary-soft); color: var(--primary-deep);
+      font-size: 0.82rem; font-weight: 700; padding: 9px 14px; border-radius: 11px; white-space: nowrap;
       display: inline-flex; align-items: center; gap: 6px;
     }
-    .btn-apply-cfg:hover { color: var(--accent); }
+    .btn-apply-cfg:hover { background: var(--primary); border-color: var(--primary); color: #ffffff; }
 
+    /* Flagship AI Concierge Composer */
     .composer-box {
-      border: 1.5px solid var(--border-strong); border-radius: 14px; background: var(--bg);
-      padding: 10px 14px; transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+      border: 1.5px solid var(--border-strong); border-radius: 16px;
+      background: #fbfcfd; padding: 12px 15px;
+      transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
     }
     .composer-box:focus-within {
       background: var(--surface); border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(14, 77, 92, 0.10);
+      box-shadow: 0 0 0 4px rgba(10, 88, 108, 0.10);
     }
+    .composer-input-row { display: flex; align-items: flex-start; gap: 10px; }
+    .composer-lead-ico {
+      margin-top: 5px; width: 28px; height: 28px; border-radius: 8px;
+      background: var(--surface-warm); border: 1px solid #eadcc7; color: var(--gold);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    @media (max-width: 560px) { .composer-lead-ico { display: none; } }
     .composer-box textarea {
-      width: 100%; min-height: 58px; padding: 4px 6px; border: none; background: transparent;
-      font-family: inherit; font-size: 0.94rem; line-height: 1.5; color: var(--ink); resize: vertical;
-      border-radius: 8px;
+      width: 100%; min-height: 56px; padding: 3px 4px; border: none; background: transparent;
+      font-family: inherit; font-size: 0.95rem; line-height: 1.55; color: var(--ink);
+      resize: none; border-radius: 8px;
     }
-    .composer-box textarea:focus { box-shadow: none; }
+    .composer-box textarea::placeholder { color: #738792; }
     .composer-box textarea:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
     .composer-foot {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 10px; padding-top: 9px; margin-top: 6px; border-top: 1px dashed var(--border);
+      gap: 10px; padding-top: 10px; margin-top: 8px; border-top: 1px solid var(--border);
     }
     .composer-meta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 10px; }
     .char-count { font-size: 0.76rem; font-weight: 600; color: var(--muted); }
-    .composer-tip { font-size: 0.76rem; color: var(--muted); }
-    @media (max-width: 600px) { .composer-tip { display: none; } }
+    .composer-tip { font-size: 0.76rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+    .composer-tip kbd {
+      padding: 1px 5px; border-radius: 5px; background: var(--surface-soft);
+      border: 1px solid var(--border-strong); font-family: inherit; font-size: 0.7rem; font-weight: 700; color: var(--ink-soft);
+    }
+    @media (max-width: 640px) { .composer-tip { display: none; } }
     .cta-stack { display: flex; gap: 8px; align-items: center; margin-left: auto; }
     .btn-cta {
-      min-width: 162px; height: 42px; padding: 0 20px; border: none;
-      background: var(--accent); color: #ffffff;
-      font-size: 0.91rem; font-weight: 700; letter-spacing: 0.01em;
+      min-width: 184px; height: 44px; padding: 0 22px; border: 1px solid #bd3d11;
+      background: linear-gradient(180deg, #ea6030 0%, #d44819 100%);
+      color: #ffffff;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 6px 16px rgba(217, 107, 39, 0.26);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 8px 20px rgba(212, 72, 25, 0.28);
     }
-    .btn-cta:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(184, 85, 24, 0.34); }
-    .btn-cta:disabled { opacity: 0.65; cursor: wait; transform: none; }
-    .btn-clear { height: 42px; padding: 0 14px; }
+    .btn-cta:hover:not(:disabled) {
+      background: linear-gradient(180deg, #df5322 0%, #bd3c11 100%);
+      transform: translateY(-1px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 12px 24px rgba(189, 60, 17, 0.34);
+    }
+    .btn-cta:disabled { opacity: 0.68; cursor: wait; transform: none; }
+    .btn-clear { height: 44px; padding: 0 15px; }
 
+    @keyframes spinAnim { to { transform: rotate(360deg); } }
+    .spin-ico { animation: spinAnim 0.85s linear infinite; }
+
+    /* 2-Row Quick Scenarios */
     .preset-strip {
-      display: grid; gap: 8px; margin-top: 10px;
-      padding-top: 11px; border-top: 1px dashed var(--border);
+      display: grid; gap: 8px; margin-top: 12px;
+      padding-top: 12px; border-top: 1px dashed var(--border);
     }
     .preset-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-    .preset-caption { font-size: 0.79rem; font-weight: 700; color: var(--muted); min-width: 126px; }
-    @media (max-width: 600px) { .preset-caption { min-width: 100%; } }
+    .preset-caption { font-size: 0.78rem; font-weight: 700; color: var(--muted); min-width: 138px; }
+    @media (max-width: 640px) { .preset-caption { min-width: 100%; } }
     .preset-pill {
-      display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px;
       border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong);
-      color: var(--ink); font-size: 0.8rem; font-weight: 600;
+      color: var(--ink-soft); font-size: 0.79rem; font-weight: 600;
+      box-shadow: var(--shadow-xs);
     }
-    .preset-pill:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep); }
+    .preset-pill:hover {
+      background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep);
+      transform: translateY(-1px);
+    }
     .preset-pill.edge {
-      background: #fdf9f2; border-style: dashed; border-color: #d6c3a5; color: #5c4627;
+      background: #fcfaf6; border-style: dashed; border-color: #d7c7ae; color: #5b472b;
+      box-shadow: none;
     }
-    .preset-pill.edge:hover { background: var(--amber-bg); border-style: solid; border-color: var(--amber); color: var(--amber); }
+    .preset-pill.edge:hover {
+      background: var(--amber-bg); border-style: solid; border-color: var(--amber); color: var(--amber);
+    }
     .preset-pill.active,
     .preset-pill.edge.active {
-      background: var(--primary-soft); border-style: solid; border-color: var(--primary); color: var(--primary-deep);
-      box-shadow: 0 2px 8px rgba(14, 77, 92, 0.14);
+      background: var(--primary-deep); border-style: solid; border-color: var(--primary-deep); color: #ffffff;
+      box-shadow: 0 4px 12px rgba(6, 56, 70, 0.22);
     }
 
-    /* Commercial 4-Tab Bar */
+    /* Segmented 4-Tab Bar */
     .tabs-bar {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
-      background: var(--surface); border: 1px solid var(--border); border-radius: 15px;
-      padding: 6px; margin-bottom: 20px; box-shadow: var(--shadow-sm); scroll-margin-top: 84px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px;
+      background: #e6eef2; border: 1px solid #d2dfe6; border-radius: 16px;
+      padding: 6px; margin-bottom: 24px; scroll-margin-top: 84px;
     }
-    @media (max-width: 780px) { .tabs-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 820px) { .tabs-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     .tab-btn {
       border: 1px solid transparent; background: transparent; color: var(--muted);
-      padding: 10px 12px; border-radius: 11px;
+      padding: 11px 12px; border-radius: 12px;
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
       font-size: 0.86rem; font-weight: 700;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      text-align: center;
+      text-align: center; min-width: 0;
     }
-    .tab-btn:hover { background: var(--surface-soft); color: var(--primary-deep); }
+    .tab-btn:hover { background: rgba(255, 255, 255, 0.65); color: var(--primary-deep); }
     .tab-btn.active {
-      background: var(--primary-deep); color: #ffffff;
-      box-shadow: 0 4px 12px rgba(9, 56, 68, 0.20);
+      background: var(--surface); color: var(--primary-deep);
+      border-color: rgba(197, 212, 220, 0.7);
+      box-shadow: 0 4px 14px rgba(6, 56, 70, 0.10);
     }
+    .tab-btn.active svg.ico { color: var(--primary); }
     .tab-pill-badge {
-      padding: 1px 7px; border-radius: 999px; font-size: 0.71rem; font-weight: 700;
-      background: var(--surface-soft); color: var(--primary-deep);
+      padding: 2px 8px; border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+      background: rgba(10, 88, 108, 0.09); color: var(--primary-deep); white-space: nowrap;
     }
-    .tab-btn.active .tab-pill-badge { background: rgba(255, 255, 255, 0.20); color: var(--gold-light); }
-    .tab-pill-badge.ready { background: var(--emerald-bg); color: var(--emerald); }
+    @media (max-width: 560px) {
+      .tab-btn { padding: 10px 8px; font-size: 0.8rem; gap: 6px; }
+      .tab-btn .tab-pill-badge:not(#resultTabBadge) { display: none; }
+    }
+    .tab-btn.active .tab-pill-badge { background: var(--primary-soft); color: var(--primary); }
+    .tab-pill-badge.ready { background: var(--emerald-bg) !important; color: var(--emerald) !important; }
 
-    /* Tab 1: 6 Park Zones + 18 Rides */
+    /* Section Headers */
     .explore-head {
-      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-      gap: 10px; margin-bottom: 16px;
+      display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+      gap: 12px; margin-bottom: 18px;
     }
-    .explore-head h3 { margin: 0; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); }
-    .explore-head p { margin: 0; font-size: 0.88rem; color: var(--muted); }
-    .zones-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-    @media (max-width: 960px) { .zones-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 600px) { .zones-grid { grid-template-columns: 1fr; } }
+    .explore-head h2, .explore-head h3 {
+      margin: 0; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.42rem; font-weight: 800; letter-spacing: -0.025em; color: var(--primary-deep);
+    }
+    .explore-head p { margin: 4px 0 0; font-size: 0.89rem; color: var(--muted); }
+    .section-Included-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 7px 14px; border-radius: 999px;
+      background: var(--emerald-bg); border: 1px solid var(--emerald-border);
+      font-size: 0.8rem; font-weight: 700; color: var(--emerald);
+    }
+
+    /* Tab 1: Editorial 6 Park Zones */
+    .zones-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    @media (max-width: 980px) { .zones-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 620px) { .zones-grid { grid-template-columns: 1fr; } }
 
     .zone-card {
       position: relative; z-index: 1;
@@ -436,78 +583,100 @@
       display: flex; flex-direction: column;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
-    .zone-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-    .zone-card.rides-open { z-index: 20; }
+    .zone-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+    .zone-card.rides-open { z-index: 25; }
     .zone-media {
-      position: relative; aspect-ratio: 4 / 3; overflow: visible;
+      position: relative; aspect-ratio: 16 / 10.5; overflow: visible;
       background: var(--surface-soft); border-radius: var(--radius) var(--radius) 0 0;
     }
-    .zone-media-clip { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
-    .zone-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
-    .zone-card:hover .zone-media img { transform: scale(1.04); }
+    .zone-media-clip {
+      position: absolute; inset: 0; overflow: hidden; border-radius: inherit;
+    }
+    .zone-media-clip::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(6, 36, 46, 0.28) 0%, rgba(6, 36, 46, 0) 36%, rgba(6, 36, 46, 0.42) 100%);
+      pointer-events: none;
+    }
+    .zone-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .zone-card:hover .zone-media img { transform: scale(1.045); }
     .zone-walk-badge {
-      position: absolute; left: 12px; top: 12px; z-index: 2; padding: 4px 10px; border-radius: 999px;
-      background: rgba(9, 56, 68, 0.86); color: #ffffff;
-      font-size: 0.76rem; font-weight: 600; backdrop-filter: blur(4px);
+      position: absolute; left: 12px; top: 12px; z-index: 2;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(6, 42, 54, 0.84); border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #ffffff; font-size: 0.74rem; font-weight: 600; backdrop-filter: blur(6px);
+    }
+    .zone-env-badge {
+      position: absolute; right: 12px; top: 12px; z-index: 2;
+      padding: 4px 10px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92); color: var(--primary-deep);
+      font-size: 0.72rem; font-weight: 700; backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(6, 42, 54, 0.14);
     }
     .zone-hover-hint {
       position: absolute; right: 10px; bottom: 10px; z-index: 5;
       display: inline-flex; align-items: center; gap: 5px;
-      padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(14, 77, 92, 0.18);
-      background: rgba(255, 255, 255, 0.94); color: var(--primary-deep);
-      font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(6px);
-      box-shadow: 0 4px 12px rgba(9, 40, 49, 0.16);
+      padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(10, 88, 108, 0.22);
+      background: rgba(255, 255, 255, 0.96); color: var(--primary-deep);
+      font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(8px);
+      box-shadow: 0 6px 16px rgba(6, 42, 54, 0.20);
       transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
     .zone-hover-hint:hover,
     .zone-card.rides-open .zone-hover-hint {
       background: var(--primary-deep); color: #ffffff; border-color: var(--primary-deep);
-      box-shadow: 0 6px 16px rgba(9, 56, 68, 0.28);
+      box-shadow: 0 8px 20px rgba(6, 56, 70, 0.32);
     }
     .zone-rides-popover {
-      position: absolute; left: 10px; right: 10px; bottom: 48px; z-index: 12;
+      position: absolute; left: 10px; right: 10px; bottom: 48px; z-index: 14;
       max-height: 310px; overflow-y: auto;
-      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
-      color: var(--ink); border: 1px solid #cfe0e4; border-top: 3px solid var(--primary);
-      border-radius: 13px; box-shadow: 0 16px 34px rgba(9, 56, 68, 0.18), 0 2px 6px rgba(9, 56, 68, 0.08);
+      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px);
+      color: var(--ink); border: 1px solid #c6dbe2; border-top: 3px solid var(--primary);
+      border-radius: 14px; box-shadow: 0 18px 38px rgba(6, 42, 54, 0.22), 0 3px 8px rgba(6, 42, 54, 0.08);
       opacity: 0; transform: translateY(6px); pointer-events: none;
       transition: opacity 0.18s ease, transform 0.18s ease;
     }
     .zone-card.rides-open .zone-rides-popover { opacity: 1; transform: translateY(0); pointer-events: auto; }
     .popover-head {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      padding: 9px 12px; background: #eef5f6; border-bottom: 1px solid #dce9ec;
+      padding: 9px 12px; background: #ecf5f8; border-bottom: 1px solid #d7e7ec;
       font-size: 0.81rem; font-weight: 700; color: var(--primary-deep);
       position: sticky; top: 0; z-index: 1;
     }
     .popover-head-right { display: inline-flex; align-items: center; gap: 6px; }
     .popover-count {
-      padding: 1px 7px; border-radius: 999px; background: #ffffff; border: 1px solid #c6dce1;
+      padding: 1px 8px; border-radius: 999px; background: #ffffff; border: 1px solid #bfd7df;
       color: var(--primary); font-size: 0.72rem; font-weight: 700;
     }
     .overlay-close-btn {
-      display: none; border: 1px solid #c6dce1; background: #ffffff;
+      display: none; border: 1px solid #bfd7df; background: #ffffff;
       color: var(--primary-deep); padding: 0 7px; line-height: 1.45; font-size: 0.85rem; border-radius: 6px;
     }
-    .zone-card.rides-open .overlay-close-btn { display: inline-block; }
-    .zone-body { padding: 15px 16px 16px; flex: 1; display: flex; flex-direction: column; }
-    .zone-body h4 { margin: 0 0 6px; font-size: 1.06rem; font-weight: 700; color: var(--primary-deep); }
-    .zone-body p { margin: 0 0 13px; font-size: 0.86rem; color: var(--muted); flex: 1; }
-    .zone-hours-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; font-size: 0.77rem; font-weight: 600; }
-    .zone-included-pill { padding: 2px 8px; border-radius: 999px; background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
-    .zone-time-pill { padding: 2px 8px; border-radius: 999px; background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border); }
-    .ride-list { margin: 0; padding: 8px 12px 10px; list-style: none; display: grid; gap: 8px; }
+    @media (max-width: 768px) {
+      .zone-card.rides-open .overlay-close-btn { display: inline-block; }
+    }
+    .zone-body { padding: 16px 18px 17px; flex: 1; display: flex; flex-direction: column; }
+    .zone-sub {
+      font-size: 0.74rem; font-weight: 700; color: var(--primary);
+      margin-bottom: 3px; letter-spacing: 0.01em;
+    }
+    .zone-body h4 {
+      margin: 0 0 8px; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.14rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink);
+    }
+    .zone-body p { margin: 0 0 15px; font-size: 0.86rem; line-height: 1.55; color: var(--muted); flex: 1; }
+    .ride-list { margin: 0; padding: 9px 12px 11px; list-style: none; display: grid; gap: 8px; }
     .ride-item { padding-top: 8px; border-top: 1px dashed var(--border); display: flex; flex-direction: column; gap: 5px; }
     .ride-item:first-child { padding-top: 0; border-top: none; }
     .ride-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
     .ride-name { font-weight: 700; color: var(--ink); font-size: 0.81rem; line-height: 1.3; }
     .ride-hours {
-      flex-shrink: 0; padding: 1px 6px; border-radius: 6px;
-      background: var(--surface-soft); color: var(--ink-soft); font-size: 0.71rem; font-weight: 600;
+      flex-shrink: 0; padding: 1px 7px; border-radius: 6px;
+      background: var(--surface-soft); color: var(--ink-soft); font-size: 0.71rem; font-weight: 700;
     }
     .ride-chips { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
     .ride-chip {
-      display: inline-block; padding: 2px 7px; border-radius: 999px;
+      display: inline-block; padding: 2px 8px; border-radius: 999px;
       font-size: 0.71rem; font-weight: 600; line-height: 1.35;
     }
     .rc-rule { background: var(--primary-soft); color: var(--primary-deep); }
@@ -515,127 +684,280 @@
     .rc-outdoor { background: var(--surface-soft); color: var(--muted); }
     .rc-maint { background: var(--rose-bg); color: var(--rose); font-weight: 700; }
     .rc-paid { background: var(--amber-bg); color: var(--amber); font-weight: 700; }
-    .zone-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .zone-tag { font-size: 0.77rem; font-weight: 600; color: var(--primary); background: var(--primary-soft); padding: 3px 10px; border-radius: 999px; }
 
-    /* Tab 2: Tickets & Hours */
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
-    .card-pad { padding: 20px 22px; }
-    .guide-banner {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
-      padding: 12px 16px; border-radius: 12px; margin-bottom: 18px;
-      background: var(--primary-soft); border: 1px solid #9ec8d1;
-      color: var(--primary-deep); font-size: 0.92rem; font-weight: 700;
+    .zone-foot {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding-top: 12px; border-top: 1px solid var(--surface-soft);
     }
+    .zone-hours-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.79rem; font-weight: 600; color: var(--ink-soft);
+    }
+    .zone-hours-pill svg { width: 14px; height: 14px; color: var(--primary); }
+    .btn-add-item {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px;
+      background: var(--primary-soft); border: 1px solid var(--primary-border);
+      color: var(--primary-deep); font-size: 0.79rem; font-weight: 700;
+    }
+    .btn-add-item:hover { background: var(--primary); border-color: var(--primary); color: #ffffff; }
+    .btn-add-item.added { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
+
+    /* Tab 2: Commercial Ticket Rate & Park Guide */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm); min-width: 0;
+    }
+    .card-pad { padding: 22px 24px; }
+    @media (max-width: 600px) { .card-pad { padding: 16px; } }
+
+    .ticket-perks-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px;
+    }
+    @media (max-width: 860px) { .ticket-perks-grid { grid-template-columns: 1fr; } }
+    .perk-card {
+      display: flex; align-items: flex-start; gap: 13px;
+      padding: 16px 18px; border-radius: 16px;
+      background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-xs);
+    }
+    .perk-ico {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--primary-soft); color: var(--primary);
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .perk-ico.emerald { background: var(--emerald-bg); color: var(--emerald); }
+    .perk-ico.amber { background: var(--amber-bg); color: var(--amber); }
+    .perk-card h4 { margin: 0 0 3px; font-size: 0.94rem; font-weight: 700; color: var(--ink); }
+    .perk-card p { margin: 0; font-size: 0.82rem; color: var(--muted); line-height: 1.48; }
+
+    .tickets-layout {
+      display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 20px; align-items: start;
+    }
+    @media (max-width: 980px) { .tickets-layout { grid-template-columns: 1fr; } }
+    .tickets-side-stack { display: grid; gap: 18px; min-width: 0; }
+
     .tbl-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
-    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 0; }
+    table.price-tbl { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.89rem; min-width: 0; }
     table.price-tbl th, table.price-tbl td {
-      padding: 10px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
+      padding: 13px 14px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
     }
     table.price-tbl th:first-child, table.price-tbl td:first-child { text-align: left; white-space: normal; }
-    table.price-tbl th { font-size: 0.78rem; color: var(--muted); font-weight: 700; background: var(--surface-soft); }
-    table.price-tbl td strong { color: var(--primary-deep); font-size: 0.94rem; }
-    .two-col-info { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
-    @media (max-width: 820px) { .two-col-info { grid-template-columns: 1fr; } }
-    .guide-box {
-      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 18px 20px; box-shadow: var(--shadow-sm); min-width: 0;
+    table.price-tbl th {
+      font-size: 0.77rem; color: var(--muted); font-weight: 700;
+      background: var(--surface-soft); border-top: 1px solid var(--border);
     }
-    .guide-box h4 { margin: 0 0 10px; font-size: 1.05rem; font-weight: 700; color: var(--primary-deep); }
-    .guide-list { margin: 0; padding-left: 18px; font-size: 0.87rem; color: var(--ink-soft); display: grid; gap: 7px; }
-    .guide-note { margin: 10px 0 0; font-size: 0.81rem; color: var(--muted); }
+    table.price-tbl th:first-child { border-radius: 11px 0 0 0; }
+    table.price-tbl th:last-child { border-radius: 0 11px 0 0; }
+    table.price-tbl th.featured-col { background: var(--primary-soft); color: var(--primary-deep); }
+    table.price-tbl td.featured-col { background: rgba(227, 243, 247, 0.34); }
+    .guest-tier-cell { display: flex; flex-direction: column; gap: 2px; }
+    .guest-tier-cell strong { font-size: 0.93rem; color: var(--ink); }
+    .guest-tier-cell span { font-size: 0.78rem; color: var(--muted); }
+    .price-strong {
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.02rem; font-weight: 800; color: var(--primary-deep);
+    }
+    .price-free {
+      display: inline-block; padding: 3px 10px; border-radius: 999px;
+      background: var(--emerald-bg); color: var(--emerald); font-size: 0.8rem; font-weight: 700;
+    }
+    .col-pop-tag {
+      display: inline-block; margin-left: 5px; padding: 1px 7px; border-radius: 999px;
+      background: var(--primary); color: #ffffff; font-size: 0.67rem; font-weight: 700; vertical-align: middle;
+    }
+    .guide-note { margin: 12px 0 0; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
 
-    /* Tab 3: Shows & Detailed 7-Day Weather */
+    .kv-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+    .kv-row {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 10px 0; border-bottom: 1px dashed var(--border); font-size: 0.85rem;
+    }
+    .kv-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .kv-row:first-child { padding-top: 0; }
+    .kv-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .kv-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .kv-title { font-weight: 700; color: var(--ink); }
+    .kv-sub { display: block; font-size: 0.75rem; color: var(--muted); font-weight: 500; }
+    .kv-badge {
+      padding: 3px 9px; border-radius: 8px; background: var(--surface-soft);
+      color: var(--ink-soft); font-size: 0.78rem; font-weight: 700; white-space: nowrap;
+    }
+    .kv-badge.warn { background: var(--amber-bg); color: var(--amber); }
+    .kv-badge.maint { background: var(--rose-bg); color: var(--rose); }
+
+    /* Tab 3: Apple-Weather-Grade 8-Day Grid & Boutique Show Passes */
     .weather-detail-grid {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 28px;
     }
     @media (max-width: 1080px) { .weather-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 580px) { .weather-detail-grid { grid-template-columns: 1fr; } }
     .wd-card {
-      background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px;
-      padding: 14px 15px; box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column; gap: 8px; min-width: 0;
+      background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px;
+      padding: 16px; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; gap: 10px; min-width: 0;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
-    .wd-card.active { border-color: var(--primary); background: var(--surface-tint); }
-    .wd-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .wd-title { font-weight: 700; color: var(--primary-deep); font-size: 0.95rem; }
-    .wd-sub { font-size: 0.78rem; color: var(--muted); }
-    .wd-temp-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .wd-temp { font-size: 1.08rem; font-weight: 700; color: var(--ink); }
-    .wd-prob { font-size: 0.79rem; font-weight: 600; color: var(--muted); }
-    .wd-advice { margin: 0; font-size: 0.81rem; color: var(--ink-soft); flex: 1; }
+    .wd-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .wd-card.active {
+      border-color: var(--primary); background: linear-gradient(180deg, #f2fafc 0%, #ffffff 100%);
+      box-shadow: 0 10px 26px rgba(10, 88, 108, 0.14);
+    }
+    .wd-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .wd-title {
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-weight: 800; color: var(--primary-deep); font-size: 0.96rem;
+    }
+    .wd-sub { font-size: 0.77rem; color: var(--muted); font-weight: 500; margin-top: 1px; }
+    .wd-icon-box {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: var(--surface-soft); display: grid; place-items: center; flex-shrink: 0;
+    }
+    .wd-icon-box .w-ico { width: 22px; height: 22px; }
+    .wd-temp-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .wd-temp {
+      font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.24rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em;
+    }
+    .wd-prob { font-size: 0.77rem; font-weight: 700; color: var(--muted); }
+    .rain-meter { height: 5px; border-radius: 999px; background: var(--surface-soft); overflow: hidden; }
+    .rain-meter-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, #38bdf8, #0284c7); }
+    .rain-meter-fill.low { background: linear-gradient(90deg, #34d399, #059669); }
+    .rain-meter-fill.high { background: linear-gradient(90deg, #fb7185, #e11d48); }
 
-    .filter-strip { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .day-slots {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;
+      padding: 6px; border-radius: 10px; background: var(--surface-soft);
+    }
+    .slot-pill {
+      text-align: center; padding: 3px 4px; border-radius: 7px;
+      background: var(--surface); font-size: 0.68rem; font-weight: 700; color: var(--emerald);
+      border: 1px solid rgba(8, 104, 74, 0.14);
+    }
+    .slot-pill span { display: block; font-size: 0.63rem; color: var(--muted); font-weight: 600; }
+    .slot-pill.wet { background: var(--sky-bg); color: var(--sky); border-color: var(--sky-border); }
+    .slot-pill.storm { background: var(--rose-bg); color: var(--rose); border-color: var(--rose-border); }
+
+    .wd-advice { margin: 0; font-size: 0.8rem; line-height: 1.48; color: var(--ink-soft); flex: 1; }
+    .wd-pick-btn { width: 100%; justify-content: center; padding: 8px 12px; font-size: 0.8rem; font-weight: 700; }
+    .wd-card.active .wd-pick-btn {
+      background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff;
+    }
+
+    .filter-strip { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
     .filter-btn {
-      padding: 6px 13px; border-radius: 999px; font-size: 0.81rem; font-weight: 600;
+      padding: 7px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
       background: var(--surface); border: 1px solid var(--border-strong); color: var(--muted);
     }
+    .filter-btn:hover { color: var(--primary-deep); border-color: var(--primary); }
     .filter-btn.active { background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff; }
-    .shows-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+    .shows-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
     @media (max-width: 960px) { .shows-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 580px) { .shows-grid { grid-template-columns: 1fr; } }
     .show-card {
-      padding: 14px 15px; border-radius: 14px; background: var(--surface);
-      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column; gap: 6px; min-width: 0;
+      position: relative; padding: 16px 18px; border-radius: 16px; background: var(--surface);
+      border: 1px solid var(--border); border-top: 3px solid var(--show-accent, var(--primary));
+      box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; gap: 9px; min-width: 0;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
     }
+    .show-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
     .show-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
-    .show-time { padding: 3px 9px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; background: var(--primary-soft); color: var(--primary-deep); }
-    .show-name { margin: 2px 0 0; font-size: 0.98rem; font-weight: 700; color: var(--ink); }
-    .show-meta { margin: 0; font-size: 0.82rem; color: var(--muted); flex: 1; }
+    .show-slots { display: inline-flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+    .show-slot-chip {
+      padding: 3px 9px; border-radius: 7px; font-size: 0.79rem; font-weight: 800;
+      background: var(--primary-soft); color: var(--primary-deep);
+    }
+    .show-dur { font-size: 0.75rem; font-weight: 600; color: var(--muted); }
+    .show-name {
+      margin: 0; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.04rem; font-weight: 800; color: var(--ink);
+    }
+    .show-zone-line {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.79rem; font-weight: 700; color: var(--primary);
+    }
+    .show-meta { margin: 0; font-size: 0.82rem; color: var(--muted); flex: 1; line-height: 1.48; }
+    .show-foot { padding-top: 8px; border-top: 1px solid var(--surface-soft); display: flex; justify-content: flex-end; }
 
-    /* Tab 4: Results Workspace */
+    /* Tab 4: Results Workspace, Wayfinding Map & Boarding-Pass Receipt */
     .workspace {
       display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(350px, 0.88fr);
       gap: 22px; align-items: start;
     }
     @media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } }
-    .right-sticky { display: grid; gap: 16px; position: sticky; top: 82px; }
+    .right-sticky { display: grid; gap: 18px; position: sticky; top: 80px; min-width: 0; }
     @media (max-width: 980px) { .right-sticky { position: static; } }
 
     .sec-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
-    .sec-title { margin: 0; font-size: 1.12rem; font-weight: 700; color: var(--primary-deep); display: inline-flex; align-items: center; gap: 8px; }
-    .sec-sub { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
+    .sec-title {
+      margin: 0; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.12rem; font-weight: 800; color: var(--primary-deep);
+      display: inline-flex; align-items: center; gap: 8px; letter-spacing: -0.02em;
+    }
+    .sec-sub { font-size: 0.83rem; color: var(--muted); font-weight: 600; }
 
     .banner {
       display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
-      padding: 12px 15px; border-radius: 12px; border: 1px solid; font-size: 0.9rem; font-weight: 700; margin-bottom: 16px;
+      padding: 12px 16px; border-radius: 13px; border: 1px solid; font-size: 0.89rem; font-weight: 700; margin-bottom: 18px;
     }
     .banner.ok { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
     .banner.warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
     .banner.danger { background: var(--rose-bg); border-color: var(--rose-border); color: var(--rose); }
-    .banner.info { background: var(--primary-soft); border-color: #9ec8d1; color: var(--primary-deep); }
+    .banner.info { background: var(--primary-soft); border-color: var(--primary-border); color: var(--primary-deep); }
 
     .empty-state {
-      background: var(--surface); border: 1px dashed var(--border-strong); border-radius: var(--radius);
-      padding: 36px 22px; text-align: center; box-shadow: var(--shadow-sm);
+      background: var(--surface); border: 1.5px dashed var(--border-strong); border-radius: var(--radius);
+      padding: 44px 24px; text-align: center; box-shadow: var(--shadow-sm);
     }
-    .empty-state h3 { margin: 0 0 8px; color: var(--primary-deep); font-size: 1.25rem; }
-    .empty-state p { margin: 0 auto 18px; max-width: 520px; font-size: 0.9rem; color: var(--muted); }
+    .empty-ico {
+      width: 54px; height: 54px; margin: 0 auto 14px; border-radius: 16px;
+      background: var(--primary-soft); color: var(--primary);
+      display: grid; place-items: center;
+    }
+    .empty-state h3 {
+      margin: 0 0 8px; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      color: var(--primary-deep); font-size: 1.28rem; font-weight: 800;
+    }
+    .empty-state p { margin: 0 auto 20px; max-width: 530px; font-size: 0.9rem; color: var(--muted); }
 
-    .timeline-wrap { position: relative; padding-left: 28px; display: grid; gap: 0; }
-    .timeline-wrap::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: var(--border-strong); }
+    /* Skeleton Shimmer for Loading State */
+    @keyframes shimmer {
+      0% { background-position: -460px 0; }
+      100% { background-position: 460px 0; }
+    }
+    .skel-card {
+      height: 104px; border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--border);
+      background: #f2f6f8 linear-gradient(90deg, #f2f6f8 0px, #ffffff 180px, #f2f6f8 360px);
+      background-size: 920px 100%; animation: shimmer 1.4s infinite linear;
+    }
+
+    .timeline-wrap { position: relative; padding-left: 30px; display: grid; gap: 0; }
+    .timeline-wrap::before {
+      content: ""; position: absolute; left: 11px; top: 16px; bottom: 16px; width: 2px;
+      background: linear-gradient(180deg, var(--primary) 0%, var(--border-strong) 100%);
+    }
     .gate-start {
       position: relative; display: flex; align-items: center; gap: 10px;
-      padding: 9px 13px; border-radius: 11px; background: var(--surface-soft);
-      border: 1px solid var(--border); font-size: 0.86rem; font-weight: 600;
+      padding: 10px 14px; border-radius: 12px; background: var(--surface-soft);
+      border: 1px solid var(--border); font-size: 0.85rem; font-weight: 700; color: var(--primary-deep);
     }
     .gate-dot {
-      position: absolute; left: -27px; width: 20px; height: 20px; border-radius: 50%;
-      background: var(--primary-deep); color: #ffffff; font-size: 0.72rem; font-weight: 700;
-      display: grid; place-items: center; border: 2px solid var(--surface);
+      position: absolute; left: -29px; width: 22px; height: 22px; border-radius: 50%;
+      background: var(--primary-deep); color: #ffffff; font-size: 0.72rem; font-weight: 800;
+      display: grid; place-items: center; border: 2px solid var(--surface); box-shadow: var(--shadow-xs);
     }
-    .leg-connector { padding: 8px 0 8px 6px; display: flex; align-items: center; }
+    .leg-connector { padding: 9px 0 9px 6px; display: flex; align-items: center; }
     .leg-pill {
-      display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px;
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
       border-radius: 999px; background: var(--surface-soft); border: 1px solid var(--border);
-      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+      font-size: 0.79rem; font-weight: 600; color: var(--muted);
     }
-    .leg-pill.buffer { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+    .leg-pill.buffer { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); font-weight: 700; }
 
     .stop-card {
-      position: relative; display: grid; grid-template-columns: 118px 1fr; gap: 14px;
-      padding: 13px; border-radius: 14px; border: 1px solid var(--border);
+      position: relative; display: grid; grid-template-columns: 124px 1fr; gap: 15px;
+      padding: 14px; border-radius: 16px; border: 1px solid var(--border);
       border-left: 4px solid var(--zone-color, var(--primary));
       background: var(--surface); box-shadow: var(--shadow-sm); cursor: pointer;
       transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
@@ -643,57 +965,122 @@
     @media (max-width: 560px) { .stop-card { grid-template-columns: 1fr; } }
     .stop-card:hover, .stop-card.active { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
     .stop-num {
-      position: absolute; left: -29px; top: 16px; width: 24px; height: 24px; border-radius: 50%;
-      background: var(--zone-color, var(--primary)); color: #ffffff; font-size: 0.8rem; font-weight: 800;
-      display: grid; place-items: center; border: 2px solid var(--surface); box-shadow: var(--shadow-sm);
+      position: absolute; left: -31px; top: 18px; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--zone-color, var(--primary)); color: #ffffff; font-size: 0.79rem; font-weight: 800;
+      display: grid; place-items: center; border: 2.5px solid var(--surface); box-shadow: var(--shadow-sm);
     }
-    .stop-thumb { width: 118px; height: 88px; border-radius: 10px; object-fit: cover; background: var(--surface-soft); display: block; }
-    @media (max-width: 560px) { .stop-thumb { width: 100%; height: 150px; } }
-    .stop-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-    .time-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 8px; background: var(--primary-soft); color: var(--primary-deep); font-weight: 700; font-size: 0.84rem; }
-    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface-soft); color: var(--muted); }
-    .tag.indoor { background: var(--primary-soft); border-color: #b7d7de; color: var(--primary-deep); }
+    .stop-thumb { width: 124px; height: 92px; border-radius: 11px; object-fit: cover; background: var(--surface-soft); display: block; }
+    @media (max-width: 560px) { .stop-thumb { width: 100%; height: 156px; } }
+    .stop-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .time-chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px;
+      border-radius: 8px; background: var(--primary-soft); color: var(--primary-deep);
+      font-weight: 800; font-size: 0.83rem;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px;
+      border-radius: 999px; font-size: 0.74rem; font-weight: 700;
+      border: 1px solid var(--border); background: var(--surface-soft); color: var(--ink-soft);
+    }
+    .tag.indoor { background: var(--primary-soft); border-color: var(--primary-border); color: var(--primary-deep); }
     .tag.outdoor { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
-    .stop-name { margin: 2px 0 4px; font-size: 0.99rem; font-weight: 700; color: var(--ink); }
-    .stop-reason { margin: 0; font-size: 0.87rem; color: var(--muted); }
+    .stop-name {
+      margin: 2px 0 5px; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.02rem; font-weight: 800; color: var(--ink);
+    }
+    .stop-reason { margin: 0; font-size: 0.86rem; color: var(--muted); line-height: 1.5; }
 
-    .notes-box { margin-top: 15px; padding: 12px 14px; border-radius: 12px; background: var(--amber-bg); border: 1px solid var(--amber-border); font-size: 0.88rem; }
-    .notes-box ul { margin: 5px 0 0; padding-left: 18px; }
-    .raw-msg { padding: 15px 17px; border-radius: 12px; background: var(--surface-soft); border: 1px solid var(--border); white-space: pre-wrap; font-size: 0.93rem; }
-    .disclaimer-row { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); }
+    .notes-box {
+      margin-top: 16px; padding: 13px 16px; border-radius: 13px;
+      background: var(--amber-bg); border: 1px solid var(--amber-border); font-size: 0.87rem; color: var(--ink-soft);
+    }
+    .notes-box strong { color: var(--amber); }
+    .notes-box ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; }
+    .raw-msg {
+      padding: 16px 18px; border-radius: 13px; background: var(--surface-soft);
+      border: 1px solid var(--border); white-space: pre-wrap; font-size: 0.92rem; line-height: 1.6;
+    }
+    .disclaimer-row { margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--muted); }
 
-    .map-stage { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #c5e8ef; }
+    /* Wayfinding Island Map */
+    .map-legend {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+      margin-bottom: 10px; font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    }
+    .legend-item { display: inline-flex; align-items: center; gap: 5px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .map-stage {
+      position: relative; aspect-ratio: 4 / 3; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--border-strong); background: #c5e8ef; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+    }
     .map-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .map-overlay-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .zone-node { cursor: pointer; }
-    .zone-info-bar { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.84rem; }
-    .map-caption { margin: 8px 0 0; font-size: 0.77rem; color: var(--muted); }
+    .zone-info-bar {
+      margin-top: 10px; padding: 10px 13px; border-radius: 11px;
+      background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.83rem; color: var(--ink-soft);
+    }
+    .map-caption { margin: 8px 0 0; font-size: 0.76rem; color: var(--muted); }
 
-    .receipt-hero { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 11px; }
-    .receipt-total { font-size: 1.75rem; font-weight: 700; color: var(--primary-deep); letter-spacing: -0.02em; }
-    .receipt-badge { padding: 4px 10px; border-radius: 999px; font-size: 0.77rem; font-weight: 700; background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
-    .receipt-rows { display: grid; gap: 8px; font-size: 0.88rem; }
+    /* Boarding-Pass Cost Voucher */
+    .voucher-card { overflow: hidden; padding: 0; }
+    .voucher-head {
+      padding: 18px 22px;
+      background: linear-gradient(135deg, #063846 0%, #0c6076 100%);
+      color: #ffffff;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+    }
+    .voucher-kicker { font-size: 0.74rem; font-weight: 700; color: var(--gold-light); letter-spacing: 0.04em; text-transform: uppercase; }
+    .voucher-total {
+      margin-top: 4px; font-family: "Plus Jakarta Sans", "Be Vietnam Pro", sans-serif;
+      font-size: 1.82rem; font-weight: 800; letter-spacing: -0.025em; color: #ffffff; line-height: 1.1;
+    }
+    .voucher-badge {
+      padding: 4px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.25); color: #ffffff; white-space: nowrap;
+    }
+    .voucher-body { padding: 18px 22px 20px; }
+    .receipt-rows { display: grid; gap: 9px; font-size: 0.86rem; padding-bottom: 14px; border-bottom: 1.5px dashed var(--border-strong); }
     .receipt-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); }
-    .receipt-row strong { color: var(--ink); font-weight: 600; text-align: right; }
-    .receipt-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+    .receipt-row strong { color: var(--ink); font-weight: 700; text-align: right; }
+    .receipt-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 14px; }
+    .receipt-actions .btn-ghost { justify-content: center; padding: 9px 12px; }
 
-    details.trace-box { font-size: 0.84rem; }
+    details.trace-box { font-size: 0.83rem; }
     details.trace-box summary { cursor: pointer; font-weight: 700; color: var(--primary-deep); }
     .trace-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 10px 0; }
     .trace-kpi { padding: 7px 6px; border-radius: 9px; background: var(--surface-soft); border: 1px solid var(--border); text-align: center; }
-    .trace-kpi span { display: block; font-size: 0.73rem; color: var(--muted); }
-    .trace-kpi strong { font-size: 0.89rem; }
-    table.trace-tbl { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
+    .trace-kpi span { display: block; font-size: 0.72rem; color: var(--muted); }
+    .trace-kpi strong { font-size: 0.88rem; }
+    table.trace-tbl { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
     table.trace-tbl th, table.trace-tbl td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--border); }
 
+    /* Commercial Resort Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 24px 34px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+    }
+    .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-weight: 700; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+    .footer-links a { color: var(--ink-soft); text-decoration: none; font-weight: 600; }
+    .footer-links a:hover { color: var(--primary); }
+    .footer-note { width: 100%; padding-top: 14px; border-top: 1px solid var(--surface-soft); font-size: 0.77rem; color: var(--muted); }
+
     @media print {
-      body { background-image: none; background: #ffffff; }
-      .topbar, .hero, .concierge-dock, .tabs-bar, #panelExplore, #panelTickets, #panelShows, #resultEmptyState, details.trace-box, .receipt-actions, #backExploreBtn { display: none !important; }
+      body { background: #ffffff; }
+      .topbar, .hero, .concierge-dock, .tabs-bar, #panelExplore, #panelTickets, #panelShows, #resultEmptyState, details.trace-box, .receipt-actions, #backExploreBtn, .site-footer { display: none !important; }
       #panelResult { display: block !important; }
       .shell { padding: 0; }
       .workspace { display: block; }
       .right-sticky { position: static; margin-top: 16px; }
-      .card { box-shadow: none; border-color: #d5c8b6; }
+      .card { box-shadow: none; border-color: #c5d4dc; }
     }
   </style>
 </head>
@@ -703,15 +1090,15 @@
       <a class="brand" href="#conciergeDock">
         <div class="crest" aria-hidden="true">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-            <circle cx="14" cy="11.5" r="6.5" stroke="#f6d28b" stroke-width="1.65" />
-            <circle cx="14" cy="11.5" r="2.1" fill="#f6d28b" />
-            <path d="M14 5v2.2M14 15.8V18M7.5 11.5h2.2M18.3 11.5h2.2" stroke="#f6d28b" stroke-width="1.3" stroke-linecap="round" />
+            <circle cx="14" cy="11.5" r="6.5" stroke="#f9db9d" stroke-width="1.7" />
+            <circle cx="14" cy="11.5" r="2.2" fill="#f9db9d" />
+            <path d="M14 5v2.2M14 15.8V18M7.5 11.5h2.2M18.3 11.5h2.2" stroke="#f9db9d" stroke-width="1.3" stroke-linecap="round" />
             <path d="M4.5 20.5c2.4-1.8 4.8-1.8 7.2 0s4.8 1.8 7.2 0 4.6-1.8 4.6-1.8" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" />
           </svg>
         </div>
         <div>
-          <p class="brand-title serif">VinWonders <em>Nha Trang</em></p>
-          <p class="brand-sub">Lịch trình gia đình tại Đảo Hòn Tre</p>
+          <p class="brand-title display">VinWonders <span>Nha Trang</span></p>
+          <p class="brand-sub">Trợ lý lịch trình gia đình tại Đảo Hòn Tre</p>
         </div>
       </a>
 
@@ -725,7 +1112,7 @@
       <div class="top-actions">
         <span class="status-inline" id="statusPill">
           <span class="dot" id="statusDot"></span>
-          <span id="statusText">Đang kiểm tra...</span>
+          <span id="statusText">Đang kiểm tra…</span>
         </span>
         <button type="button" class="btn-ghost" id="copyBtn" disabled>
           <svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -740,18 +1127,34 @@
   </header>
 
   <section class="hero">
-    <img class="hero-bg" src="/assets/hero_vinwonders.jpg" alt="Toàn cảnh VinWonders Nha Trang trên Đảo Hòn Tre nhìn từ vịnh biển" />
+    <img class="hero-bg" src="/assets/hero_vinwonders.jpg" width="1600" height="900" alt="Toàn cảnh cáp treo vượt biển và Bánh xe bầu trời VinWonders Nha Trang trên Đảo Hòn Tre" />
     <div class="hero-scrim" aria-hidden="true"></div>
     <div class="hero-content">
-      <div class="hero-location">Đảo Hòn Tre, Nha Trang (09:00 – 20:00)</div>
-      <h2 class="serif">Lên lịch một ngày <em>trọn vẹn</em> cho gia đình tại VinWonders</h2>
-      <p class="hero-sub">Chọn ngày đi theo dự báo thời tiết 8 ngày, ghép sẵn điểm chơi, giờ show, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
-      <div class="hero-metrics nums">
-        <span class="hero-metric"><strong>6</strong> phân khu, 1 vé trọn gói</span>
-        <span class="hero-sep" aria-hidden="true"></span>
-        <span class="hero-metric"><strong>8 ngày</strong> chọn lịch &amp; xem thời tiết</span>
-        <span class="hero-sep" aria-hidden="true"></span>
-        <span class="hero-metric"><strong>20 phút</strong> đệm thay đồ công viên nước</span>
+      <div class="hero-badge-row nums">
+        <span class="hero-eyebrow-pill">
+          <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Đảo Hòn Tre, Vịnh Nha Trang
+        </span>
+        <span class="hero-live-pill">
+          <span class="hero-live-dot" aria-hidden="true"></span>
+          Mở cửa hằng ngày 09:00 – 20:00
+        </span>
+      </div>
+      <h1 class="display">Lên lịch một ngày <span>trọn vẹn từng phút</span> cho cả gia đình</h1>
+      <p class="hero-sub">Đồng bộ dự báo thời tiết 8 ngày tại đảo, kiểm tra tự động chiều cao từng bé, giữ chỗ khung giờ show biểu diễn, cộng sẵn 20 phút tắm tráng Công viên nước và báo giá vé chính xác theo quy định cổng.</p>
+      <div class="hero-capsules nums">
+        <span class="hero-capsule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
+          <span><strong>1 vé trọn gói</strong> 6 phân khu &amp; cáp treo 2 chiều</span>
+        </span>
+        <span class="hero-capsule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg>
+          <span><strong>8 ngày</strong> dự báo nắng mưa theo khung giờ</span>
+        </span>
+        <span class="hero-capsule">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          <span><strong>+20 phút</strong> đệm thay đồ khi rời Công viên nước</span>
+        </span>
       </div>
     </div>
   </section>
@@ -763,31 +1166,39 @@
         <div class="date-strip-head">
           <span class="date-strip-title">
             <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Chọn ngày đi trong 8 ngày tới
+            Chọn ngày tham quan trong 8 ngày tới
           </span>
-          <span class="weather-src-badge" id="weatherSourceBadge">Đang tải dự báo thời tiết...</span>
+          <span class="weather-src-badge" id="weatherSourceBadge">Đang tải dự báo thời tiết…</span>
         </div>
         <div class="date-cards-row" id="dateCardsRow" role="listbox" aria-label="Chọn ngày đi trong 8 ngày tới"></div>
-        <div class="selected-date-note" id="selectedDateNote">Đang tải lịch 8 ngày tại Đảo Hòn Tre...</div>
+        <div class="selected-date-note" id="selectedDateNote">Đang tải lịch 8 ngày tại Đảo Hòn Tre…</div>
       </div>
 
-      <!-- Guest / Budget / Time Strip -->
+      <!-- Segmented Parameter Strip -->
       <div class="booking-strip">
         <div class="booking-cell" id="guestCell">
-          <label for="guestTrigger">Đoàn khách</label>
-          <button type="button" class="guest-trigger" id="guestTrigger" aria-expanded="false" aria-controls="guestPopover">
-            <span id="guestSummary">2 người lớn, 1 bé</span>
-            <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
+          <div class="cell-icon" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <div class="cell-main">
+            <div class="cell-label-row">
+              <label for="guestTrigger">Đoàn khách tham quan</label>
+            </div>
+            <button type="button" class="guest-trigger" id="guestTrigger" aria-expanded="false" aria-controls="guestPopover">
+              <span id="guestSummary">2 người lớn, 1 bé</span>
+              <svg class="ico" style="width:15px;height:15px;color:var(--muted)" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+          </div>
+
           <div class="guest-popover hidden" id="guestPopover" role="dialog" aria-label="Chi tiết thành phần đoàn khách">
             <div class="pop-head">
-              <strong>Thành phần đoàn &amp; giá vé áp dụng</strong>
-              <button type="button" class="btn-ghost" id="closePopoverBtn" style="padding:4px 10px;font-size:0.78rem;">Xong</button>
+              <strong>Thành phần đoàn &amp; hạng vé áp dụng</strong>
+              <button type="button" class="btn-ghost" id="closePopoverBtn" style="padding:4px 10px;font-size:0.78rem;">Đóng</button>
             </div>
             <div class="pop-row">
               <div>
                 <div class="pop-title">Người lớn</div>
-                <div class="pop-rule">Cao từ 140cm: 1.050.000đ (sau 16h: 700.000đ)</div>
+                <div class="pop-rule nums">Cao từ 140cm: 1.050.000đ (sau 16h: 700.000đ)</div>
               </div>
               <div class="stepper">
                 <button type="button" class="step-btn" data-step="adults:-1" aria-label="Giảm người lớn">−</button>
@@ -798,7 +1209,7 @@
             <div class="pop-row">
               <div>
                 <div class="pop-title">Trẻ em</div>
-                <div class="pop-rule">Dưới 100cm miễn phí, 100–139cm tính giá trẻ em</div>
+                <div class="pop-rule nums">Dưới 100cm miễn phí, 100–139cm tính giá trẻ em</div>
               </div>
               <div class="stepper">
                 <button type="button" class="step-btn" data-step="children:-1" aria-label="Giảm trẻ em">−</button>
@@ -810,7 +1221,7 @@
             <div class="pop-row">
               <div>
                 <div class="pop-title">Người cao tuổi</div>
-                <div class="pop-rule">Từ 60 tuổi: 800.000đ (sau 16h: 550.000đ)</div>
+                <div class="pop-rule nums">Từ 60 tuổi: 800.000đ (sau 16h: 550.000đ)</div>
               </div>
               <div class="stepper">
                 <button type="button" class="step-btn" data-step="seniors:-1" aria-label="Giảm người cao tuổi">−</button>
@@ -820,27 +1231,47 @@
             </div>
             <div class="sub-list hidden" id="seniorsList"></div>
             <div class="pop-foot">
-              <div class="pop-est">Tạm tính (<span id="estTicketType">Vé tiêu chuẩn</span>): <strong class="nums" id="estGateTotal">2.900.000đ</strong></div>
-              <button type="button" class="btn-ghost" id="popApplyBtn" style="padding:6px 13px;font-size:0.81rem;border-color:var(--primary);color:var(--primary-deep);white-space:nowrap;">Áp dụng</button>
+              <div class="pop-est">Vé cổng tạm tính (<span id="estTicketType">Vé cả ngày</span>): <strong class="nums" id="estGateTotal">2.900.000đ</strong></div>
+              <button type="button" class="btn-apply-cfg" id="popApplyBtn" style="padding:6px 13px;font-size:0.8rem;">Áp dụng</button>
             </div>
           </div>
         </div>
 
         <div class="booking-cell">
-          <label for="bBudget">Ngân sách dự kiến (VNĐ)</label>
-          <input id="bBudget" type="number" min="500000" step="100000" value="3500000" />
+          <div class="cell-icon" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          </div>
+          <div class="cell-main">
+            <div class="cell-label-row">
+              <label for="bBudget">Ngân sách tối đa (VNĐ)</label>
+              <span class="budget-pretty-pill nums" id="budgetPretty">3,5 triệu ₫</span>
+            </div>
+            <input id="bBudget" class="nums" type="number" min="500000" step="100000" value="3500000" />
+          </div>
         </div>
+
         <div class="booking-cell">
-          <label for="bWindow">Loại vé &amp; Giờ vào cổng</label>
-          <select id="bWindow">
-            <option value="09:00 đến 20:00">Vé cả ngày (09:00–20:00)</option>
-            <option value="16:00 đến 20:00">Vé sau 16:00 (16:00–20:00)</option>
-          </select>
+          <div class="cell-icon" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+          </div>
+          <div class="cell-main">
+            <div class="cell-label-row">
+              <label for="bWindow">Hạng vé &amp; Giờ vào cổng</label>
+            </div>
+            <div class="select-wrap">
+              <select id="bWindow" class="nums">
+                <option value="09:00 đến 20:00">Vé cả ngày (09:00–20:00)</option>
+                <option value="16:00 đến 20:00">Vé sau 16:00 (16:00–20:00)</option>
+              </select>
+              <svg class="select-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+          </div>
         </div>
+
         <div class="booking-apply-cell">
           <button type="button" class="btn-apply-cfg" id="applyBuilderBtn">
-            <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
-            Áp dụng
+            <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="m19 12-7 7-7-7"></path></svg>
+            Điền vào ô dưới
           </button>
         </div>
       </div>
@@ -848,33 +1279,38 @@
       <form id="planForm">
         <div class="composer-box">
           <label class="hidden" for="queryInput">Nhập yêu cầu chuyến đi VinWonders Nha Trang</label>
-          <textarea id="queryInput" maxlength="2000" placeholder="Chia sẻ nhu cầu gia đình hoặc bấm Áp dụng ở thanh trên (ví dụ: đi ngày mai, 2 người lớn, 1 bé 7 tuổi cao 1m2, ngân sách 3 triệu 5, thích thủy cung và Tata Show)..."></textarea>
+          <div class="composer-input-row">
+            <span class="composer-lead-ico" aria-hidden="true">
+              <svg class="ico" style="width:16px;height:16px" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z"></path></svg>
+            </span>
+            <textarea id="queryInput" maxlength="2000" placeholder="Mô tả nhu cầu riêng của gia đình hoặc bấm Lập lịch ngay để dùng cấu hình phía trên (ví dụ: đi ngày mai, 2 người lớn, 1 bé 7 tuổi cao 1m2, ngân sách 3 triệu 5, thích thủy cung và Tata Show)…"></textarea>
+          </div>
           <div class="composer-foot">
             <div class="composer-meta">
               <span class="char-count nums" id="charCount">0 / 2000</span>
-              <span class="composer-tip">Nhấn Ctrl + Enter để lập lịch nhanh</span>
+              <span class="composer-tip">Mẹo: nhấn <kbd>Ctrl</kbd> + <kbd>Enter</kbd> để tạo lịch tức thì</span>
             </div>
             <div class="cta-stack">
-              <button type="button" class="btn-ghost btn-clear" id="clearBtn">Xóa</button>
+              <button type="button" class="btn-ghost btn-clear" id="clearBtn">Làm mới</button>
               <button type="submit" class="btn-cta" id="submitBtn">
-                <svg class="ico" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                <span>Lập lịch ngay</span>
+                <svg class="ico" id="submitBtnIco" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span id="submitBtnLabel">Lập lịch ngay</span>
               </button>
             </div>
           </div>
         </div>
       </form>
 
-      <div class="preset-strip" aria-label="Các kịch bản gợi ý nhanh để thử nghiệm">
+      <div class="preset-strip" aria-label="Các kịch bản gợi ý nhanh">
         <div class="preset-row">
-          <span class="preset-caption">Lịch trình mẫu:</span>
+          <span class="preset-caption">Gợi ý theo nhu cầu:</span>
           <button type="button" class="preset-pill" data-preset="fullday">Cả ngày: Thủy cung &amp; Công viên nước</button>
           <button type="button" class="preset-pill" data-preset="after16">Sau 16h: Bánh xe &amp; Tata Show</button>
           <button type="button" class="preset-pill" data-preset="rain">Đi cùng ông bà, tránh mưa chiều</button>
           <button type="button" class="preset-pill" data-preset="allrain">Mưa cả ngày: Bé dưới 1m, chơi trong nhà</button>
         </div>
         <div class="preset-row">
-          <span class="preset-caption">Kiểm tra ràng buộc:</span>
+          <span class="preset-caption">Tình huống thực tế:</span>
           <button type="button" class="preset-pill edge" data-preset="ask_height">Thiếu chiều cao bé (hỏi lại)</button>
           <button type="button" class="preset-pill edge" data-preset="low_budget">Ngân sách thấp hơn vé cổng</button>
           <button type="button" class="preset-pill edge" data-preset="unpriced">Hỏi giá Zipline &amp; Buffet ngoài vé</button>
@@ -883,156 +1319,305 @@
       </div>
     </section>
 
-    <!-- 4 Commercial Tabs -->
+    <!-- Segmented 4-Tab Bar -->
     <div class="tabs-bar" id="mainTabs" role="tablist" aria-label="Thông tin VinWonders Nha Trang và lịch trình">
       <button type="button" class="tab-btn active" id="tabBtnExplore" role="tab" aria-selected="true" aria-controls="panelExplore" data-tab="explore">
-        <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+        <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>
         <span>6 phân khu &amp; Trò chơi</span>
+        <span class="tab-pill-badge nums">18 trò</span>
       </button>
       <button type="button" class="tab-btn" id="tabBtnTickets" role="tab" aria-selected="false" aria-controls="panelTickets" data-tab="tickets">
         <svg class="ico" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2M13 17v2M13 11v2"></path></svg>
         <span>Giá vé &amp; Giờ mở cửa</span>
+        <span class="tab-pill-badge">Trọn gói</span>
       </button>
       <button type="button" class="tab-btn" id="tabBtnShows" role="tab" aria-selected="false" aria-controls="panelShows" data-tab="shows">
         <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg>
-        <span>Lịch show &amp; Thời tiết 8 ngày</span>
+        <span>Lịch show &amp; Thời tiết</span>
+        <span class="tab-pill-badge nums">8 ngày</span>
       </button>
       <button type="button" class="tab-btn" id="tabBtnResult" role="tab" aria-selected="false" aria-controls="panelResult" data-tab="result">
         <svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
         <span>Lịch trình đề xuất</span>
-        <span class="tab-pill-badge" id="resultTabBadge">Chưa tạo</span>
+        <span class="tab-pill-badge nums" id="resultTabBadge">Chưa tạo</span>
       </button>
     </div>
 
     <!-- Tab 1: 6 Zones & 18 Rides -->
     <section class="tab-panel" id="panelExplore" role="tabpanel" aria-labelledby="tabBtnExplore">
       <div class="explore-head">
-        <h3 class="serif">Khám phá 6 phân khu tại VinWonders Nha Trang</h3>
-        <p>Tất cả 6 phân khu đều đã nằm trong 1 vé vào cổng. Trỏ chuột (hoặc chạm) vào nút Xem trò &amp; chiều cao ở góc ảnh từng khu để xem chi tiết.</p>
+        <div>
+          <h3>Khám phá 6 phân khu chủ đề trên Đảo Hòn Tre</h3>
+          <p>Trỏ chuột (hoặc chạm) vào nút <strong>Xem trò &amp; chiều cao</strong> ở góc dưới mỗi ảnh để tra cứu nhanh giới hạn an toàn từng trò.</p>
+        </div>
+        <span class="section-Included-badge">
+          <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Đã bao gồm cả 6 phân khu trong 1 vé vào cổng
+        </span>
       </div>
       <div class="zones-grid" id="zonesGrid"></div>
     </section>
 
-    <!-- Tab 2: Tickets & Opening Hours -->
+    <!-- Tab 2: Commercial Ticket Rate & Opening Hours -->
     <section class="tab-panel hidden" id="panelTickets" role="tabpanel" aria-labelledby="tabBtnTickets">
       <div class="explore-head">
-        <h3 class="serif">Bảng giá vé niêm yết &amp; Giờ mở cửa</h3>
-        <p>Giá đã gồm VAT và cáp treo vượt biển 2 chiều, không bán vé lẻ từng khu.</p>
-      </div>
-
-      <div class="guide-banner">
-        <span>1 vé trọn gói đi được cả 6 phân khu — không chia ca sáng / ca chiều, chỉ phân biệt Vé cả ngày (vào từ 09:00) và Vé sau 16:00.</span>
-        <span class="nums" style="font-size:0.83rem;">Toàn khu 09:00–20:00, Công viên nước 10:00–17:30</span>
-      </div>
-
-      <div class="card card-pad">
-        <div class="sec-head" style="margin-bottom:10px;">
-          <h4 class="sec-title serif">Bảng giá vé tham quan trọn gói (VNĐ / người)</h4>
-          <span class="sec-sub">Xét theo chiều cao; riêng người từ 60 tuổi xét theo giấy tờ tùy thân</span>
+        <div>
+          <h3>Bảng giá vé niêm yết &amp; Khung giờ vận hành</h3>
+          <p>Áp dụng vé tham quan trọn gói trong 1 ngày, đã gồm thuế VAT và cáp treo vượt biển khứ hồi.</p>
         </div>
-        <div class="tbl-scroll">
-          <table class="price-tbl nums">
-            <thead>
-              <tr>
-                <th>Nhóm khách hàng</th>
-                <th>Vé cả ngày (09:00–20:00)</th>
-                <th>Vé sau 16:00</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Người lớn</strong> (cao từ 140cm)</td>
-                <td><strong>1.050.000đ</strong></td>
-                <td>700.000đ</td>
-              </tr>
-              <tr>
-                <td><strong>Trẻ em</strong> (100cm đến dưới 140cm)</td>
-                <td><strong>800.000đ</strong></td>
-                <td>550.000đ</td>
-              </tr>
-              <tr>
-                <td><strong>Người cao tuổi</strong> (từ 60 tuổi)</td>
-                <td><strong>800.000đ</strong></td>
-                <td>550.000đ</td>
-              </tr>
-              <tr>
-                <td><strong>Trẻ em dưới 100cm</strong></td>
-                <td><strong>Miễn phí</strong></td>
-                <td>Miễn phí</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="guide-note">Chính sách cổng: Vé đã mua không hoàn, không đổi, không trả. Đã bao gồm cáp treo 2 chiều, hầu hết trò chơi và show diễn trong ngày.</p>
+        <span class="section-Included-badge nums">Toàn đảo: 09:00 – 20:00 hằng ngày</span>
       </div>
 
-      <div class="two-col-info">
-        <article class="guide-box">
-          <h4>Giờ mở cửa các phân khu chính</h4>
-          <ul class="guide-list nums">
-            <li><strong>Toàn khu VinWonders Nha Trang:</strong> 09:00 – 20:00 hằng ngày.</li>
-            <li><strong>Tropical Paradise (Công viên nước):</strong> 10:00 – 17:30 <em>(+20 phút đệm tắm tráng, thay đồ khi rời khu)</em>.</li>
-            <li><strong>Sea World (Thủy cung):</strong> 09:00 – 19:00 (Rạp Phim Bay: 10:00 – 18:00).</li>
-            <li><strong>King's Garden (Vườn thú):</strong> 09:00 – 17:30 (Vườn bướm: 09:00 – 18:00).</li>
-            <li><strong>The World Garden:</strong> 09:00 – 20:00 (Bánh xe bầu trời: 09:00 – 20:00).</li>
-            <li><strong>Fairy Land:</strong> 09:00 – 19:00 (Alpine Coaster &amp; Kịch rối cho bé).</li>
-            <li><strong>Festive Hill:</strong> 09:00 – 19:30 (Sân khấu Tata Show lúc 19:30).</li>
-          </ul>
+      <div class="ticket-perks-grid">
+        <article class="perk-card">
+          <div class="perk-ico" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
+          </div>
+          <div>
+            <h4>Trọn gói 6 khu, không chia ca lẻ</h4>
+            <p>Không bán vé lẻ từng khu hay ca sáng/chiều; chỉ phân biệt Vé cả ngày (từ 09:00) và Vé sau 16:00.</p>
+          </div>
         </article>
+        <article class="perk-card">
+          <div class="perk-ico emerald" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div>
+            <h4>Miễn phí hoàn toàn bé dưới 100cm</h4>
+            <p>Đo trực tiếp tại cổng soát vé; khách từ 60 tuổi mang CCCD/hộ chiếu để hưởng ưu đãi người cao tuổi.</p>
+          </div>
+        </article>
+        <article class="perk-card">
+          <div class="perk-ico amber" aria-hidden="true">
+            <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg>
+          </div>
+          <div>
+            <h4>Tiết kiệm tới 33% sau 16:00</h4>
+            <p>Phù hợp gia đình sang đảo buổi chiều mát ngắm vịnh Nha Trang, dạo vườn hoa và xem Tata Show 19:30.</p>
+          </div>
+        </article>
+      </div>
 
-        <article class="guide-box">
-          <h4>Phí dịch vụ ngoài vé &amp; Trò tạm bảo trì</h4>
-          <ul class="guide-list">
-            <li><strong>Dịch vụ lẻ ngoài vé (tham khảo):</strong> Cho thú ăn (50.000đ/phần), Thuê tủ đồ Công viên nước (50.000đ/tủ), Áo mưa giấy (30.000đ/cái).</li>
-            <li><strong>Thu phí riêng, hỏi trực tiếp tại quầy:</strong> Trò Zipline (≥130cm, ≤110kg), Xe điện Buggy nội khu và các gói Combo/Buffet.</li>
-            <li><strong>Đang tạm bảo trì (hệ thống tự bỏ qua khi lập lịch):</strong> Xe điện đụng (Festive Hill) và Tàu lượn mini trẻ em (Fairy Land).</li>
-            <li><strong>Giới hạn an toàn đáng chú ý:</strong> Cụm đường trượt cảm giác mạnh Công viên nước không phục vụ khách từ 50 tuổi trở lên.</li>
-          </ul>
-        </article>
+      <div class="tickets-layout">
+        <div class="card card-pad">
+          <div class="sec-head" style="margin-bottom:12px;">
+            <h4 class="sec-title">Bảng giá vé vào cổng 1 ngày (VNĐ / khách)</h4>
+            <span class="sec-sub">Đã gồm cáp treo 2 chiều</span>
+          </div>
+          <div class="tbl-scroll">
+            <table class="price-tbl nums">
+              <thead>
+                <tr>
+                  <th>Hạng khách tham quan</th>
+                  <th class="featured-col">Vé cả ngày (09:00–20:00) <span class="col-pop-tag">Phổ biến</span></th>
+                  <th>Vé vào cửa sau 16:00</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="guest-tier-cell">
+                      <strong>Người lớn</strong>
+                      <span>Khách cao từ 140cm trở lên</span>
+                    </div>
+                  </td>
+                  <td class="featured-col"><span class="price-strong">1.050.000đ</span></td>
+                  <td><strong>700.000đ</strong></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="guest-tier-cell">
+                      <strong>Trẻ em</strong>
+                      <span>Chiều cao từ 100cm đến dưới 140cm</span>
+                    </div>
+                  </td>
+                  <td class="featured-col"><span class="price-strong">800.000đ</span></td>
+                  <td><strong>550.000đ</strong></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="guest-tier-cell">
+                      <strong>Người cao tuổi</strong>
+                      <span>Từ 60 tuổi trở lên (cần giấy tờ tùy thân)</span>
+                    </div>
+                  </td>
+                  <td class="featured-col"><span class="price-strong">800.000đ</span></td>
+                  <td><strong>550.000đ</strong></td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="guest-tier-cell">
+                      <strong>Em bé dưới 100cm</strong>
+                      <span>Đi kèm người lớn bảo hộ</span>
+                    </div>
+                  </td>
+                  <td class="featured-col"><span class="price-free">Miễn phí (0đ)</span></td>
+                  <td><span class="price-free">Miễn phí (0đ)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="guide-note">Chính sách vé niêm yết: Vé đã xuất không hoàn, không hủy, không quy đổi. Bao gồm hầu hết trò chơi trong nhà, ngoài trời và các suất biểu diễn định kỳ trong ngày.</p>
+
+          <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">
+            <h4 class="sec-title" style="font-size:0.98rem;margin-bottom:10px;">Dịch vụ lẻ ngoài vé &amp; Trò đang bảo trì</h4>
+            <ul class="kv-list nums">
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:var(--emerald)"></span>
+                  <div><span class="kv-title">Cho thú ăn / Thuê tủ đồ Công viên nước</span><span class="kv-sub">Mức phí ước tính tham khảo khi khách có nhu cầu</span></div>
+                </div>
+                <span class="kv-badge">50.000đ / lượt</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:var(--sky)"></span>
+                  <div><span class="kv-title">Áo mưa giấy sử dụng trong ngày mưa</span><span class="kv-sub">Mức phí tham khảo cho thành viên di chuyển ngoài trời</span></div>
+                </div>
+                <span class="kv-badge">30.000đ / cái</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:var(--amber)"></span>
+                  <div><span class="kv-title">Trò Zipline, Xe điện Buggy &amp; Gói Buffet</span><span class="kv-sub">Chưa niêm yết giá lẻ cố định, hệ thống không tự đoán giá</span></div>
+                </div>
+                <span class="kv-badge warn">Hỏi trực tiếp tại quầy</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:var(--rose)"></span>
+                  <div><span class="kv-title">Xe điện đụng &amp; Tàu lượn mini trẻ em</span><span class="kv-sub">Hệ thống tự động loại khỏi lịch trình đề xuất để tránh đi hố</span></div>
+                </div>
+                <span class="kv-badge maint">Đang tạm bảo trì</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tickets-side-stack">
+          <article class="card card-pad">
+            <div class="sec-head" style="margin-bottom:12px;">
+              <h4 class="sec-title" style="font-size:1.02rem;">Giờ mở cửa từng phân khu</h4>
+              <span class="sec-sub nums">Cáp treo 09:00–20:00</span>
+            </div>
+            <ul class="kv-list nums">
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#0b7a75"></span>
+                  <div>
+                    <span class="kv-title">Tropical Paradise (Công viên nước)</span>
+                    <span class="kv-sub">Cộng thêm 20 phút tắm tráng, thay đồ khi rời khu</span>
+                  </div>
+                </div>
+                <span class="kv-badge warn">10:00 – 17:30</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#136f82"></span>
+                  <div>
+                    <span class="kv-title">Sea World (Thủy cung)</span>
+                    <span class="kv-sub">Rạp Phim Bay mở cửa 10:00 – 18:00</span>
+                  </div>
+                </div>
+                <span class="kv-badge">09:00 – 19:00</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#0b6e4f"></span>
+                  <div>
+                    <span class="kv-title">King's Garden (Vườn thú)</span>
+                    <span class="kv-sub">Vườn bướm trong nhà mở tới 18:00</span>
+                  </div>
+                </div>
+                <span class="kv-badge">09:00 – 17:30</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#a61b3a"></span>
+                  <div>
+                    <span class="kv-title">Fairy Land (Lâu đài cổ tích)</span>
+                    <span class="kv-sub">Alpine Coaster đóng 18:30, Zipline đóng 17:00</span>
+                  </div>
+                </div>
+                <span class="kv-badge">09:00 – 19:00</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#0e4d5c"></span>
+                  <div>
+                    <span class="kv-title">The World Garden</span>
+                    <span class="kv-sub">Nhà kính 5 châu &amp; Bánh xe bầu trời ngắm hoàng hôn</span>
+                  </div>
+                </div>
+                <span class="kv-badge">09:00 – 20:00</span>
+              </li>
+              <li class="kv-row">
+                <div class="kv-left">
+                  <span class="kv-dot" style="background:#c67d22"></span>
+                  <div>
+                    <span class="kv-title">Festive Hill (Đồi Lễ Hội)</span>
+                    <span class="kv-sub">Quảng trường Tata Show biểu diễn 19:30 – 20:00</span>
+                  </div>
+                </div>
+                <span class="kv-badge">09:00 – 19:30</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card card-pad" style="background:var(--surface-warm);border-color:#e7dac6;">
+            <h4 class="sec-title" style="font-size:0.96rem;margin-bottom:6px;color:#5c431d;">Lưu ý an toàn cho gia đình đa thế hệ</h4>
+            <p style="margin:0;font-size:0.83rem;color:#5c4b32;line-height:1.55;">Cụm đường trượt cảm giác mạnh tại Công viên nước giới hạn khách <strong>cao từ 130cm, nặng tối đa 100kg và dưới 50 tuổi</strong>. Khi đi cùng ông bà hoặc trẻ nhỏ, trợ lý sẽ tự động chuyển sang Hồ tạo sóng, Thủy cung, Vườn bướm và Bánh xe bầu trời an toàn hơn.</p>
+          </article>
+        </div>
       </div>
     </section>
 
     <!-- Tab 3: Shows & 8-Day Weather Details -->
     <section class="tab-panel hidden" id="panelShows" role="tabpanel" aria-labelledby="tabBtnShows">
       <div class="explore-head">
-        <h3 class="serif">Dự báo thời tiết 8 ngày tại Đảo Hòn Tre</h3>
-        <p id="weatherTabSub">Chọn sẵn ngày đi phù hợp — hệ thống tự đồng bộ kịch bản nắng/mưa vào lịch trình.</p>
+        <div>
+          <h3>Dự báo thời tiết 8 ngày tới tại Đảo Hòn Tre</h3>
+          <p id="weatherTabSub">Phân tích theo đúng khung giờ mở cửa 09:00–20:00 để tự động xếp điểm trong nhà khi có mưa.</p>
+        </div>
       </div>
       <div class="weather-detail-grid" id="weather7dGrid"></div>
 
       <div class="explore-head" style="margin-top:8px;">
         <div>
-          <h3 class="serif">Lịch 6 show biểu diễn trong ngày</h3>
-          <p>Show ngoài trời tạm huỷ khi trời mưa; show trong nhà vẫn phục vụ bình thường.</p>
+          <h3>Lịch 6 chương trình biểu diễn nổi bật trong ngày</h3>
+          <p>Show ngoài trời tạm ngưng khi mưa lớn; 3 show trong nhà vẫn diễn ra bình thường mọi thời tiết.</p>
         </div>
         <div class="filter-strip" id="showFilterStrip">
           <button type="button" class="filter-btn active" data-show-filter="all">Tất cả (6)</button>
           <button type="button" class="filter-btn" data-show-filter="indoor">Trong nhà, không sợ mưa (3)</button>
-          <button type="button" class="filter-btn" data-show-filter="outdoor">Ngoài trời (3)</button>
+          <button type="button" class="filter-btn" data-show-filter="outdoor">Sân khấu ngoài trời (3)</button>
         </div>
       </div>
       <div class="shows-grid" id="showsGrid"></div>
-      <p class="guide-note" style="margin-top:14px;">Khung giờ show và trạng thái bảo trì hiển thị theo lịch tham khảo; vui lòng đối chiếu bảng thông báo tại cổng trong ngày tham quan.</p>
+      <p class="guide-note" style="margin-top:14px;">Lưu ý: Khung giờ biểu diễn và trạng thái bảo trì mang tính tham khảo phục vụ lập kế hoạch; quý khách vui lòng đối chiếu bảng điện tử tại cổng trong ngày tham quan.</p>
     </section>
 
     <!-- Tab 4: Proposed Itinerary & Map -->
     <section class="tab-panel hidden" id="panelResult" role="tabpanel" aria-labelledby="tabBtnResult">
       <div class="empty-state" id="resultEmptyState">
-        <h3 class="serif">Chưa có lịch trình nào được tạo</h3>
-        <p>Chọn ngày đi ở dải 8 ngày phía trên, chỉnh số người lớn / trẻ em / ngân sách rồi bấm <strong>Lập lịch ngay</strong> — kết quả lịch trình từng giờ, bản đồ Đảo Hòn Tre và bảng tiền sẽ xuất hiện tại đây.</p>
-        <button type="button" class="btn-cta" id="goDockBtn" style="height:44px;min-width:190px;">Lên lịch ngay</button>
+        <div class="empty-ico" aria-hidden="true">
+          <svg class="ico" style="width:26px;height:26px" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="8" y1="13" x2="16" y2="13"></line><line x1="8" y1="17" x2="13" y2="17"></line></svg>
+        </div>
+        <h3>Chưa có lịch trình nào được khởi tạo</h3>
+        <p>Chọn ngày đi ở dải thời tiết 8 ngày phía trên, kiểm tra số thành viên và ngân sách rồi bấm <strong>Lập lịch ngay</strong> để nhận lộ trình chi tiết từng giờ kèm bản đồ di chuyển và bảng chi phí.</p>
+        <button type="button" class="btn-cta" id="goDockBtn" style="height:44px;min-width:200px;">Thiết lập chuyến đi ngay</button>
       </div>
 
       <div class="workspace hidden" id="resultsWorkspace" aria-live="polite" aria-label="Kết quả lịch trình và bản đồ">
         <div class="card card-pad">
           <div class="sec-head">
-            <h3 class="sec-title serif">
+            <h3 class="sec-title">
               <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-              Lịch trình đề xuất trong ngày
+              Lộ trình tham quan đề xuất
             </h3>
             <div style="display:flex;gap:8px;align-items:center;">
               <span class="sec-sub nums" id="routeSummary">Chưa có lộ trình</span>
-              <button type="button" class="btn-ghost" id="backExploreBtn" style="padding:5px 10px;font-size:0.8rem;">Xem 6 phân khu</button>
+              <button type="button" class="btn-ghost" id="backExploreBtn" style="padding:5px 11px;font-size:0.79rem;">Xem 6 phân khu</button>
             </div>
           </div>
           <div id="timelineRoot"></div>
@@ -1040,41 +1625,47 @@
 
         <aside class="right-sticky" aria-label="Bản đồ đảo Hòn Tre và phiếu chi phí">
           <section class="card card-pad">
-            <div class="sec-head" style="margin-bottom:10px;">
-              <h3 class="sec-title serif">
+            <div class="sec-head" style="margin-bottom:8px;">
+              <h3 class="sec-title">
                 <svg class="ico" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-                Bản đồ lộ trình Đảo Hòn Tre
+                Bản đồ tuyến đi Đảo Hòn Tre
               </h3>
-              <span class="sec-sub">Chọn khu để xem chi tiết</span>
+              <span class="sec-sub">Chạm nút khu để tra cứu</span>
+            </div>
+            <div class="map-legend">
+              <span class="legend-item"><span class="legend-dot" style="background:#0a586c"></span> Điểm có trong lịch</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#526067"></span> Phân khu khác</span>
+              <span class="legend-item"><span class="legend-dot" style="background:#063846"></span> Cổng cáp treo (C)</span>
             </div>
             <div class="map-stage">
-              <img class="map-bg-img" src="/assets/island_map.jpg" alt="Bản đồ minh họa 6 phân khu khu vui chơi Đảo Hòn Tre" />
+              <img class="map-bg-img" src="/assets/island_map.jpg" width="960" height="720" alt="Bản đồ minh họa 6 phân khu khu vui chơi Đảo Hòn Tre" />
               <svg id="parkMapSvg" class="map-overlay-svg" viewBox="0 0 960 720" role="img" aria-label="Tuyến đường di chuyển giữa các phân khu"></svg>
             </div>
             <div class="zone-info-bar" id="zoneInfoBar">
-              Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.
+              Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng bên trái để xem thời gian đi bộ.
             </div>
-            <p class="map-caption">Sơ đồ 6 phân khu &amp; thời gian di chuyển ước tính cho gia đình có trẻ nhỏ.</p>
+            <p class="map-caption">Thời gian đi bộ ước tính theo tốc độ di chuyển thong thả của gia đình có trẻ nhỏ.</p>
           </section>
 
-          <section class="card card-pad">
-            <div class="sec-head" style="margin-bottom:10px;">
-              <h3 class="sec-title serif">
-                <svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                Chi phí dự kiến
-              </h3>
-              <span class="receipt-badge">Theo bảng giá niêm yết</span>
-            </div>
+          <section class="card voucher-card">
             <div id="costRoot"></div>
-            <div class="receipt-actions">
-              <button type="button" class="btn-ghost" id="sideCopyBtn" disabled>Sao chép gửi Zalo</button>
-              <button type="button" class="btn-ghost" id="sidePrintBtn" disabled>In / Lưu PDF</button>
+            <div style="padding:0 22px 20px;">
+              <div class="receipt-actions">
+                <button type="button" class="btn-ghost" id="sideCopyBtn" disabled>
+                  <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Sao chép gửi Zalo
+                </button>
+                <button type="button" class="btn-ghost" id="sidePrintBtn" disabled>
+                  <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                  In / Lưu PDF
+                </button>
+              </div>
             </div>
           </section>
 
           <section class="card card-pad" style="padding:13px 18px;">
             <details class="trace-box" id="traceDetails">
-              <summary style="font-size:0.8rem;color:var(--muted);font-weight:600;">Chi tiết xử lý hệ thống</summary>
+              <summary style="font-size:0.8rem;color:var(--muted);font-weight:700;">Nhật ký kiểm tra ràng buộc tự động</summary>
               <div id="traceRoot" style="margin-top:8px;color:var(--muted);">Chưa có lượt tra cứu nào.</div>
             </details>
           </section>
@@ -1083,42 +1674,60 @@
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand display">
+        <span style="width:10px;height:10px;border-radius:50%;background:var(--primary);display:inline-block;"></span>
+        VinWonders Nha Trang — Cẩm nang &amp; Trợ lý Lịch trình Gia đình (Đảo Hòn Tre)
+      </div>
+      <div class="footer-links">
+        <a href="#mainTabs" data-jump-tab="explore">6 phân khu</a>
+        <a href="#mainTabs" data-jump-tab="tickets">Bảng giá vé</a>
+        <a href="#mainTabs" data-jump-tab="shows">Lịch show &amp; Thời tiết</a>
+        <a href="#conciergeDock">Lập lịch trình</a>
+      </div>
+      <div class="footer-note">
+        Hệ thống hỗ trợ đối chiếu tự động giờ mở cửa, giới hạn chiều cao/độ tuổi, thời gian đi bộ + đệm tắm tráng Công viên nước và bảng giá niêm yết trong 1 ngày. Lịch trình mang tính gợi ý tham khảo trước chuyến đi; quý khách vui lòng kiểm tra thông báo thực tế tại cổng và tự đặt vé trên kênh chính thức.
+      </div>
+    </div>
+  </footer>
+
   <script>
     const ZONES = {
       GATE: {
-        label: "Ga cáp treo Đảo Hòn Tre", short: "Cổng vào", x: 228, y: 344, color: "#1b2428",
+        label: "Ga cáp treo Đảo Hòn Tre", subtitle: "Cổng chào đảo", short: "Cổng vào", x: 228, y: 344, color: "#0f1f26",
         img: "/assets/hero_vinwonders.jpg", tag: "Điểm xuất phát", hours: "09:00–20:00",
-        desc: "Cổng cáp treo vượt biển phía đảo, đã gồm trong vé tiêu chuẩn 2 chiều."
+        desc: "Ga cáp treo vượt biển phía đảo Hòn Tre, đã bao gồm vé khứ hồi 2 chiều."
       },
       WORLD_GARDEN: {
-        label: "The World Garden", short: "World Garden", x: 326, y: 238, color: "#0e4d5c",
+        label: "The World Garden", subtitle: "Đồi vạn hoa 5 châu", short: "World Garden", x: 326, y: 238, color: "#0a586c",
         img: "/assets/zone_world_garden.jpg", tag: "Nhà kính & Bánh xe", hours: "09:00–20:00",
-        desc: "Vườn hoa 5 châu mát mẻ, Bánh xe bầu trời ngắm toàn vịnh Nha Trang (không giới hạn tuổi)."
+        desc: "Nhà kính hoa ôn đới mát mẻ và Bánh xe bầu trời ngắm trọn vịnh Nha Trang cho mọi lứa tuổi."
       },
       SEA_WORLD: {
-        label: "Sea World (Thủy cung)", short: "Sea World", x: 308, y: 468, color: "#136f82",
+        label: "Sea World", subtitle: "Thủy cung đại dương", short: "Sea World", x: 308, y: 468, color: "#11698e",
         img: "/assets/zone_sea_world.jpg", tag: "Trong nhà, tránh mưa", hours: "09:00–19:00",
-        desc: "Đường hầm thủy cung mát mẻ, show Nàng tiên cá & cho cá ăn, phù hợp mọi lứa tuổi và ngày mưa."
+        desc: "Đường hầm kính dưới đáy biển, Rạp Phim Bay cùng show Nàng tiên cá và Cho cá ăn mát lạnh."
       },
       TROPICAL_PARADISE: {
-        label: "Tropical Paradise (Công viên nước)", short: "Công viên nước", x: 510, y: 422, color: "#0b7a75",
+        label: "Tropical Paradise", subtitle: "Công viên nước nhiệt đới", short: "Công viên nước", x: 510, y: 422, color: "#0b7a75",
         img: "/assets/zone_tropical_paradise.jpg", tag: "+20p đệm tắm tráng", hours: "10:00–17:30",
-        desc: "Hồ tạo sóng, dòng sông lười cho bé. Lưu ý cộng +20 phút tắm tráng, thay đồ khi rời khu."
+        desc: "Hồ tạo sóng và khu trượt nước trẻ em sôi động. Hệ thống tự cộng 20 phút tắm tráng khi rời khu."
       },
       KINGS_GARDEN: {
-        label: "King's Garden (Vườn thú)", short: "King's Garden", x: 548, y: 236, color: "#0b6e4f",
-        img: "/assets/zone_kings_garden.jpg", tag: "Bé yêu thích", hours: "09:00–18:00",
-        desc: "Hồng hạc, hươu cao cổ, hồ thú thân thiện trẻ nhỏ và show chim buổi chiều."
+        label: "King's Garden", subtitle: "Vườn thú quý vương", short: "King's Garden", x: 548, y: 236, color: "#08684a",
+        img: "/assets/zone_kings_garden.jpg", tag: "Hồng hạc & Vườn bướm", hours: "09:00–17:30",
+        desc: "Hồng hạc, hươu cao cổ thân thiện, Vườn bướm trong nhà và sân khấu biểu diễn chim muông."
       },
       FESTIVE_HILL: {
-        label: "Festive Hill (Đồi Lễ Hội)", short: "Festive Hill", x: 750, y: 222, color: "#c67d22",
+        label: "Festive Hill", subtitle: "Đồi lễ hội & Quảng trường", short: "Festive Hill", x: 750, y: 222, color: "#c2761c",
         img: "/assets/zone_festive_hill.jpg", tag: "Tata Show 19:30", hours: "09:00–19:30",
-        desc: "Quảng trường lễ hội trên đồi, khu vui chơi trong nhà và sân khấu Tata Show lúc 19:30."
+        desc: "Quảng trường lễ hội châu Âu, Nhà bóng trong nhà cho bé và sân khấu thực cảnh Tata Show 19:30."
       },
       FAIRY_LAND: {
-        label: "Fairy Land (Lâu đài cổ tích)", short: "Fairy Land", x: 768, y: 404, color: "#a61b3a",
-        img: "/assets/zone_fairy_land.jpg", tag: "Kịch rối & Trò gia đình", hours: "09:00–19:00",
-        desc: "Quảng trường lâu đài cổ tích, Alpine Coaster, Tata River Adventure và Kịch rối cho bé."
+        label: "Fairy Land", subtitle: "Vương quốc cổ tích", short: "Fairy Land", x: 768, y: 404, color: "#a11b38",
+        img: "/assets/zone_fairy_land.jpg", tag: "Lâu đài & Kịch rối", hours: "09:00–19:00",
+        desc: "Quảng trường lâu đài cổ tích, xe trượt núi Alpine Coaster, Tata River Adventure và Kịch rối cho bé."
       }
     };
 
@@ -1156,12 +1765,12 @@
     };
 
     const SHOWS_DATA = [
-      { id: "S01", name: "Tata Show", times: "19:30", dur: "30p", zone: "FESTIVE_HILL", zoneName: "Festive Hill", indoor: false, note: "Đã gồm trong vé, tạm huỷ nếu mưa tối" },
-      { id: "S02", name: "Show nàng tiên cá", times: "11:00, 15:00", dur: "20p", zone: "SEA_WORLD", zoneName: "Sea World", indoor: true, note: "Trong nhà, không sợ mưa, hợp mọi lứa tuổi" },
-      { id: "S03", name: "Show cho cá ăn", times: "10:00, 14:00", dur: "15p", zone: "SEA_WORLD", zoneName: "Sea World", indoor: true, note: "Trong nhà, hợp trẻ nhỏ & ông bà" },
-      { id: "S04", name: "Show chim muông", times: "10:30, 15:30", dur: "25p", zone: "KINGS_GARDEN", zoneName: "King's Garden", indoor: false, note: "Ngoài trời, cách Sea World 20p đi bộ, huỷ khi mưa" },
-      { id: "S05", name: "Diễu hành lễ hội", times: "16:30", dur: "30p", zone: "FESTIVE_HILL", zoneName: "Festive Hill", indoor: false, note: "Ngoài trời, không khí gia đình, huỷ khi mưa" },
-      { id: "S06", name: "Kịch rối cho bé", times: "09:30, 13:30, 16:00", dur: "20p", zone: "FAIRY_LAND", zoneName: "Fairy Land", indoor: true, note: "Trong nhà, hợp bé nhỏ, tránh nắng mưa" }
+      { id: "S01", name: "Tata Show", slots: ["19:30"], dur: "30 phút", zone: "FESTIVE_HILL", zoneName: "Festive Hill (Đồi Lễ Hội)", indoor: false, note: "Bom tấn thực cảnh đa phương tiện buổi tối, đã gồm trong vé cổng (tạm ngưng nếu mưa tối)." },
+      { id: "S02", name: "Show nàng tiên cá", slots: ["11:00", "15:00"], dur: "20 phút", zone: "SEA_WORLD", zoneName: "Sea World (Thủy cung)", indoor: true, note: "Biểu diễn dưới lòng đại dương mát lạnh trong nhà, xem tốt kể cả khi trời mưa." },
+      { id: "S03", name: "Show cho cá ăn", slots: ["10:00", "14:00"], dur: "15 phút", zone: "SEA_WORLD", zoneName: "Sea World (Thủy cung)", indoor: true, note: "Thợ lặn tương tác cùng đàn cá lớn trong đường hầm kính, trẻ nhỏ và ông bà rất thích." },
+      { id: "S04", name: "Show chim muông", slots: ["10:30", "15:30"], dur: "25 phút", zone: "KINGS_GARDEN", zoneName: "King's Garden (Vườn thú)", indoor: false, note: "Trình diễn vũ điệu chim quý ngoài trời (cách Thủy cung 20 phút đi bộ, tạm ngưng nếu mưa)." },
+      { id: "S05", name: "Diễu hành lễ hội", slots: ["16:30"], dur: "30 phút", zone: "FESTIVE_HILL", zoneName: "Festive Hill (Đồi Lễ Hội)", indoor: false, note: "Đoàn xe hoa cổ tích diễu hành sôi động chiều mát trên quảng trường (ngoài trời)." },
+      { id: "S06", name: "Kịch rối cho bé", slots: ["09:30", "13:30", "16:00"], dur: "20 phút", zone: "FAIRY_LAND", zoneName: "Fairy Land (Lâu đài cổ tích)", indoor: true, note: "Sân khấu mái che mát mẻ dành riêng cho các bé nghỉ chân tránh nắng hoặc tránh mưa." }
     ];
 
     const TRAVEL_MIN = {
@@ -1217,40 +1826,6 @@
       }
     };
 
-    const form = document.getElementById("planForm");
-    const inputEl = document.getElementById("queryInput");
-    const charCount = document.getElementById("charCount");
-    const submitBtn = document.getElementById("submitBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const copyBtn = document.getElementById("copyBtn");
-    const copyBtnText = document.getElementById("copyBtnText");
-    const printBtn = document.getElementById("printBtn");
-    const sideCopyBtn = document.getElementById("sideCopyBtn");
-    const sidePrintBtn = document.getElementById("sidePrintBtn");
-    const dateCardsRow = document.getElementById("dateCardsRow");
-    const weatherSourceBadge = document.getElementById("weatherSourceBadge");
-    const selectedDateNote = document.getElementById("selectedDateNote");
-    const weather7dGrid = document.getElementById("weather7dGrid");
-    const showsGrid = document.getElementById("showsGrid");
-    const zonesGrid = document.getElementById("zonesGrid");
-    const resultEmptyState = document.getElementById("resultEmptyState");
-    const resultsWorkspace = document.getElementById("resultsWorkspace");
-    const resultTabBadge = document.getElementById("resultTabBadge");
-    const timelineRoot = document.getElementById("timelineRoot");
-    const routeSummary = document.getElementById("routeSummary");
-    const parkMapSvg = document.getElementById("parkMapSvg");
-    const zoneInfoBar = document.getElementById("zoneInfoBar");
-    const costRoot = document.getElementById("costRoot");
-    const traceRoot = document.getElementById("traceRoot");
-    const statusDot = document.getElementById("statusDot");
-    const statusText = document.getElementById("statusText");
-
-    let currentData = null;
-    let forecastData = null;
-    let selectedDayIdx = 0;
-    let activeTab = "explore";
-    let showFilter = "all";
-
     const ITEM_CODE_NAMES = {
       A01: "Zipline",
       A02: "Alpine Coaster",
@@ -1283,6 +1858,30 @@
       SV05: "Zipline"
     };
 
+    const ITEM_CLEAN_REASONS = {
+      A02: "Trải nghiệm xe trượt núi ngắm trọn vịnh biển cho khách cao từ 100cm.",
+      A03: "Rạp chiếu phim bay 4D trong nhà có điều hòa mát mẻ, phù hợp trẻ từ 100cm.",
+      A04: "Hành trình thuyền nước khám phá thế giới cổ tích ngoài trời cho bé từ 105cm.",
+      A05: "Tàu lượn khám phá hầm mỏ sôi động dành cho trẻ cao từ 110cm trở lên.",
+      A06: "Trò cảm giác mạnh ngoài trời dành cho thành viên cao từ 120cm.",
+      A07: "Đường trượt nước tốc độ cao dành cho khách từ 130cm và dưới 50 tuổi.",
+      A08: "Khám phá hơn 30.000 sinh vật biển trong đường hầm kính mát mẻ, hợp mọi độ tuổi và thời tiết.",
+      A09: "Ngắm toàn cảnh Đảo Hòn Tre và vịnh Nha Trang từ cabin trên cao, không giới hạn độ tuổi.",
+      A10: "Không gian nhà kính ngập tràn bướm nhiệt đới, đi bộ nhẹ nhàng và không lo nắng mưa.",
+      A11: "Tham quan hồng hạc, hươu cao cổ và các loài thú thân thiện cùng trẻ nhỏ.",
+      A12: "Vòng quay ngựa gỗ cổ tích nhẹ nhàng cho bé vui chơi cùng bố mẹ.",
+      A13: "Khu vận động liên hoàn trong nhà an toàn và mát mẻ cho các bé dưới 140cm.",
+      A14: "Vui chơi làn nước mát tại hồ tạo sóng rộng rãi (bé dưới 120cm có người lớn đi kèm).",
+      A15: "Cầu trượt nước nông thiết kế riêng cho các bé cao từ 120cm trở xuống.",
+      A18: "Tản bộ thư thái giữa các khu vườn hoa 5 châu, đặc biệt hợp với ông bà và trẻ nhỏ.",
+      S01: "Show thực cảnh đa phương tiện đặc sắc lúc 19:30 khép lại trọn vẹn ngày vui chơi.",
+      S02: "Thưởng thức màn trình diễn Nàng tiên cá trong lòng thủy cung mát lạnh.",
+      S03: "Xem thợ lặn cho đàn cá đại dương ăn ngay tại sảnh kính trung tâm Sea World.",
+      S04: "Xem trình diễn vũ điệu các loài chim quý ngoài trời tại Vườn thú King's Garden.",
+      S05: "Hòa mình vào không khí lễ hội sôi động cùng đoàn xe hoa cổ tích buổi chiều.",
+      S06: "Suất kịch rối vui nhộn trong nhà giúp bé nghỉ ngơi thoải mái giữa hành trình."
+    };
+
     const ZONE_CODE_NAMES = {
       SEA_WORLD: "Sea World (Thủy cung)",
       TROPICAL_PARADISE: "Tropical Paradise (Công viên nước)",
@@ -1292,10 +1891,14 @@
       FESTIVE_HILL: "Festive Hill (Đồi Lễ Hội)"
     };
 
-    function humanizeUiText(v) {
+    function humanizeUiText(v, itemId) {
       let s = String(v ?? "");
+      if (itemId && /synthetic|chưa kiểm|W_HOURS|W_PRICE|W_RULES|^Phù hợp chiều cao\/độ tuổi tại khu/i.test(s) && ITEM_CLEAN_REASONS[itemId]) {
+        return ITEM_CLEAN_REASONS[itemId];
+      }
       s = s.replace(/\s*\u00b7\s*/g, ", ");
       s = s.replace(/\s*\(mẫu\)\s*/gi, " ");
+      s = s.replace(/\s*\(synthetic[^)]*\)\s*/gi, " ");
       s = s.replace(/\[(A\d{2}|S0[1-6]|SV0[1-5])\]\s*/g, "");
       s = s.replace(/\s*\((?:(?:A\d{2}|S0[1-6]|SV0[1-5])(?:\s*\/\s*(?:A\d{2}|S0[1-6]|SV0[1-5]))*)\)/g, "");
       s = s.replace(/\b(A\d{2}|S0[1-6]|SV0[1-5])\b/g, (m) => ITEM_CODE_NAMES[m] || m);
@@ -1316,6 +1919,17 @@
       return Number(n || 0).toLocaleString("vi-VN") + "đ";
     }
 
+    function fmtCompactBudget(n) {
+      const val = Number(n || 0);
+      if (!val || val < 0) return "0 ₫";
+      if (val >= 1000000) {
+        const tr = val / 1000000;
+        const txt = Number.isInteger(tr) ? String(tr) : tr.toFixed(2).replace(/\.?0+$/, "").replace(".", ",");
+        return `${txt} triệu ₫`;
+      }
+      return `${Math.round(val / 1000).toLocaleString("vi-VN")}k ₫`;
+    }
+
     function toMin(hhmm) {
       const parts = String(hhmm || "00:00").split(":");
       return Number(parts[0]) * 60 + Number(parts[1]);
@@ -1323,20 +1937,73 @@
 
     function calcLegInfo(prevZone, nextZone) {
       if (prevZone === nextZone) {
-        return { walk: 5, buffer: 0, total: 5, label: "Cùng phân khu, di chuyển 5 phút" };
+        return { walk: 5, buffer: 0, total: 5, label: "Cùng phân khu, di chuyển khoảng 5 phút" };
       }
       const walk = (TRAVEL_MIN[prevZone] && TRAVEL_MIN[prevZone][nextZone]) || 12;
       const buffer = (prevZone === "TROPICAL_PARADISE") ? 20 : 0;
       const total = walk + buffer;
       const label = buffer > 0
         ? `Đi bộ ${walk} phút (+${buffer} phút tắm tráng, thay đồ)`
-        : `Đi bộ sang khu kế tiếp: khoảng ${walk} phút`;
+        : `Đi bộ sang phân khu kế tiếp: khoảng ${walk} phút`;
       return { walk, buffer, total, label };
     }
 
+    const form = document.getElementById("planForm");
+    const inputEl = document.getElementById("queryInput");
+    const charCount = document.getElementById("charCount");
+    const submitBtn = document.getElementById("submitBtn");
+    const submitBtnIco = document.getElementById("submitBtnIco");
+    const submitBtnLabel = document.getElementById("submitBtnLabel");
+    const clearBtn = document.getElementById("clearBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const copyBtnText = document.getElementById("copyBtnText");
+    const printBtn = document.getElementById("printBtn");
+    const sideCopyBtn = document.getElementById("sideCopyBtn");
+    const sidePrintBtn = document.getElementById("sidePrintBtn");
+    const dateCardsRow = document.getElementById("dateCardsRow");
+    const weatherSourceBadge = document.getElementById("weatherSourceBadge");
+    const selectedDateNote = document.getElementById("selectedDateNote");
+    const weather7dGrid = document.getElementById("weather7dGrid");
+    const showsGrid = document.getElementById("showsGrid");
+    const zonesGrid = document.getElementById("zonesGrid");
+    const resultEmptyState = document.getElementById("resultEmptyState");
+    const resultsWorkspace = document.getElementById("resultsWorkspace");
+    const resultTabBadge = document.getElementById("resultTabBadge");
+    const timelineRoot = document.getElementById("timelineRoot");
+    const routeSummary = document.getElementById("routeSummary");
+    const parkMapSvg = document.getElementById("parkMapSvg");
+    const zoneInfoBar = document.getElementById("zoneInfoBar");
+    const costRoot = document.getElementById("costRoot");
+    const traceRoot = document.getElementById("traceRoot");
+    const statusPill = document.getElementById("statusPill");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const budgetInput = document.getElementById("bBudget");
+    const budgetPretty = document.getElementById("budgetPretty");
+
+    let currentData = null;
+    let forecastData = null;
+    let selectedDayIdx = 0;
+    let activeTab = "explore";
+    let showFilter = "all";
+
     function setServerState(mode, label) {
       statusDot.className = "dot" + (mode ? " " + mode : "");
+      statusPill.className = "status-inline" + (mode === "busy" ? " is-busy" : (mode === "err" ? " is-err" : ""));
       statusText.textContent = label;
+    }
+
+    function setSubmittingUI(busy) {
+      submitBtn.disabled = busy;
+      if (busy) {
+        submitBtnIco.innerHTML = `<path d="M21 12a9 9 0 1 1-6.219-8.56"></path>`;
+        submitBtnIco.classList.add("spin-ico");
+        submitBtnLabel.textContent = "Đang lập lịch…";
+      } else {
+        submitBtnIco.innerHTML = `<polygon points="5 3 19 12 5 21 5 3"></polygon>`;
+        submitBtnIco.classList.remove("spin-ico");
+        submitBtnLabel.textContent = "Lập lịch ngay";
+      }
     }
 
     function setActionButtons(canCopy, canPrint) {
@@ -1357,7 +2024,7 @@
       Object.entries(panelMap).forEach(([key, pid]) => {
         document.getElementById(pid).classList.toggle("hidden", key !== tabName);
       });
-      document.querySelectorAll(".top-nav a[data-jump-tab]").forEach((a) => {
+      document.querySelectorAll("a[data-jump-tab]").forEach((a) => {
         a.classList.toggle("active", a.dataset.jumpTab === tabName);
       });
     }
@@ -1372,6 +2039,38 @@
       return `<svg class="w-ico rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M9 17v2M15 17v2"></path></svg>`;
     }
 
+    function getDayTagClass(d) {
+      if (d.scenario_id === "ALL_DAY_RAIN") return "heavy";
+      if (d.scenario_id === "SUNNY") return "";
+      if (String(d.short_label || "").includes("chiều")) return "amber";
+      return "rain";
+    }
+
+    function buildDaySessionSlots(d) {
+      const lbl = String(d.short_label || "");
+      let s = { cls: "", txt: "Tạnh ráo" };
+      let c = { cls: "", txt: "Tạnh ráo" };
+      let t = { cls: "", txt: "Tạnh ráo" };
+      if (d.scenario_id === "ALL_DAY_RAIN") {
+        s = { cls: "storm", txt: "Có mưa" };
+        c = { cls: "storm", txt: "Mưa rào" };
+        t = { cls: "storm", txt: "Có mưa" };
+      } else if (lbl.includes("sáng")) {
+        s = { cls: "wet", txt: "Mưa sáng" };
+      } else if (lbl.includes("chiều")) {
+        c = { cls: "wet", txt: "Mưa rào" };
+      } else if (d.scenario_id === "EVENING_RAIN" || lbl.includes("tối")) {
+        t = { cls: "wet", txt: "Mưa tối" };
+      }
+      return `
+        <div class="day-slots">
+          <div class="slot-pill ${s.cls}"><span>Sáng</span>${s.txt}</div>
+          <div class="slot-pill ${c.cls}"><span>Chiều</span>${c.txt}</div>
+          <div class="slot-pill ${t.cls}"><span>Tối</span>${t.txt}</div>
+        </div>
+      `;
+    }
+
     function getSelectedDay() {
       const days = (forecastData && forecastData.days) || [];
       return days[selectedDayIdx] || days[0] || null;
@@ -1382,11 +2081,11 @@
       if (!days.length) return;
       weatherSourceBadge.textContent = forecastData.source_label || "Dự báo 8 ngày";
       const tabSub = document.getElementById("weatherTabSub");
-      if (tabSub) tabSub.textContent = `${forecastData.source_label}. Chọn một ngày để đồng bộ tự động vào lịch trình.`;
+      if (tabSub) tabSub.textContent = `${forecastData.source_label}. Chọn một ngày bất kỳ để đồng bộ kịch bản nắng/mưa vào lịch trình.`;
 
       dateCardsRow.innerHTML = days.map((d, idx) => {
         const isActive = idx === selectedDayIdx;
-        const tagCls = d.scenario_id === "ALL_DAY_RAIN" ? "heavy" : (d.scenario_id === "SUNNY" ? "" : "rain");
+        const tagCls = getDayTagClass(d);
         return `
           <button type="button" class="date-card ${isActive ? "active" : ""}" data-day-idx="${idx}" role="option" aria-selected="${isActive ? "true" : "false"}">
             <div class="dc-top">
@@ -1405,15 +2104,17 @@
       const activeDay = getSelectedDay();
       if (activeDay) {
         selectedDateNote.innerHTML = `
-          <span>Đang chọn: <strong>${esc(activeDay.rel_label)} (${esc(activeDay.weekday_vi)} ${esc(activeDay.full_date)})</strong>: ${esc(activeDay.weather_label)} (${activeDay.temp_min}°–${activeDay.temp_max}°C, mưa ${activeDay.rain_prob}%)</span>
-          <span>${esc(activeDay.advice)}</span>
+          <span>Ngày đang chọn: <strong>${esc(activeDay.rel_label)} (${esc(activeDay.weekday_vi)}, ${esc(activeDay.full_date)})</strong>: ${esc(activeDay.weather_label)} (${activeDay.temp_min}°–${activeDay.temp_max}°C, khả năng mưa ${activeDay.rain_prob}%)</span>
+          <span class="selected-advice-pill">${esc(activeDay.advice)}</span>
         `;
       }
 
       weather7dGrid.innerHTML = days.map((d, idx) => {
         const isActive = idx === selectedDayIdx;
-        const badgeCls = d.scenario_id === "ALL_DAY_RAIN" ? "heavy" : (d.scenario_id === "SUNNY" ? "" : "rain");
+        const badgeCls = getDayTagClass(d);
         const cardTitle = idx <= 2 ? `${d.rel_label} (${d.weekday_vi})` : d.weekday_vi;
+        const prob = Number(d.rain_prob || 0);
+        const meterCls = prob >= 75 ? "high" : (prob <= 35 ? "low" : "");
         return `
           <article class="wd-card ${isActive ? "active" : ""}">
             <div class="wd-head">
@@ -1421,16 +2122,20 @@
                 <div class="wd-title">${esc(cardTitle)}</div>
                 <div class="wd-sub nums">${esc(d.full_date)}</div>
               </div>
-              ${weatherIconSvg(d.icon)}
+              <div class="wd-icon-box">${weatherIconSvg(d.icon)}</div>
             </div>
             <div class="wd-temp-row">
               <span class="wd-temp nums">${d.temp_min}° – ${d.temp_max}°C</span>
-              <span class="wd-prob nums">Khả năng mưa: ${d.rain_prob}%</span>
+              <span class="wd-prob nums">Mưa ${prob}%</span>
             </div>
+            <div class="rain-meter" aria-hidden="true">
+              <div class="rain-meter-fill ${meterCls}" style="width:${Math.max(8, prob)}%"></div>
+            </div>
+            ${buildDaySessionSlots(d)}
             <div><span class="dc-tag ${badgeCls}">${esc(d.weather_label)}</span></div>
             <p class="wd-advice">${esc(d.advice)}</p>
-            <button type="button" class="btn-ghost pick-day-detail-btn" data-day-idx="${idx}" style="width:100%;justify-content:center;">
-              ${isActive ? "Đang chọn ngày này" : "Chọn ngày này lập lịch"}
+            <button type="button" class="btn-ghost wd-pick-btn pick-day-detail-btn" data-day-idx="${idx}">
+              ${isActive ? "✓ Đang chọn ngày này" : "Chọn ngày này lập lịch"}
             </button>
           </article>
         `;
@@ -1481,6 +2186,15 @@
       renderWeatherViews();
     }
 
+    function flashAddedButton(btn, defaultLabel) {
+      btn.classList.add("added");
+      btn.textContent = "✓ Đã thêm vào yêu cầu";
+      setTimeout(() => {
+        btn.classList.remove("added");
+        btn.textContent = defaultLabel;
+      }, 1400);
+    }
+
     function renderExploreGrid() {
       const keys = ["SEA_WORLD", "TROPICAL_PARADISE", "KINGS_GARDEN", "FAIRY_LAND", "WORLD_GARDEN", "FESTIVE_HILL"];
       zonesGrid.innerHTML = keys.map((k) => {
@@ -1510,16 +2224,20 @@
           <article class="zone-card">
             <div class="zone-media">
               <div class="zone-media-clip">
-                <img src="${esc(z.img)}" alt="Hình ảnh minh họa phân khu ${esc(z.label)} tại VinWonders Nha Trang" />
+                <img src="${esc(z.img)}" width="640" height="420" alt="Hình ảnh minh họa phân khu ${esc(z.label)} - ${esc(z.subtitle)} tại VinWonders Nha Trang" />
               </div>
-              <span class="zone-walk-badge nums">Từ cổng ${walk} phút đi bộ</span>
+              <span class="zone-walk-badge nums">
+                <svg class="ico" style="width:13px;height:13px" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"></circle><path d="m9 20 3-6 3 6M6 12l6-3 6 3M12 9v5"></path></svg>
+                ${walk} phút từ cổng
+              </span>
+              <span class="zone-env-badge">${esc(z.tag)}</span>
               <button type="button" class="zone-hover-hint nums" aria-expanded="false">
                 <svg class="ico" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
                 <span>Xem ${rides.length} trò &amp; chiều cao</span>
               </button>
               <div class="zone-rides-popover" role="region" aria-label="Danh sách trò chơi tại ${esc(z.short)}">
                 <div class="popover-head">
-                  <span>${esc(z.short)}</span>
+                  <span>${esc(z.label)} (${esc(z.subtitle)})</span>
                   <span class="popover-head-right">
                     <span class="popover-count nums">${rides.length} trò</span>
                     <button type="button" class="overlay-close-btn" aria-label="Đóng danh sách trò">×</button>
@@ -1529,15 +2247,15 @@
               </div>
             </div>
             <div class="zone-body">
-              <h4 class="serif">${esc(z.label)}</h4>
-              <div class="zone-hours-row">
-                <span class="zone-included-pill">Đã gồm trong vé cổng</span>
-                <span class="zone-time-pill nums">Giờ khu ${esc(z.hours || "09:00–20:00")}</span>
-              </div>
+              <span class="zone-sub">${esc(z.subtitle)}</span>
+              <h4>${esc(z.label)}</h4>
               <p>${esc(z.desc)}</p>
               <div class="zone-foot">
-                <span class="zone-tag">${esc(z.tag)}</span>
-                <button type="button" class="btn-ghost add-zone-btn" data-zone-name="${esc(z.short)}" style="padding:6px 11px;font-size:0.8rem;">+ Thêm vào lịch</button>
+                <span class="zone-hours-pill nums">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                  Mở cửa ${esc(z.hours || "09:00–20:00")}
+                </span>
+                <button type="button" class="btn-add-item add-zone-btn" data-zone-name="${esc(z.short)}">+ Thêm vào lịch</button>
               </div>
             </div>
           </article>
@@ -1556,7 +2274,10 @@
       };
 
       zonesGrid.querySelectorAll(".add-zone-btn").forEach((btn) => {
-        btn.addEventListener("click", () => appendHighlightToPrompt(`khu ${btn.dataset.zoneName}`));
+        btn.addEventListener("click", () => {
+          appendHighlightToPrompt(`khu ${btn.dataset.zoneName}`, false);
+          flashAddedButton(btn, "+ Thêm vào lịch");
+        });
       });
 
       zonesGrid.querySelectorAll(".zone-card").forEach((card) => {
@@ -1616,26 +2337,40 @@
 
     function renderShowsGrid() {
       const list = SHOWS_DATA.filter((s) => showFilter === "all" || (showFilter === "indoor" ? s.indoor : !s.indoor));
-      showsGrid.innerHTML = list.map((s) => `
-        <article class="show-card">
-          <div class="show-top">
-            <span class="show-time nums">${esc(s.times)} (${esc(s.dur)})</span>
-            <span class="tag ${s.indoor ? "indoor" : "outdoor"}">${s.indoor ? "Trong nhà" : "Ngoài trời"}</span>
-          </div>
-          <h4 class="show-name">${esc(s.name)}</h4>
-          <p class="show-meta">${esc(s.zoneName)}: ${esc(s.note)}</p>
-          <div>
-            <button type="button" class="btn-ghost add-show-btn" data-show-name="${esc(s.name)}" style="padding:5px 11px;font-size:0.79rem;">+ Thêm show vào lịch</button>
-          </div>
-        </article>
-      `).join("");
+      showsGrid.innerHTML = list.map((s) => {
+        const zColor = (ZONES[s.zone] && ZONES[s.zone].color) || "#0a586c";
+        const slotsHtml = s.slots.map((t) => `<span class="show-slot-chip nums">${esc(t)}</span>`).join("");
+        return `
+          <article class="show-card" style="--show-accent:${esc(zColor)}">
+            <div class="show-top">
+              <div class="show-slots">
+                ${slotsHtml}
+                <span class="show-dur nums">(${esc(s.dur)})</span>
+              </div>
+              <span class="tag ${s.indoor ? "indoor" : "outdoor"}">${s.indoor ? "Trong nhà" : "Ngoài trời"}</span>
+            </div>
+            <h4 class="show-name">${esc(s.name)}</h4>
+            <div class="show-zone-line">
+              <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>${esc(s.zoneName)}</span>
+            </div>
+            <p class="show-meta">${esc(s.note)}</p>
+            <div class="show-foot">
+              <button type="button" class="btn-add-item add-show-btn" data-show-name="${esc(s.name)}">+ Thêm show vào lịch</button>
+            </div>
+          </article>
+        `;
+      }).join("");
 
       showsGrid.querySelectorAll(".add-show-btn").forEach((btn) => {
-        btn.addEventListener("click", () => appendHighlightToPrompt(`xem ${btn.dataset.showName}`));
+        btn.addEventListener("click", () => {
+          appendHighlightToPrompt(`xem ${btn.dataset.showName}`, false);
+          flashAddedButton(btn, "+ Thêm show vào lịch");
+        });
       });
     }
 
-    function appendHighlightToPrompt(phrase) {
+    function appendHighlightToPrompt(phrase, scrollFocus = true) {
       const base = inputEl.value.trim();
       const day = getSelectedDay();
       const win = document.getElementById("bWindow").value;
@@ -1647,8 +2382,10 @@
         inputEl.value = `${base.replace(/[.]+$/, "")}, thêm ${phrase}.`;
       }
       charCount.textContent = `${inputEl.value.length} / 2000`;
-      inputEl.focus();
-      inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (scrollFocus) {
+        inputEl.focus();
+        inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     }
 
     function renderParkMap(items, activeZone) {
@@ -1663,10 +2400,10 @@
       let svg = `
         <defs>
           <marker id="routeArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-            <polygon points="0 0, 8 4, 0 8" fill="#0e4d5c"></polygon>
+            <polygon points="0 0, 8 4, 0 8" fill="#0a586c"></polygon>
           </marker>
           <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1b2428" flood-opacity="0.28" />
+            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#062b36" flood-opacity="0.30" />
           </filter>
         </defs>
       `;
@@ -1679,8 +2416,8 @@
         const x2 = b.x - (dx / dist) * 30, y2 = b.y - (dy / dist) * 30;
         const mx = (x1 + x2) / 2 - (dy / dist) * 26;
         const my = (y1 + y2) / 2 + (dx / dist) * 26;
-        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity="0.9"></path>`;
-        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#0e4d5c" stroke-width="4" stroke-linecap="round" marker-end="url(#routeArrow)"></path>`;
+        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#ffffff" stroke-width="7.5" stroke-linecap="round" opacity="0.92"></path>`;
+        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#0a586c" stroke-width="4.2" stroke-linecap="round" marker-end="url(#routeArrow)"></path>`;
       }
 
       Object.entries(ZONES).forEach(([id, z]) => {
@@ -1689,16 +2426,16 @@
         const isActive = activeZone === id;
         const dimmed = routeNodes.length > 0 && !visited;
         const r = isActive ? 25 : (visited ? 22 : 17);
-        const fill = visited ? z.color : "#39484f";
-        const badgeText = id === "GATE" ? "C" : (stops.length ? stops.map((s) => s.num).join(",") : "•");
-        const labelW = z.short.length * 7.8 + 18;
+        const fill = visited ? z.color : "#4c616b";
+        const badgeText = id === "GATE" ? "C" : (stops.length ? stops.map((s) => s.num).join(",") : "");
+        const labelW = z.short.length * 7.8 + 20;
 
         svg += `
-          <g class="zone-node" data-zone="${id}" tabindex="0" role="button" aria-label="Xem thông tin ${esc(z.label)}" opacity="${dimmed ? "0.62" : "1"}">
-            <circle cx="${z.x}" cy="${z.y}" r="${r}" fill="${fill}" stroke="${isActive ? "#f6d28b" : "#ffffff"}" stroke-width="${isActive ? 4.5 : 3.5}" filter="url(#pinShadow)"></circle>
-            <text x="${z.x}" y="${z.y + 5}" text-anchor="middle" fill="#ffffff" font-size="${visited ? "14" : "13"}" font-weight="800">${esc(badgeText)}</text>
-            <rect x="${z.x - labelW / 2}" y="${z.y + r + 7}" width="${labelW}" height="22" rx="11" fill="#ffffff" stroke="${isActive ? z.color : "#d5c8b6"}" stroke-width="1.5" filter="url(#pinShadow)"></rect>
-            <text x="${z.x}" y="${z.y + r + 22}" text-anchor="middle" fill="#1b2428" font-size="11.5" font-weight="700">${esc(z.short)}</text>
+          <g class="zone-node" data-zone="${id}" tabindex="0" role="button" aria-label="Xem thông tin ${esc(z.label)}" opacity="${dimmed ? "0.66" : "1"}">
+            <circle cx="${z.x}" cy="${z.y}" r="${r}" fill="${fill}" stroke="${isActive ? "#f9db9d" : "#ffffff"}" stroke-width="${isActive ? 4.5 : 3.5}" filter="url(#pinShadow)"></circle>
+            ${badgeText ? `<text x="${z.x}" y="${z.y + 5}" text-anchor="middle" fill="#ffffff" font-size="${visited ? "14" : "12"}" font-weight="800">${esc(badgeText)}</text>` : `<circle cx="${z.x}" cy="${z.y}" r="4.5" fill="#ffffff" opacity="0.85"></circle>`}
+            <rect x="${z.x - labelW / 2}" y="${z.y + r + 7}" width="${labelW}" height="23" rx="11.5" fill="#ffffff" stroke="${isActive ? z.color : "#c5d4dc"}" stroke-width="1.5" filter="url(#pinShadow)"></rect>
+            <text x="${z.x}" y="${z.y + r + 22.5}" text-anchor="middle" fill="#0f1f26" font-size="11.5" font-weight="700">${esc(z.short)}</text>
           </g>
         `;
       });
@@ -1709,9 +2446,9 @@
         const fromGate = TRAVEL_MIN.GATE[zId] ?? 0;
         const itemsHere = (currentData && currentData.parsed && currentData.parsed.items || []).filter((it) => it.zone === zId);
         const stopTxt = itemsHere.length
-          ? "Chặng trong lịch: " + itemsHere.map((it) => `${it.start}–${it.end} ${it.name}`).join("; ")
+          ? "Chặng trong lịch: " + itemsHere.map((it) => `${it.start}–${it.end} ${humanizeUiText(it.name)}`).join("; ")
           : z.desc;
-        zoneInfoBar.innerHTML = `<strong>${esc(z.label)}</strong> (cách cổng <span class="nums">${fromGate} phút</span> đi bộ). ${esc(stopTxt)}`;
+        zoneInfoBar.innerHTML = `<strong>${esc(z.label)} (${esc(z.subtitle)})</strong> — cách cổng <strong class="nums">${fromGate} phút</strong> đi bộ. ${esc(stopTxt)}`;
         renderParkMap(currentData && currentData.parsed ? currentData.parsed.items : [], zId);
       };
       parkMapSvg.querySelectorAll(".zone-node").forEach((el) => {
@@ -1738,33 +2475,42 @@
       const dayTxt = day ? `${day.rel_label} (${day.full_date})` : "Hôm nay";
       if (!cost) {
         costRoot.innerHTML = `
-          <div class="receipt-hero">
-            <div><div class="sec-sub">Tổng chi phí dự kiến</div><div class="receipt-total nums">—</div></div>
+          <div class="voucher-head">
+            <div>
+              <div class="voucher-kicker">Phiếu tổng hợp chi phí</div>
+              <div class="voucher-total nums">Chưa tính</div>
+            </div>
+            <span class="voucher-badge">Bảng giá niêm yết</span>
           </div>
-          <div class="receipt-rows">
-            <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
-            <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>Chưa xếp lịch</strong></div>
-            <div class="receipt-row"><span>Vé cổng</span><strong class="nums">—</strong></div>
-            <div class="receipt-row"><span>Dịch vụ lẻ</span><strong class="nums">—</strong></div>
-            <div class="receipt-row"><span>Thời tiết dự kiến</span><strong>—</strong></div>
+          <div class="voucher-body">
+            <div class="receipt-rows">
+              <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
+              <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>Chờ lập lịch</strong></div>
+              <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">—</strong></div>
+              <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">—</strong></div>
+              <div class="receipt-row"><span>Kịch bản thời tiết</span><strong>—</strong></div>
+            </div>
           </div>
         `;
         return;
       }
-      const ticketLabel = TICKET_NAMES[cost.ticket_type] || cost.ticket_type || "Vé tiêu chuẩn cả ngày";
+      const ticketLabel = TICKET_NAMES[cost.ticket_type] || cost.ticket_type || "Vé cả ngày (09:00–20:00)";
       costRoot.innerHTML = `
-        <div class="receipt-hero">
+        <div class="voucher-head">
           <div>
-            <div class="sec-sub">Tổng chi phí dự kiến</div>
-            <div class="receipt-total nums">${fmtVnd(cost.total_vnd)}</div>
+            <div class="voucher-kicker">Tổng chi phí dự kiến</div>
+            <div class="voucher-total nums">${fmtVnd(cost.total_vnd)}</div>
           </div>
+          <span class="voucher-badge">Tính chính xác bằng code</span>
         </div>
-        <div class="receipt-rows">
-          <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
-          <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>${esc(ticketLabel)}</strong></div>
-          <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">${fmtVnd(cost.gate_vnd)}</strong></div>
-          <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">${fmtVnd(cost.extra_vnd)}</strong></div>
-          <div class="receipt-row"><span>Thời tiết dự kiến</span><strong>${esc(parsed.weather || "Nắng ráo")}</strong></div>
+        <div class="voucher-body">
+          <div class="receipt-rows">
+            <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
+            <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>${esc(ticketLabel)}</strong></div>
+            <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">${fmtVnd(cost.gate_vnd)}</strong></div>
+            <div class="receipt-row"><span>Dịch vụ lẻ ngoài vé</span><strong class="nums">${fmtVnd(cost.extra_vnd)}</strong></div>
+            <div class="receipt-row"><span>Thời tiết áp dụng</span><strong>${esc(parsed.weather || "Nắng ráo")}</strong></div>
+          </div>
         </div>
       `;
     }
@@ -1774,7 +2520,7 @@
         traceRoot.innerHTML = "Chưa có lượt gọi nào.";
         return;
       }
-      const models = (trace.models && trace.models.length) ? trace.models.join(", ") : "không gọi model";
+      const models = (trace.models && trace.models.length) ? trace.models.join(", ") : "xử lý trực tiếp bằng code (0 token)";
       const rows = (trace.events || []).map((ev) => `
         <tr>
           <td>${esc(ev.kind)}</td>
@@ -1784,15 +2530,15 @@
         </tr>
       `).join("");
       traceRoot.innerHTML = `
-        <div class="sec-sub">Model: <strong>${esc(models)}</strong></div>
+        <div class="sec-sub">Nguồn xử lý: <strong>${esc(models)}</strong></div>
         <div class="trace-kpis nums">
           <div class="trace-kpi"><span>Gọi model</span><strong>${esc(trace.model_calls)}</strong></div>
-          <div class="trace-kpi"><span>Gọi tool</span><strong>${esc(trace.tool_calls)}</strong></div>
+          <div class="trace-kpi"><span>Gọi công cụ</span><strong>${esc(trace.tool_calls)}</strong></div>
           <div class="trace-kpi"><span>Token vào/ra</span><strong>${esc(trace.tokens_in)}/${esc(trace.tokens_out)}</strong></div>
-          <div class="trace-kpi"><span>Thời gian</span><strong>${esc(trace.elapsed_s)}s</strong></div>
+          <div class="trace-kpi"><span>Tổng thời gian</span><strong>${esc(trace.elapsed_s)}s</strong></div>
         </div>
         <table class="trace-tbl">
-          <thead><tr><th>Loại</th><th>Công cụ / Ghi chú</th><th>Mốc</th><th>Độ trễ</th></tr></thead>
+          <thead><tr><th>Bước</th><th>Công cụ / Kiểm tra</th><th>Mốc</th><th>Độ trễ</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
       `;
@@ -1816,17 +2562,20 @@
     function renderLoading() {
       openResultWorkspace();
       setActionButtons(false, false);
-      resultTabBadge.textContent = "Đang xử lý...";
+      resultTabBadge.textContent = "Đang xử lý…";
       resultTabBadge.classList.remove("ready");
-      routeSummary.textContent = "Đang sắp xếp...";
-      zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.";
+      routeSummary.textContent = "Đang kiểm tra ràng buộc…";
+      zoneInfoBar.textContent = "Đang tính toán lộ trình đi bộ ngắn nhất và thời gian đệm giữa các phân khu…";
       renderParkMap([], null);
       renderCostCard(null);
       renderTrace(null);
       timelineRoot.innerHTML = `
         <div class="banner info">
-          <span>Đang đối chiếu giờ mở cửa, thời tiết, giới hạn chiều cao &amp; chọn lộ trình phù hợp cho gia đình...</span>
+          <span>Đang đối chiếu giờ mở cửa, thời tiết, chiều cao từng bé, đệm tắm tráng Công viên nước và ngân sách…</span>
         </div>
+        <div class="skel-card" aria-hidden="true"></div>
+        <div class="skel-card" aria-hidden="true"></div>
+        <div class="skel-card" aria-hidden="true"></div>
       `;
     }
 
@@ -1839,8 +2588,8 @@
       routeSummary.textContent = "Chưa hoàn tất";
       timelineRoot.innerHTML = `
         <div class="banner danger"><span>Không thể hoàn tất yêu cầu: ${esc(msg)}</span></div>
-        <div class="raw-msg">Vui lòng thử lại sau ít giây hoặc kiểm tra kết nối dịch vụ tư vấn.</div>
-        ${canRetry ? '<div style="margin-top:12px;"><button type="button" class="btn-cta" id="retryBtn" style="height:44px;">Thử lại</button></div>' : ""}
+        <div class="raw-msg">Quý khách vui lòng thử bấm lại sau ít giây hoặc kiểm tra kết nối tới máy chủ tư vấn.</div>
+        ${canRetry ? '<div style="margin-top:12px;"><button type="button" class="btn-cta" id="retryBtn" style="height:42px;">Thử lập lịch lại</button></div>' : ""}
       `;
       const retryBtn = document.getElementById("retryBtn");
       if (retryBtn) retryBtn.addEventListener("click", () => submitRequest());
@@ -1854,7 +2603,7 @@
       renderCostCard(p);
 
       const day = getSelectedDay();
-      const dayTag = day ? `${day.rel_label} (${day.full_date})` : "Hôm nay";
+      const dayTag = day ? `${day.rel_label}, ${day.full_date}` : "Hôm nay";
 
       if (p.kind === "schedule") {
         setActionButtons(true, true);
@@ -1862,27 +2611,29 @@
         resultTabBadge.textContent = `${items.length} điểm`;
         resultTabBadge.classList.add("ready");
         routeSummary.textContent = `${items.length} điểm dừng${p.cost ? " (" + fmtVnd(p.cost.total_vnd) + ")" : ""}`;
+        zoneInfoBar.innerHTML = `Lộ trình đi qua <strong class="nums">${items.length} điểm dừng</strong> từ Ga cáp treo. Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng bên trái để xem thời gian đi bộ.`;
         renderParkMap(items, null);
 
         const bannerCls = p.is_mock ? "warn" : "ok";
         const bannerTitle = p.is_mock
           ? `Lịch trình tham khảo nhanh (${esc(dayTag)})`
-          : `Lịch trình phù hợp (${esc(dayTag)}): Đã đối chiếu giờ mở cửa, chiều cao & chi phí`;
+          : `Lịch trình phù hợp (${esc(dayTag)}): Đã kiểm chứng giờ mở cửa, chiều cao & chi phí`;
 
         let prevZone = "GATE";
         let stopsHtml = `
           <div class="gate-start">
             <span class="gate-dot">C</span>
-            <span>Xuất phát tại Ga cáp treo Đảo Hòn Tre (đã gồm cáp treo 2 chiều theo vé vào cổng)</span>
+            <span>Xuất phát tại Ga cáp treo Đảo Hòn Tre (đã gồm cáp treo khứ hồi 2 chiều)</span>
           </div>
         `;
 
         items.forEach((it, idx) => {
           const leg = calcLegInfo(prevZone, it.zone);
           const dur = Math.max(0, toMin(it.end) - toMin(it.start));
-          const zMeta = ZONES[it.zone] || { label: it.zone, color: "#0e4d5c", img: "/assets/hero_vinwonders.jpg" };
+          const zMeta = ZONES[it.zone] || { label: it.zone, short: it.zone, color: "#0a586c", img: "/assets/hero_vinwonders.jpg" };
           const isIndoor = String(it.env || "").toLowerCase().includes("trong nhà");
           const cleanName = humanizeUiText(it.name);
+          const cleanReason = humanizeUiText(it.reason, it.id);
 
           stopsHtml += `
             <div class="leg-connector nums">
@@ -1893,8 +2644,8 @@
             </div>
             <article class="stop-card" data-zone="${esc(it.zone)}" style="--zone-color:${esc(zMeta.color)}">
               <span class="stop-num nums">${idx + 1}</span>
-              <img class="stop-thumb" src="${esc(zMeta.img)}" alt="Phân khu ${esc(zMeta.label)}" />
-              <div>
+              <img class="stop-thumb" src="${esc(zMeta.img)}" width="248" height="184" alt="Hình minh họa phân khu ${esc(zMeta.label)}" />
+              <div style="min-width:0;">
                 <div class="stop-top">
                   <span class="time-chip nums">
                     <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
@@ -1906,7 +2657,7 @@
                   </div>
                 </div>
                 <h4 class="stop-name">${esc(cleanName)}</h4>
-                <p class="stop-reason">${esc(humanizeUiText(it.reason))}</p>
+                <p class="stop-reason">${esc(cleanReason)}</p>
               </div>
             </article>
           `;
@@ -1914,7 +2665,7 @@
         });
 
         const notesHtml = (p.notes && p.notes.length)
-          ? `<div class="notes-box"><strong>Lưu ý dành cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(humanizeUiText(n))}</li>`).join("")}</ul></div>`
+          ? `<div class="notes-box"><strong>Lưu ý quan trọng cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(humanizeUiText(n))}</li>`).join("")}</ul></div>`
           : "";
 
         timelineRoot.innerHTML = `
@@ -1927,7 +2678,7 @@
           <div class="timeline-wrap">${stopsHtml}</div>
           ${notesHtml}
           <div class="disclaimer-row">
-            <span>Lịch trình mang tính gợi ý để gia đình tham khảo, điều chỉnh và chủ động đặt vé trên kênh chính thức.</span>
+            <span>Lịch trình mang tính gợi ý để phụ huynh tham khảo, linh hoạt điều chỉnh và chủ động đặt vé trên kênh chính thức.</span>
           </div>
         `;
 
@@ -1938,8 +2689,8 @@
             timelineRoot.querySelectorAll(".stop-card").forEach((c) => c.classList.remove("active"));
             card.classList.add("active");
             renderParkMap(items, zId);
-            const z = ZONES[zId] || { label: zId };
-            zoneInfoBar.innerHTML = `Đang xem phân khu <strong>${esc(z.label)}</strong> từ lịch trình.`;
+            const z = ZONES[zId] || { label: zId, subtitle: "" };
+            zoneInfoBar.innerHTML = `Đang xem vị trí phân khu <strong>${esc(z.label)}${z.subtitle ? " (" + esc(z.subtitle) + ")" : ""}</strong> trên bản đồ đảo.`;
           });
         });
         return;
@@ -1947,15 +2698,15 @@
 
       setActionButtons(true, false);
       renderParkMap([], null);
-      zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ để xem thời gian di chuyển từ cổng.";
+      zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ để xem thời gian đi bộ từ cổng cáp treo.";
       resultTabBadge.textContent = p.kind === "blocked" ? "Từ chối" : "Cần bổ sung";
       resultTabBadge.classList.remove("ready");
       routeSummary.textContent = p.kind === "blocked" ? "Không hỗ trợ yêu cầu" : "Cần thêm thông tin";
       const metaMap = {
         blocked: { cls: "danger", title: "Không thể đáp ứng yêu cầu vượt quy định an toàn hoặc ngoài phạm vi hỗ trợ" },
-        ask_more: { cls: "warn", title: "Cần thêm thông tin để tính đúng hạng vé & gợi ý trò chơi phù hợp" },
-        impossible: { cls: "warn", title: "Chưa thể xếp lịch khớp toàn bộ yêu cầu hiện tại" },
-        other: { cls: "warn", title: "Thông tin phản hồi" }
+        ask_more: { cls: "warn", title: "Cần bổ sung thêm thông tin để tính đúng hạng vé & gợi ý trò chơi an toàn" },
+        impossible: { cls: "warn", title: "Chưa thể xếp lịch thỏa mãn đồng thời các ràng buộc hiện tại" },
+        other: { cls: "info", title: "Thông tin giải đáp từ dữ liệu niêm yết" }
       };
       const meta = metaMap[p.kind] || metaMap.other;
       timelineRoot.innerHTML = `
@@ -1970,8 +2721,8 @@
         applyBuilderToPrompt();
         text = inputEl.value.trim();
       }
-      submitBtn.disabled = true;
-      setServerState("busy", "Đang lập lịch...");
+      setSubmittingUI(true);
+      setServerState("busy", "Đang lập lịch…");
       renderLoading();
       document.getElementById("mainTabs").scrollIntoView({ behavior: "smooth", block: "start" });
       try {
@@ -1986,20 +2737,20 @@
           renderError(data.error || "Máy chủ trả về lỗi không xác định.", true);
           return;
         }
-        setServerState("", "Sẵn sàng");
+        setServerState("", "Sẵn sàng tư vấn");
         renderResult(data);
       } catch {
-        setServerState("err", "Mất kết nối máy chủ");
+        setServerState("err", "Mất kết nối");
         renderError("Không kết nối được tới máy chủ cục bộ 127.0.0.1.", true);
       } finally {
-        submitBtn.disabled = false;
+        setSubmittingUI(false);
       }
     }
 
     document.querySelectorAll(".tab-btn").forEach((btn) => {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     });
-    document.querySelectorAll(".top-nav a[data-jump-tab]").forEach((a) => {
+    document.querySelectorAll("a[data-jump-tab]").forEach((a) => {
       a.addEventListener("click", () => switchTab(a.dataset.jumpTab));
     });
     document.querySelectorAll("#showFilterStrip .filter-btn").forEach((btn) => {
@@ -2030,7 +2781,7 @@
             guestState.seniors = [...cfg.guests.seniors];
           }
           document.getElementById("bWindow").value = cfg.window;
-          document.getElementById("bBudget").value = String(cfg.budget);
+          budgetInput.value = String(cfg.budget);
           updateGuestUI();
           const chosen = getSelectedDay();
           const dateNote = chosen ? `vào ${chosen.rel_label} (${chosen.full_date}), ` : "";
@@ -2058,7 +2809,7 @@
     function getChildTier(heightCm) {
       const h = Number(heightCm || 115);
       if (h < 100) return { id: "INFANT", label: "Miễn phí (<100cm)", cls: "free" };
-      if (h < 140) return { id: "CHILD", label: "Vé trẻ em (100–<140cm)", cls: "" };
+      if (h < 140) return { id: "CHILD", label: "Vé trẻ em (100–139cm)", cls: "" };
       return { id: "ADULT", label: "Vé người lớn (≥140cm)", cls: "adult" };
     }
 
@@ -2089,8 +2840,8 @@
           return `
             <div class="sub-person">
               <strong>Bé ${idx + 1}</strong>
-              <div><label for="chAge${idx}">Tuổi (1–15)</label><input id="chAge${idx}" class="ch-age-in" data-idx="${idx}" type="number" min="1" max="15" value="${ch.age}" /></div>
-              <div><label for="chH${idx}">Cao (cm)</label><input id="chH${idx}" class="ch-h-in" data-idx="${idx}" type="number" min="70" max="165" value="${ch.height}" /></div>
+              <div><label for="chAge${idx}">Tuổi (1–15)</label><input id="chAge${idx}" class="ch-age-in nums" data-idx="${idx}" type="number" min="1" max="15" value="${ch.age}" /></div>
+              <div><label for="chH${idx}">Cao (cm)</label><input id="chH${idx}" class="ch-h-in nums" data-idx="${idx}" type="number" min="70" max="165" value="${ch.height}" /></div>
               <span class="tier-badge ${tier.cls}">${tier.label}</span>
             </div>
           `;
@@ -2122,7 +2873,7 @@
         seniorsList.innerHTML = guestState.seniors.map((age, idx) => `
           <div class="sub-person">
             <strong>Khách ${idx + 1}</strong>
-            <div><label for="srAge${idx}">Tuổi (≥60)</label><input id="srAge${idx}" class="sr-age-in" data-idx="${idx}" type="number" min="60" max="95" value="${age}" /></div>
+            <div><label for="srAge${idx}">Tuổi (≥60)</label><input id="srAge${idx}" class="sr-age-in nums" data-idx="${idx}" type="number" min="60" max="95" value="${age}" /></div>
             <span class="tier-badge" style="grid-column:span 2;">Giá người cao tuổi (60+)</span>
           </div>
         `).join("");
@@ -2137,6 +2888,7 @@
     }
 
     function refreshEstimate() {
+      budgetPretty.textContent = fmtCompactBudget(budgetInput.value);
       const win = document.getElementById("bWindow").value;
       const isAfter16 = win.startsWith("16:00");
       const prices = isAfter16
@@ -2149,7 +2901,7 @@
     }
 
     function applyBuilderToPrompt() {
-      const budget = Math.max(500000, Number(document.getElementById("bBudget").value || 3500000));
+      const budget = Math.max(500000, Number(budgetInput.value || 3500000));
       const win = document.getElementById("bWindow").value;
       const day = getSelectedDay();
       const weather = (day && day.prompt_hint) ? day.prompt_hint : "";
@@ -2208,6 +2960,7 @@
         updateGuestUI();
       });
     });
+    budgetInput.addEventListener("input", refreshEstimate);
     document.getElementById("bWindow").addEventListener("change", refreshEstimate);
     document.getElementById("applyBuilderBtn").addEventListener("click", applyBuilderToPrompt);
     document.getElementById("popApplyBtn").addEventListener("click", applyBuilderToPrompt);
@@ -2259,7 +3012,7 @@
     async function checkHealth() {
       try {
         const res = await fetch("/api/health");
-        if (res.ok) setServerState("", "Sẵn sàng");
+        if (res.ok) setServerState("", "Sẵn sàng tư vấn");
         else setServerState("err", "Lỗi máy chủ");
       } catch {
         setServerState("err", "Mất kết nối");
