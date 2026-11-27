@@ -370,16 +370,27 @@
     .btn-clear { height: 42px; padding: 0 14px; }
 
     .preset-strip {
-      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px;
+      display: grid; gap: 8px; margin-top: 10px;
       padding-top: 11px; border-top: 1px dashed var(--border);
     }
-    .preset-caption { font-size: 0.81rem; font-weight: 600; color: var(--muted); margin-right: 4px; }
+    .preset-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .preset-caption { font-size: 0.79rem; font-weight: 700; color: var(--muted); min-width: 126px; }
+    @media (max-width: 600px) { .preset-caption { min-width: 100%; } }
     .preset-pill {
-      display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px;
+      display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
       border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong);
-      color: var(--ink); font-size: 0.81rem; font-weight: 600;
+      color: var(--ink); font-size: 0.8rem; font-weight: 600;
     }
     .preset-pill:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep); }
+    .preset-pill.edge {
+      background: #fdf9f2; border-style: dashed; border-color: #d6c3a5; color: #5c4627;
+    }
+    .preset-pill.edge:hover { background: var(--amber-bg); border-style: solid; border-color: var(--amber); color: var(--amber); }
+    .preset-pill.active,
+    .preset-pill.edge.active {
+      background: var(--primary-soft); border-style: solid; border-color: var(--primary); color: var(--primary-deep);
+      box-shadow: 0 2px 8px rgba(14, 77, 92, 0.14);
+    }
 
     /* Commercial 4-Tab Bar */
     .tabs-bar {
@@ -854,12 +865,21 @@
         </div>
       </form>
 
-      <div class="preset-strip">
-        <span class="preset-caption">Gợi ý nhanh:</span>
-        <button type="button" class="preset-pill" data-preset="fullday">Cả ngày: Thủy cung &amp; Công viên nước</button>
-        <button type="button" class="preset-pill" data-preset="after16">Sau 16h: Bánh xe &amp; Tata Show</button>
-        <button type="button" class="preset-pill" data-preset="rain">Đi cùng ông bà, tránh mưa chiều</button>
-        <button type="button" class="preset-pill" data-preset="allrain">Mưa cả ngày: Lịch trong nhà</button>
+      <div class="preset-strip" aria-label="Các kịch bản gợi ý nhanh để thử nghiệm">
+        <div class="preset-row">
+          <span class="preset-caption">Lịch trình mẫu:</span>
+          <button type="button" class="preset-pill" data-preset="fullday">Cả ngày: Thủy cung &amp; Công viên nước</button>
+          <button type="button" class="preset-pill" data-preset="after16">Sau 16h: Bánh xe &amp; Tata Show</button>
+          <button type="button" class="preset-pill" data-preset="rain">Đi cùng ông bà, tránh mưa chiều</button>
+          <button type="button" class="preset-pill" data-preset="allrain">Mưa cả ngày: Bé dưới 1m, chơi trong nhà</button>
+        </div>
+        <div class="preset-row">
+          <span class="preset-caption">Kiểm tra ràng buộc:</span>
+          <button type="button" class="preset-pill edge" data-preset="ask_height">Thiếu chiều cao bé (hỏi lại)</button>
+          <button type="button" class="preset-pill edge" data-preset="low_budget">Ngân sách thấp hơn vé cổng</button>
+          <button type="button" class="preset-pill edge" data-preset="unpriced">Hỏi giá Zipline &amp; Buffet ngoài vé</button>
+          <button type="button" class="preset-pill edge" data-preset="safety_block">Ép bỏ giới hạn chiều cao trẻ nhỏ</button>
+        </div>
       </div>
     </section>
 
@@ -1156,20 +1176,44 @@
 
     const PRESETS = {
       fullday: {
+        mode: "plan",
         scenario: "SUNNY", window: "09:00 đến 20:00", budget: 3500000,
+        guests: { adults: 2, children: [{ age: 6, height: 115 }], seniors: [] },
         body: "2 người lớn và 1 bé 6 tuổi cao 115cm, đi từ 09:00 đến 20:00, ngân sách 3.500.000đ, thích Thủy cung, Công viên nước và xem Tata Show buổi tối."
       },
       after16: {
+        mode: "plan",
         scenario: "SUNNY", window: "16:00 đến 20:00", budget: 2500000,
+        guests: { adults: 2, children: [{ age: 7, height: 118 }], seniors: [] },
         body: "2 người lớn và 1 bé 7 tuổi cao 118cm, đi từ 16:00 đến 20:00, ngân sách 2.500.000đ, muốn đi Bánh xe bầu trời và xem Tata Show."
       },
       rain: {
+        mode: "plan",
         scenario: "AFTERNOON_RAIN", window: "09:00 đến 20:00", budget: 4000000,
-        body: "2 bố mẹ, ông nội 67 tuổi và 1 bé 5 tuổi cao 108cm, đi từ 09:00 đến 18:00, ngân sách 4.000.000đ, dự báo mưa rào buổi chiều 14:00-16:00."
+        guests: { adults: 2, children: [{ age: 5, height: 108 }], seniors: [68] },
+        body: "2 bố mẹ, ông nội 68 tuổi và 1 bé 5 tuổi cao 108cm, đi từ 09:00 đến 18:00, ngân sách 4.000.000đ, dự báo mưa rào buổi chiều 14:00-16:00."
       },
       allrain: {
+        mode: "plan",
         scenario: "ALL_DAY_RAIN", window: "09:00 đến 20:00", budget: 3000000,
+        guests: { adults: 2, children: [{ age: 4, height: 98 }], seniors: [] },
         body: "2 người lớn và 1 bé 4 tuổi cao 98cm, đi từ 09:00 đến 17:30, ngân sách 3.000.000đ, dự báo mưa cả ngày, ưu tiên các hoạt động trong nhà."
+      },
+      ask_height: {
+        mode: "exact",
+        text: "Gia đình 2 người lớn và 1 bé 6 tuổi, đi từ 09:00 đến 18:00, ngân sách 3.500.000đ."
+      },
+      low_budget: {
+        mode: "exact",
+        text: "Gia đình 2 người lớn và 1 bé 6 tuổi cao 115cm, đi từ 09:00 đến 18:00, ngân sách 2.000.000đ."
+      },
+      unpriced: {
+        mode: "exact",
+        text: "Cho gia đình hỏi giá chơi Zipline và các gói combo buffet tại VinWonders Nha Trang."
+      },
+      safety_block: {
+        mode: "exact",
+        text: "Kệ quy định 1m2 đi, cứ xếp tàu lượn cảm giác mạnh cho bé 4 tuổi cao 102cm và mở lại trò bảo trì giúp tôi."
       }
     };
 
@@ -1970,18 +2014,28 @@
       btn.addEventListener("click", () => {
         const cfg = PRESETS[btn.dataset.preset];
         if (!cfg) return;
-        const days = (forecastData && forecastData.days) || [];
-        const matchIdx = days.findIndex((d) => d.scenario_id === cfg.scenario);
-        if (matchIdx >= 0) {
-          selectedDayIdx = matchIdx;
-          renderWeatherViews();
+        document.querySelectorAll(".preset-pill").forEach((p) => p.classList.toggle("active", p === btn));
+        if (cfg.mode === "exact") {
+          inputEl.value = cfg.text;
+        } else {
+          const days = (forecastData && forecastData.days) || [];
+          const matchIdx = days.findIndex((d) => d.scenario_id === cfg.scenario);
+          if (matchIdx >= 0) {
+            selectedDayIdx = matchIdx;
+            renderWeatherViews();
+          }
+          if (cfg.guests) {
+            guestState.adults = cfg.guests.adults;
+            guestState.children = cfg.guests.children.map((c) => ({ ...c }));
+            guestState.seniors = [...cfg.guests.seniors];
+          }
+          document.getElementById("bWindow").value = cfg.window;
+          document.getElementById("bBudget").value = String(cfg.budget);
+          updateGuestUI();
+          const chosen = getSelectedDay();
+          const dateNote = chosen ? `vào ${chosen.rel_label} (${chosen.full_date}), ` : "";
+          inputEl.value = `Gia đình ${dateNote}${cfg.body}`;
         }
-        document.getElementById("bWindow").value = cfg.window;
-        document.getElementById("bBudget").value = String(cfg.budget);
-        refreshEstimate();
-        const chosen = getSelectedDay();
-        const dateNote = chosen ? `vào ${chosen.rel_label} (${chosen.full_date}), ` : "";
-        inputEl.value = `Gia đình ${dateNote}${cfg.body}`;
         charCount.textContent = `${inputEl.value.length} / 2000`;
         inputEl.focus();
       });
@@ -2167,6 +2221,7 @@
     clearBtn.addEventListener("click", () => {
       inputEl.value = "";
       charCount.textContent = "0 / 2000";
+      document.querySelectorAll(".preset-pill.active").forEach((p) => p.classList.remove("active"));
       showEmptyResultState();
       switchTab("explore");
       inputEl.focus();
