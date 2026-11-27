@@ -11,10 +11,10 @@
 
 ## 2. Bộ câu thử dựng ra sao
 
-- `eval/benchmark.csv`: 15 câu (thuong 5 · kho 7 · tu_choi 3, trong đó 2 câu tấn công)
-- Nguồn (`python run.py check` in sẵn): nguoi_dung 3 · data_that 5 · tu_viet 7 · sinh_seed 0 → từ người dùng / data thật 8/15 (53.3%, cần ≥1/3)
-- Độ phủ — lưới input 4 chiều (guide 2.4 bước 5): (1) Thành phần đoàn (người lớn, trẻ 3–9 tuổi cao 95–132cm, người cao tuổi 66–68 tuổi); (2) Loại vé & dịch vụ lẻ (`STANDARD`, `AFTER_16H`, `SV01` cho thú ăn, `SV02` buggy không giá, `SV05` Zipline không giá); (3) Ngân sách (2.0M thiếu ngân sách, 2.2M–4.5M đ); (4) Khung giờ & thời tiết (`09:00–18:00`, `16:00–20:00`, `14:00–17:00` xung đột, `ALL_DAY_RAIN`, `AFTERNOON_RAIN`)
-- Câu `kho` trỏ về 4 lớp chỗ khó (`spec.md` §5): lớp 1 (nguồn sự thật / bảo trì / không có giá): B06, B07 · lớp 2 (mơ hồ / thiếu thông tin): B08 · lớp 3 (ngoài phạm vi / giả danh quản lý): B13–B15 (`tu_choi`) · lớp 4 (ngân sách thiếu, đệm 20p CVN + xung đột di chuyển show, mưa cả ngày/mưa chiều, an toàn tuổi-chiều cao): B09, B10, B11, B12
+- `eval/benchmark.csv`: 25 câu (thuong 9 · kho 12 · tu_choi 4, trong đó 3 câu tấn công)
+- Nguồn (`python run.py check` in sẵn): nguoi_dung 6 · data_that 9 · tu_viet 10 · sinh_seed 0 → từ người dùng / data thật 15/25 (60.0%, cần ≥1/3)
+- Độ phủ — lưới input 4 chiều (guide 2.4 bước 5): (1) Thành phần đoàn (người lớn, trẻ 3–10 tuổi cao 95–138cm, thiếu chiều cao bé, người cao tuổi 64–68 tuổi); (2) Loại vé & dịch vụ lẻ (`STANDARD`, `AFTER_16H`, `SV01` cho thú ăn, `SV02` buggy không giá, `SV03` locker, `SV04` áo mưa, `SV05` Zipline & combo/VIP không giá); (3) Ngân sách (2.0M thiếu vé cổng, 2.92M vượt do phụ phí, 2.2M–5.0M đ, thiếu ngân sách); (4) Khung giờ, chế độ & thời tiết (`09:00–18:00`, `16:00–20:00`, `14:00–17:00` xung đột, `chi_trong_nha`, `ALL_DAY_RAIN`, `AFTERNOON_RAIN`, `EVENING_RAIN`)
+- Câu `kho` trỏ về 4 lớp chỗ khó (`spec.md` §5): lớp 1 (nguồn sự thật / bảo trì / không có giá): B06, B07, B20 · lớp 2 (mơ hồ / thiếu thông tin): B08, B21 · lớp 3 (ngoài phạm vi / giả danh quản lý): B13–B15, B25 (`tu_choi`) · lớp 4 (ngân sách thiếu/vượt phụ phí, đệm 20p CVN + xung đột di chuyển show, mưa cả ngày/mưa chiều/mưa tối, chỉ trong nhà, an toàn tuổi-chiều cao): B09–B12, B22–B24
 
 ## 3. Metric và cách chấm
 
