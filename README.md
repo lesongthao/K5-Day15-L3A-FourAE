@@ -84,14 +84,14 @@ Nhóm dùng stack khác (Node, Streamlit, notebook…): sửa hàm `run_app()` t
 
 | Thành phần | Thật / Giả | Ghi chú |
 |---|---|---|
-| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: ____ |
-|  |  |  |
+| Lời gọi AI ở quyết định trung tâm | **Thật** (bắt buộc từ CP3) | Model: `cx/gpt-5.6-luna` qua endpoint tương thích OpenAI (`codebase/ai.py`, đo token từ `usage`) |
+| Kiểm tra ràng buộc & tính tổng chi phí | **Thật** | Code Python thuần trong `codebase/tools.py` (`kiem_lich_trinh`, không để model tự cộng tiền) |
+| Bằng chứng pain & bộ câu thử | **Thật** | 5 phỏng vấn `P1`–`P5` + 50 review Google Maps ẩn danh (`evidence/reviews_anon.csv`), 15/25 câu thử từ nguồn thật |
+| Dữ liệu khu vui chơi (`data/park/*.json`) | **Lai: thật + `synthetic`** | Tên khu, giờ mở, giá vé, `A01`–`A07` từ `vinwonders.com`; lịch show, đi bộ, thời tiết, `A12`–`A18` là `synthetic` (`data/DATA_CARD.md`) |
 
 ## Dùng AI vào việc gì
 
-2–3 dòng (bắt buộc): nhóm dùng công cụ AI nào để làm gì, người kiểm lại phần nào. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
-
-____
+Nhóm dùng Coding Agent (Antigravity / Codex / Claude Code) để dựng khung `codebase/tools.py`, `codebase/ai.py`, `codebase/agent.py`, bộ unit test, rà câu hỏi mở phỏng vấn, gợi ý script đếm review và trích xuất phần dữ liệu thật từ `vinwonders.com`. Cả nhóm tự phỏng vấn trực tiếp 5 phụ huynh ngoài nhóm (`P1`–`P5`), kiểm tay toàn bộ công thức tính vé/phụ thu/ràng buộc code và chạy đối chiếu thực tế qua `eval` và `simulate`. Chi tiết: [docs/ai-usage.md](docs/ai-usage.md). Coding agent đọc [AGENTS.md](AGENTS.md).
 
 ## File mẫu — điền ở bước nào
 
