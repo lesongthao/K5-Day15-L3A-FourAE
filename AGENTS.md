@@ -40,6 +40,6 @@ Khung chỉ dùng thư viện chuẩn của Python. Thêm thư viện thì ghi v
 
 ## Quy ước của nhóm
 
-- Ngôn ngữ trả lời người dùng: __
-- Phong cách code / đặt tên: __
-- Ai duyệt thay đổi do agent tạo trước khi commit: __
+- Ngôn ngữ trả lời người dùng: Tiếng Việt rõ ràng, ngắn gọn, có số liệu từ công cụ.
+- Phong cách code / đặt tên: Python 3.10+, thư viện chuẩn, Type Hints và Docstring tiếng Việt đầy đủ, mỗi file logic gọn <= 350 dòng.
+- Ai duyệt thay đổi do agent tạo trước khi commit: Đội trưởng (Lê Sông Thao) hoặc thành viên phụ trách phần việc tương ứng duyệt qua Pull Request trước khi merge vào `main`.
