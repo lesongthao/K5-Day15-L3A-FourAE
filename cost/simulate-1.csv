@@ -1,0 +1,132 @@
+﻿run_id,session,persona,turns,inputs,model,model_calls,tool_calls,tokens_in,tokens_out,latency_s,error,tokens_by_model
+simulate-1@20261127-192829,S001,len_lich_ky,3,"Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi",cx/gpt-5.6-luna,1,10,3464,936,19.616,,"{""cx/gpt-5.6-luna"": {""in"": 3464, ""out"": 936}}"
+simulate-1@20261127-192829,S002,lap_lich_nhanh,2,"Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond ‖ Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00, ",cx/gpt-5.6-luna,2,7,6502,1944,37.889,,"{""cx/gpt-5.6-luna"": {""in"": 6502, ""out"": 1944}}"
+simulate-1@20261127-192829,S003,lap_lich_nhanh,2,"Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond",cx/gpt-5.6-luna,2,12,7003,2740,51.908,,"{""cx/gpt-5.6-luna"": {""in"": 7003, ""out"": 2740}}"
+simulate-1@20261127-192829,S004,lap_lich_nhanh,2,"Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi",cx/gpt-5.6-luna,1,5,3604,1067,20.921,,"{""cx/gpt-5.6-luna"": {""in"": 3604, ""out"": 1067}}"
+simulate-1@20261127-192829,S005,len_lich_ky,3,"Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders  ‖ Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu",cx/gpt-5.6-luna,2,11,7068,1943,38.267,,"{""cx/gpt-5.6-luna"": {""in"": 7068, ""out"": 1943}}"
+simulate-1@20261127-192829,S006,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi",cx/gpt-5.6-luna,2,7,7221,2207,42.533,,"{""cx/gpt-5.6-luna"": {""in"": 7221, ""out"": 2207}}"
+simulate-1@20261127-192829,S007,lap_lich_nhanh,2,"Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders ",cx/gpt-5.6-luna,1,10,3464,1096,20.849,,"{""cx/gpt-5.6-luna"": {""in"": 3464, ""out"": 1096}}"
+simulate-1@20261127-192829,S008,len_lich_ky,3,"Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ ‖ Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi ",,3,15,0,0,16.954,"T1 RuntimeError: HTTP 502: error code: 502
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S009,lap_lich_nhanh,2,"Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu ‖ Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi ",,2,10,0,0,0.476,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S010,lap_lich_nhanh,2,"Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders  ‖ Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond",,2,10,0,0,0.53,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S011,lap_lich_nhanh,2,"Gia đình 2 người lớn, 1 bé 5 tuổi cao 108cm và 1 ông 68 tuổi đi VinWonders Nha T ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ",,1,9,0,0,0.177,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S012,lap_lich_nhanh,2,"Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond ‖ Gia đình 2 người lớn và 1 bé 6 tuổi cao 112cm đi VinWonders Nha Trang từ 10:00 đ",,2,10,0,0,0.385,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S013,len_lich_ky,3,"Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders  ‖ Gia đình 2 người lớn và 1 bé 5 tuổi cao 108cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00, ",,2,10,0,0,0.477,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S014,lap_lich_nhanh,2,Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ,,1,9,0,0,0.223,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S015,xep_lai_dot_xuat,4,"Gia đình 2 người lớn, 1 bé 5 tuổi cao 108cm và 1 ông 68 tuổi đi VinWonders Nha T ‖ Gia đình 2 người lớn và 1 bé 5 tuổi cao 105cm đi VinWonders Nha Trang từ 09:30 đ ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ",,3,19,0,0,0.948,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S016,lap_lich_nhanh,2,"Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi ‖ Nhà mình chỉ có 3 tiếng ở VinWonders Nha Trang (14:00–17:00) gồm 2 người lớn và ",,1,5,0,0,0.265,"T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S017,xep_lai_dot_xuat,4,"Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi ‖ Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond ‖ Lịch trình VinWonders Nha Trang trên ổn rồi, bạn đặt vé luôn và thanh toán giúp  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ",,1,9,0,0,0.191,"T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S018,lap_lich_nhanh,2,"Gia đình 2 người lớn, 1 bé 5 tuổi cao 108cm và 1 ông 68 tuổi đi VinWonders Nha T ‖ Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ",,2,10,0,0,0.329,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S019,lap_lich_nhanh,2,Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ,,1,9,0,0,0.169,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S020,len_lich_ky,3,Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 1 bé 5 tuổi cao 108cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ,,2,14,0,0,0.515,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S021,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi ‖ Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ",,1,5,0,0,0.192,"T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S022,lap_lich_nhanh,2,Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N,,1,9,0,0,0.264,"T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S023,len_lich_ky,3,"Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi ‖ Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi  ‖ Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond",,2,10,0,0,0.449,"T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S024,lap_lich_nhanh,2,"Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond ‖ Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi ",,2,10,0,0,0.341,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S025,lap_lich_nhanh,2,Gia đình 2 người lớn và 1 bé 5 tuổi cao 108cm đi VinWonders Nha Trang từ 09:00 đ ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu,,2,10,0,0,0.692,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S026,xep_lai_dot_xuat,4,"Gia đình 2 người lớn và 1 bé 5 tuổi cao 105cm đi VinWonders Nha Trang từ 09:30 đ ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ ‖ Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi  ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu",,3,19,0,0,0.721,"T1 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+; T4 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S027,len_lich_ky,3,"Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders  ‖ Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 1 bé 6 tuổi cao 112cm đi VinWonders Nha Trang từ 10:00 đ",,3,15,0,0,0.606,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S028,lap_lich_nhanh,2,"Gia đình 2 người lớn và 1 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 16:00 đ ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi",,1,5,0,0,0.244,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S029,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 9 tuổi cao 135cm đi VinWonders Nha Trang từ 16:00 đ",,1,9,0,0,0.167,"T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S030,lap_lich_nhanh,2,"Gia đình 2 người lớn và 1 bé 9 tuổi cao 135cm đi VinWonders Nha Trang từ 16:00 đ ‖ Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders ",,2,10,0,0,0.536,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S031,lap_lich_nhanh,2,"Gia đình 2 người lớn và 1 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 16:00 đ ‖ Nhà mình có 2 người lớn và 1 bé cao 115cm sắp đi VinWonders Nha Trang, báo giá g",,1,6,0,0,0.174,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S032,lap_lich_nhanh,2,"Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond ‖ Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond",,2,10,0,0,0.549,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S033,lap_lich_nhanh,2,"Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ ‖ Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ",,2,10,0,0,0.673,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S034,len_lich_ky,3,"Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders  ‖ Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ",,2,14,0,0,0.404,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S035,xep_lai_dot_xuat,4,"Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 6 tuổi cao 112cm đi VinWonders Nha Trang từ 10:00 đ ‖ Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders ",,3,19,0,0,0.946,"T1 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+; T4 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S036,len_lich_ky,3,"Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond ‖ Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ",,1,9,0,0,0.231,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S037,len_lich_ky,3,"Dự báo ngày mai mưa to cả ngày ở Nha Trang, gia đình 2 người lớn và 1 bé 3 tuổi  ‖ Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond ‖ Nhà mình chỉ có 3 tiếng ở VinWonders Nha Trang (14:00–17:00) gồm 2 người lớn và ",,3,15,0,0,0.794,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S038,lap_lich_nhanh,2,"Gia đình 2 người lớn và 1 bé 6 tuổi cao 112cm đi VinWonders Nha Trang từ 10:00 đ ‖ Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders ",,2,10,0,0,0.585,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S039,xep_lai_dot_xuat,4,"Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ ‖ Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Bé nhà mình 4 tuổi cao 105cm nhưng rất thích cảm giác mạnh, kệ quy định 1m2 đi, ",,2,14,0,0,0.519,"T1 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S040,lap_lich_nhanh,2,"Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond ‖ Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N",,2,10,0,0,0.483,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S041,lap_lich_nhanh,2,"Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Nhà mình có 2 người lớn và 1 bé cao 115cm sắp đi VinWonders Nha Trang, báo giá g",,1,6,0,0,0.237,"T1 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S042,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 16:00 đ ‖ Gia đình 2 người lớn, 1 bé 5 tuổi cao 108cm và 1 ông 68 tuổi đi VinWonders Nha T ‖ Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ",,3,15,0,0,0.833,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S043,len_lich_ky,3,"Nhà mình có 2 người lớn và 1 bé cao 115cm sắp đi VinWonders Nha Trang, báo giá g ‖ Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders  ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ",,1,10,0,0,0.219,"T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S044,lap_lich_nhanh,2,"Gia đình 2 người lớn, 1 bé 7 tuổi cao 115cm, ngân sách 3.5 triệu, đi VinWonders  ‖ Mùa hè này gia đình 2 người lớn, 1 bé 4 tuổi cao 95cm và 1 bà 66 tuổi đi VinWond",,2,10,0,0,0.392,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S045,xep_lai_dot_xuat,4,"Nhà mình chỉ có 3 tiếng ở VinWonders Nha Trang (14:00–17:00) gồm 2 người lớn và  ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi ‖ Nhà mình gồm 2 người lớn và 2 bé (5 tuổi cao 108cm, 9 tuổi cao 132cm) đi VinWond ‖ Cuối tuần này nhà mình có 2 bé định đi VinWonders Nha Trang chơi cả ngày, lên gi",,2,10,0,0,0.526,"T1 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S046,xep_lai_dot_xuat,4,"Gia đình 2 người lớn và 1 bé 5 tuổi cao 108cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 5 tuổi cao 108cm đi VinWonders Nha Trang từ 09:00 đ ‖ Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 2 bé (4 tuổi cao 102cm, 7 tuổi cao 122cm) đi VinWonders ",,4,20,0,0,1.019,"T1 RuntimeError: HTTP 530: error code: 1033
+; T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+; T4 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S047,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Gia đình 2 người lớn và 1 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 16:00 đ ‖ Gia đình 2 người lớn và 1 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 16:00 đ",,2,10,0,0,0.511,"T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S048,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 4 tuổi đi VinWonders Nha Trang từ 09:00 đến 17:00,  ‖ Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm đi VinWonders Nha Trang từ 09:00 đ ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 122cm đi VinWonders Nha Trang từ 09:00 đ",,1,9,0,0,0.368,"T2 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S049,len_lich_ky,3,"Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ ‖ Đoàn gia đình 5 người gồm 2 người lớn, 1 bé 6 tuổi cao 115cm và 2 ông bà (64 tuổ ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu",,2,14,0,0,0.523,"T2 RuntimeError: HTTP 530: error code: 1033
+; T3 RuntimeError: HTTP 530: error code: 1033
+",{}
+simulate-1@20261127-192829,S050,xep_lai_dot_xuat,4,"Bé nhà mình 4 tuổi cao 105cm nhưng rất thích cảm giác mạnh, kệ quy định 1m2 đi,  ‖ Trời nắng gắt nên gia đình 2 người lớn và 1 bé 10 tuổi cao 138cm đi VinWonders N ‖ Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi VinWonders Nha Trang từ 09:00 đ ‖ Lập lịch đi VinWonders Nha Trang từ 09:00 đến 20:00 cho 2 người lớn và 1 bé 8 tu",,2,14,0,0,0.523,"T2 RuntimeError: HTTP 530: error code: 1033
+; T4 RuntimeError: HTTP 530: error code: 1033
+",{}
