@@ -1,0 +1,17 @@
+{
+  "_note": "Kịch bản thời tiết cố định để thử lịch trình. TOÀN BỘ synthetic — không phải dự báo thật. Không trang VinWonders nào (đã đọc) ghi quy định đóng trò khi mưa; quy tắc dưới đây là giả định của nhóm.",
+  "src": "SYN",
+  "verified": [],
+  "rain_rules": {
+    "attraction": "Trò có closes_in_rain=true tạm đóng trong khung giờ mưa.",
+    "show": "Show có cancel_in_rain=true bị huỷ nếu giờ suất rơi vào khung giờ mưa.",
+    "indoor": "Trò/show indoor=true vẫn hoạt động."
+  },
+  "scenarios": [
+    {"id": "SUNNY", "label": "Nắng cả ngày", "rain_windows": []},
+    {"id": "AFTERNOON_RAIN", "label": "Mưa rào buổi chiều", "rain_windows": [{"from": "14:00", "to": "16:00"}]},
+    {"id": "EVENING_RAIN", "label": "Mưa buổi tối (ảnh hưởng Tata Show)", "rain_windows": [{"from": "18:30", "to": "20:00"}]},
+    {"id": "ALL_DAY_RAIN", "label": "Mưa to cả ngày", "rain_windows": [{"from": "09:00", "to": "20:00"}]}
+  ],
+  "default": "SUNNY"
+}

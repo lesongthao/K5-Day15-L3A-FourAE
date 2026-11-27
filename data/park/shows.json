@@ -1,0 +1,24 @@
+{
+  "_note": "Lịch show. Trang VinWonders đăng lịch biểu diễn dạng ẢNH, không đọc được thành chữ → mọi giờ suất, thời lượng, khu đặt ở đây là synthetic. Chỉ tên show S01–S03 có nhắc trên web (W_HOURS, phần tóm tắt — chưa kiểm nguyên văn). Cài sẵn xung đột: S02 15:00 (Sea World) sát S04 15:30 (King's Garden).",
+  "shows": [
+    {"id": "S01", "name": "Tata Show", "zone": "FESTIVE_HILL", "times": ["19:30"], "duration_min": 30,
+     "indoor": false, "cancel_in_rain": true, "min_height_cm": null,
+     "src": "SYN", "verified": [],
+     "caveat": "Web nhắc Tata Show thường khoảng 19:30 (tóm tắt, chưa kiểm); khu đặt là synthetic."},
+    {"id": "S02", "name": "Show nàng tiên cá", "zone": "SEA_WORLD", "times": ["11:00", "15:00"], "duration_min": 20,
+     "indoor": true, "cancel_in_rain": false, "min_height_cm": null,
+     "src": "SYN", "verified": []},
+    {"id": "S03", "name": "Show cho cá ăn", "zone": "SEA_WORLD", "times": ["10:00", "14:00"], "duration_min": 15,
+     "indoor": true, "cancel_in_rain": false, "min_height_cm": null,
+     "src": "SYN", "verified": []},
+    {"id": "S04", "name": "Show chim muông (mẫu)", "zone": "KINGS_GARDEN", "times": ["10:30", "15:30"], "duration_min": 25,
+     "indoor": false, "cancel_in_rain": true, "min_height_cm": null,
+     "src": "SYN", "verified": []},
+    {"id": "S05", "name": "Diễu hành lễ hội (mẫu)", "zone": "FESTIVE_HILL", "times": ["16:30"], "duration_min": 30,
+     "indoor": false, "cancel_in_rain": true, "min_height_cm": null,
+     "src": "SYN", "verified": []},
+    {"id": "S06", "name": "Kịch rối cho bé (mẫu)", "zone": "FAIRY_LAND", "times": ["09:30", "13:30", "16:00"], "duration_min": 20,
+     "indoor": true, "cancel_in_rain": false, "min_height_cm": null,
+     "src": "SYN", "verified": []}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "_note": "Dịch vụ thu phí lẻ NGOÀI vé vào cửa (canvas CP2: tách rõ phí lẻ — từ phỏng vấn P4, P5). Tên dịch vụ lấy theo những gì phụ huynh kể trong phỏng vấn (cho thú ăn, xe điện, tủ đồ, áo mưa) — KHÔNG phải bảng giá của VinWonders. Mọi giá là (tự ước tính), trừ khi price_vnd = null: không có giá lẻ công khai → công cụ phải nói 'không có giá', không được đoán. Không suy giá từ combo trên W_PRICE vì trang không ghi rõ combo tính theo người hay theo gói.",
+  "services": [
+    {"id": "SV01", "name": "Cho thú ăn (mẫu)", "zone": "KINGS_GARDEN", "unit": "phần thức ăn",
+     "price_vnd": 50000, "price_note": "(tự ước tính)",
+     "src": "SYN", "verified": [], "from_interview": "P4"},
+    {"id": "SV02", "name": "Xe điện buggy", "zone": null, "unit": "người / lượt",
+     "price_vnd": null, "price_note": "Có sản phẩm 'Vé + Xe điện Buggy' trên W_PRICE nhưng không có giá lẻ → không có giá.",
+     "src": "W_PRICE", "verified": ["name"], "from_interview": "P4"},
+    {"id": "SV03", "name": "Tủ đồ công viên nước (mẫu)", "zone": "TROPICAL_PARADISE", "unit": "tủ / ngày",
+     "price_vnd": 50000, "price_note": "(tự ước tính)",
+     "src": "SYN", "verified": [], "from_interview": "P3"},
+    {"id": "SV04", "name": "Áo mưa giấy (mẫu)", "zone": null, "unit": "cái",
+     "price_vnd": 30000, "price_note": "(tự ước tính)",
+     "src": "SYN", "verified": [], "from_interview": "P2",
+     "caveat": "P2 kể mua áo mưa giá cao ở Sun World Bà Nà, không phải VinWonders — chỉ dùng làm kịch bản mưa."},
+    {"id": "SV05", "name": "Zipline", "zone": "FAIRY_LAND", "unit": "người / lượt",
+     "price_vnd": null, "price_note": "Không gồm trong vé, không có giá lẻ công khai → không có giá. Xem attractions.json A01.",
+     "src": "W_RULES", "verified": ["name"], "attraction_id": "A01"}
+  ]
+}

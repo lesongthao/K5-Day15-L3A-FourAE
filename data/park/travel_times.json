@@ -1,0 +1,16 @@
+{
+  "_note": "Số phút đi bộ giữa các khu, tính cho gia đình có trẻ nhỏ (đi chậm). TOÀN BỘ synthetic — nhóm tự ước tính, không có nguồn công khai. Ma trận đối xứng; trong cùng một khu tính 5 phút. Cài sẵn: TROPICAL_PARADISE xa các khu khác (dễ trễ show nếu xếp sát giờ).",
+  "src": "SYN",
+  "verified": [],
+  "same_zone_min": 5,
+  "nodes": ["GATE", "WORLD_GARDEN", "KINGS_GARDEN", "FAIRY_LAND", "SEA_WORLD", "FESTIVE_HILL", "TROPICAL_PARADISE"],
+  "minutes": {
+    "GATE":              {"GATE": 0,  "WORLD_GARDEN": 5,  "KINGS_GARDEN": 12, "FAIRY_LAND": 15, "SEA_WORLD": 8,  "FESTIVE_HILL": 15, "TROPICAL_PARADISE": 20},
+    "WORLD_GARDEN":      {"GATE": 5,  "WORLD_GARDEN": 0,  "KINGS_GARDEN": 10, "FAIRY_LAND": 12, "SEA_WORLD": 6,  "FESTIVE_HILL": 12, "TROPICAL_PARADISE": 18},
+    "KINGS_GARDEN":      {"GATE": 12, "WORLD_GARDEN": 10, "KINGS_GARDEN": 0,  "FAIRY_LAND": 15, "SEA_WORLD": 20, "FESTIVE_HILL": 8,  "TROPICAL_PARADISE": 25},
+    "FAIRY_LAND":        {"GATE": 15, "WORLD_GARDEN": 12, "KINGS_GARDEN": 15, "FAIRY_LAND": 0,  "SEA_WORLD": 15, "FESTIVE_HILL": 10, "TROPICAL_PARADISE": 15},
+    "SEA_WORLD":         {"GATE": 8,  "WORLD_GARDEN": 6,  "KINGS_GARDEN": 20, "FAIRY_LAND": 15, "SEA_WORLD": 0,  "FESTIVE_HILL": 18, "TROPICAL_PARADISE": 12},
+    "FESTIVE_HILL":      {"GATE": 15, "WORLD_GARDEN": 12, "KINGS_GARDEN": 8,  "FAIRY_LAND": 10, "SEA_WORLD": 18, "FESTIVE_HILL": 0,  "TROPICAL_PARADISE": 20},
+    "TROPICAL_PARADISE": {"GATE": 20, "WORLD_GARDEN": 18, "KINGS_GARDEN": 25, "FAIRY_LAND": 15, "SEA_WORLD": 12, "FESTIVE_HILL": 20, "TROPICAL_PARADISE": 0}
+  }
+}
