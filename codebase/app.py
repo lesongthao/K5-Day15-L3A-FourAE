@@ -113,8 +113,8 @@ def _parse_output_for_ui(output_text: str) -> dict[str, Any]:
     }
 
 
-def execute_plan(text: str) -> dict[str, Any]:
-    """Chạy agent.answer(text) có ghi trace an toàn luồng và trả dữ liệu cho UI."""
+def execute_plan(text: str, selected_day: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Chạy agent.answer(text, selected_day) có ghi trace an toàn luồng và trả dữ liệu cho UI."""
     import tracing
     from agent import answer
 
@@ -122,7 +122,7 @@ def execute_plan(text: str) -> dict[str, Any]:
         t0 = time.perf_counter()
         tracing.begin("web_app")
         try:
-            result = answer(text)
+            result = answer(text, selected_day=selected_day)
         except Exception:
             tracing.end()
             raise
@@ -207,8 +207,10 @@ class PlanRequestHandler(BaseHTTPRequestHandler):
         if len(text) > MAX_TEXT_LEN:
             self._send_json(400, {"error": f"Yêu cầu quá dài (tối đa {MAX_TEXT_LEN} ký tự)."})
             return
+        raw_day = payload.get("selected_day")
+        selected_day = raw_day if isinstance(raw_day, dict) else None
         try:
-            self._send_json(200, execute_plan(text))
+            self._send_json(200, execute_plan(text, selected_day=selected_day))
         except NotImplementedError as exc:
             self._send_json(503, {"error": f"Chưa cấu hình model thật: {exc}. Kiểm tra tệp .env theo docs/connect-model.md."})
         except (ValueError, RuntimeError, OSError) as exc:

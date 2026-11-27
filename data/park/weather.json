@@ -9,6 +9,7 @@
   },
   "scenarios": [
     {"id": "SUNNY", "label": "Nắng cả ngày", "rain_windows": []},
+    {"id": "MORNING_RAIN", "label": "Mưa buổi sáng (09:00–12:00)", "rain_windows": [{"from": "09:00", "to": "12:00"}]},
     {"id": "AFTERNOON_RAIN", "label": "Mưa rào buổi chiều", "rain_windows": [{"from": "14:00", "to": "16:00"}]},
     {"id": "EVENING_RAIN", "label": "Mưa buổi tối (ảnh hưởng Tata Show)", "rain_windows": [{"from": "18:30", "to": "20:00"}]},
     {"id": "ALL_DAY_RAIN", "label": "Mưa to cả ngày", "rain_windows": [{"from": "09:00", "to": "20:00"}]}

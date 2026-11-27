@@ -23,6 +23,13 @@ from tools import (
 from tracing import note
 
 MAX_REPAIR_ROUNDS = 2
+_SCENARIO_VI = {
+    "SUNNY": "Nắng ráo",
+    "MORNING_RAIN": "Mưa buổi sáng (09:00–12:00)",
+    "AFTERNOON_RAIN": "Mưa rào buổi chiều (14:00–16:00)",
+    "EVENING_RAIN": "Mưa buổi tối (18:30–20:00)",
+    "ALL_DAY_RAIN": "Mưa to cả ngày (09:00–20:00)",
+}
 SYSTEM = (
     "Bạn là trợ lý lập lịch trình 1 ngày tại VinWonders Nha Trang cho gia đình.\n"
     "CHỈ dùng mã trò (A01-A18), show (S01-S06), giờ mở cửa, suat_hoat_dong và dữ liệu trong CĂN CỨ.\n"
@@ -159,7 +166,37 @@ def _build_context(parsed: dict[str, Any], pre: dict[str, Any], weather: dict[st
     }, ensure_ascii=False)
 
 
-def answer(text: str) -> dict[str, str]:
+def _resolve_weather_source(
+    parsed: dict[str, Any], selected_day: dict[str, Any] | None,
+) -> tuple[str, str | None, str]:
+    """Ưu tiên dự báo Open-Meteo của ngày đang chọn trên Web UI và đối chiếu nếu mâu thuẫn text."""
+    if not isinstance(selected_day, dict):
+        return parsed["kich_ban"], None, ""
+    day_sc = str(selected_day.get("scenario_id") or "").strip().upper()
+    if day_sc not in _SCENARIO_VI:
+        return parsed["kich_ban"], None, ""
+    if not parsed.get("co_nhac_thoi_tiet") or parsed["kich_ban"] == day_sc:
+        return day_sc, None, ""
+    rel = str(selected_day.get("rel_label") or "").strip()
+    full_d = str(selected_day.get("full_date") or "").strip()
+    day_desc = f"{rel} ({full_d})" if rel and full_d else (rel or full_d or "ngày đã chọn")
+    entered_vi = _SCENARIO_VI.get(parsed["kich_ban"], parsed["kich_ban"])
+    actual_vi = str(selected_day.get("weather_label") or _SCENARIO_VI[day_sc]).strip()
+    note(f"doi_chieu_thoi_tiet: text={parsed['kich_ban']} -> du_bao={day_sc}")
+    notice = (
+        f'Đối chiếu dự báo thời tiết: bạn nhắc "{entered_vi}" trong yêu cầu, nhưng dự báo Open-Meteo '
+        f'cho {day_desc} là "{actual_vi}". Hệ thống đã xếp lịch theo dự báo thực tế của ngày này '
+        "(chọn ngày khác trên dải 8 ngày nếu muốn xem lịch theo kịch bản mưa khác)."
+    )
+    override = (
+        f"\n[NGUỒN SỰ THẬT THỜI TIẾT]: Dự báo thực tế của ngày khách chọn là {day_sc} ({actual_vi}). "
+        "Bỏ qua khung giờ mưa mâu thuẫn trong câu người dùng; KHÔNG viết khung mưa sai đó vào lý do (ly_do) "
+        "và chỉ tuân thủ khung mưa trong trường thoi_tiet."
+    )
+    return day_sc, notice, override
+
+
+def answer(text: str, selected_day: dict[str, Any] | None = None) -> dict[str, str]:
     """Điểm vào chuẩn cho run.py, eval và simulate."""
     blocked = check_safety(text)
     if blocked:
@@ -193,14 +230,16 @@ def answer(text: str) -> dict[str, str]:
             )
         }
 
-    weather = tra_thoi_tiet(parsed["kich_ban"])
+    effective_sc, weather_notice, weather_override = _resolve_weather_source(parsed, selected_day)
+    context_parsed = {**parsed, "kich_ban": effective_sc}
+    weather = tra_thoi_tiet(effective_sc)
     min_child_h = min(parsed["child_heights"]) if parsed["child_heights"] else None
     max_age = max((g.get("tuoi", 30) for g in parsed["nhom_khach"]), default=None)
     attrs = tra_diem_choi(chieu_cao_tre_cm=min_child_h, tuoi_lon_nhat=max_age, chi_trong_nha=parsed["chi_trong_nha"])
-    shows = tra_lich_show(kich_ban_thoi_tiet=parsed["kich_ban"], chi_trong_nha=parsed["chi_trong_nha"])
+    shows = tra_lich_show(kich_ban_thoi_tiet=effective_sc, chi_trong_nha=parsed["chi_trong_nha"])
     catalog = {a["id"]: a for a in attrs["diem_choi"]} | {s["id"]: s for s in shows["shows"]}
 
-    pre = kiem_lich_trinh([], parsed["ngan_sach_vnd"], parsed["nhom_khach"], parsed["kich_ban"], parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
+    pre = kiem_lich_trinh([], parsed["ngan_sach_vnd"], parsed["nhom_khach"], effective_sc, parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
     if pre["tong_tien_vnd"] > parsed["ngan_sach_vnd"]:
         cost = pre["chi_tiet_chi_phi"]
         vuot = pre["tong_tien_vnd"] - parsed["ngan_sach_vnd"]
@@ -213,8 +252,8 @@ def answer(text: str) -> dict[str, str]:
             )
         }
 
-    context = _build_context(parsed, pre, weather, attrs, shows)
-    prompt = f"Căn cứ dữ liệu công cụ:\n{context}\n\nYêu cầu người dùng:\n{text}"
+    context = _build_context(context_parsed, pre, weather, attrs, shows)
+    prompt = f"Căn cứ dữ liệu công cụ:\n{context}\n\nYêu cầu người dùng:\n{text}{weather_override}"
     items: list[dict[str, Any]] = []
     notes: list[str] = []
     check_res: dict[str, Any] = {"hop_le": False, "vi_pham": [], "goi_y_noi_rang_buoc": []}
@@ -224,8 +263,8 @@ def answer(text: str) -> dict[str, str]:
         reply = call_model(SYSTEM, prompt)
         if reply["model"] == "fake":
             is_mock = True
-            items = _build_fallback_schedule(parsed, attrs["diem_choi"], shows["shows"], weather)
-            check_res = kiem_lich_trinh(items, parsed["ngan_sach_vnd"], parsed["nhom_khach"], parsed["kich_ban"], parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
+            items = _build_fallback_schedule(context_parsed, attrs["diem_choi"], shows["shows"], weather)
+            check_res = kiem_lich_trinh(items, parsed["ngan_sach_vnd"], parsed["nhom_khach"], effective_sc, parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
             note("dung: che do khung fake")
             break
         data_json = _parse_json_reply(reply["text"])
@@ -237,14 +276,14 @@ def answer(text: str) -> dict[str, str]:
             return {"output": "Không xếp được lịch trình phù hợp.\nGợi ý: " + "; ".join(data_json.get("goi_y", []))}
         items = data_json.get("items", [])
         notes = data_json.get("ghi_chu", []) if isinstance(data_json.get("ghi_chu"), list) else []
-        check_res = kiem_lich_trinh(items, parsed["ngan_sach_vnd"], parsed["nhom_khach"], parsed["kich_ban"], parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
+        check_res = kiem_lich_trinh(items, parsed["ngan_sach_vnd"], parsed["nhom_khach"], effective_sc, parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
         if check_res["hop_le"]:
             note(f"dung: lich hop le tai vong {round_idx + 1}")
             break
         prompt = (
             "Lịch vừa tạo có vi phạm:\n" + "\n".join("- " + v for v in check_res["vi_pham"])
             + f"\nHãy sửa lại giờ hoặc bỏ bớt điểm bạn tự thêm gây vi phạm, vẫn giữ đủ điểm hợp lệ khách mong muốn; "
-            f"KHÔNG đặt khong_xep_duoc=true nếu vẫn xếp được lịch hợp lệ.\nYêu cầu gốc: {text}\nDữ liệu gốc:\n{context}"
+            f"KHÔNG đặt khong_xep_duoc=true nếu vẫn xếp được lịch hợp lệ.\nYêu cầu gốc: {text}{weather_override}\nDữ liệu gốc:\n{context}"
         )
 
     if not check_res.get("hop_le"):
@@ -256,4 +295,5 @@ def answer(text: str) -> dict[str, str]:
                 + "\nGợi ý nới ràng buộc: " + "; ".join(check_res.get("goi_y_noi_rang_buoc", []))
             )
         }
-    return {"output": _format_success(items, check_res, catalog, weather, is_mock, notes)}
+    final_notes = ([weather_notice] + notes) if weather_notice else notes
+    return {"output": _format_success(items, check_res, catalog, weather, is_mock, final_notes)}

@@ -28,7 +28,7 @@ _WEATHER_STYLES: dict[str, dict[str, str]] = {
         "advice": "Thuận lợi cả Công viên nước, cáp treo lẫn Tata Show 19:30.",
     },
     "MORNING_RAIN": {
-        "scenario_id": "AFTERNOON_RAIN",
+        "scenario_id": "MORNING_RAIN",
         "label": "Mưa sáng (09:00–12:00)",
         "short": "Mưa sáng",
         "icon": "rain_afternoon",

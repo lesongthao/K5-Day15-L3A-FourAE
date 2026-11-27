@@ -2664,8 +2664,9 @@
           prevZone = it.zone;
         });
 
-        const notesHtml = (p.notes && p.notes.length)
-          ? `<div class="notes-box"><strong>Lưu ý quan trọng cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(humanizeUiText(n))}</li>`).join("")}</ul></div>`
+        const visibleNotes = (p.notes || []).filter((n) => !String(n || "").trim().startsWith("Đã sửa lỗi"));
+        const notesHtml = visibleNotes.length
+          ? `<div class="notes-box"><strong>Lưu ý quan trọng cho gia đình:</strong><ul>${visibleNotes.map((n) => `<li>${esc(humanizeUiText(n))}</li>`).join("")}</ul></div>`
           : "";
 
         timelineRoot.innerHTML = `
@@ -2715,12 +2716,35 @@
       `;
     }
 
+    function syncSelectedDayFromText(rawText) {
+      const days = (forecastData && forecastData.days) || [];
+      if (!days.length) return;
+      const low = String(rawText || "").toLowerCase();
+      let foundIdx = -1;
+      const mDate = low.match(/\b(\d{1,2}\/\d{1,2}(?:\/\d{4})?)\b/);
+      if (mDate) {
+        const token = mDate[1];
+        foundIdx = days.findIndex((d) => d.display_date === token || d.full_date === token);
+      } else if (low.includes("ngày kia") && days.length > 2) {
+        foundIdx = 2;
+      } else if (low.includes("ngày mai") && days.length > 1) {
+        foundIdx = 1;
+      } else if (low.includes("hôm nay")) {
+        foundIdx = 0;
+      }
+      if (foundIdx >= 0 && foundIdx !== selectedDayIdx) {
+        selectedDayIdx = foundIdx;
+        renderWeatherViews();
+      }
+    }
+
     async function submitRequest() {
       let text = inputEl.value.trim();
       if (!text) {
         applyBuilderToPrompt();
         text = inputEl.value.trim();
       }
+      syncSelectedDayFromText(text);
       setSubmittingUI(true);
       setServerState("busy", "Đang lập lịch…");
       renderLoading();
@@ -2729,7 +2753,7 @@
         const res = await fetch("/api/plan", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text })
+          body: JSON.stringify({ text, selected_day: getSelectedDay() })
         });
         const data = await res.json();
         if (!res.ok) {

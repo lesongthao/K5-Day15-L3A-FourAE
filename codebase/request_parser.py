@@ -118,13 +118,23 @@ def parse_request(text: str) -> dict[str, Any]:
         start, end = "09:00", "20:00"
 
     loai_ve = "AFTER_16H" if (start >= "16:00" or "after_16h" in low or "sau 16" in low) else "STANDARD"
+    has_morning_rain_range = bool(
+        re.search(r"mưa[^\d]{0,16}(?:0?9|10|11)\s*(?::|h|giờ)?\s*(?:00)?\s*(?:-|đến|tới)\s*1[12]", low)
+    )
     kich_ban = "SUNNY"
     if "mưa cả ngày" in low or "mưa to" in low or "all_day_rain" in low:
         kich_ban = "ALL_DAY_RAIN"
     elif "mưa tối" in low or "mưa buổi tối" in low or "evening_rain" in low:
         kich_ban = "EVENING_RAIN"
+    elif "mưa sáng" in low or "mưa buổi sáng" in low or "morning_rain" in low or has_morning_rain_range:
+        kich_ban = "MORNING_RAIN"
     elif "mưa" in low or "afternoon_rain" in low:
         kich_ban = "AFTERNOON_RAIN"
+    weather_mentioned = bool(
+        "mưa" in low
+        or any(k in low for k in ("sunny", "morning_rain", "afternoon_rain", "evening_rain", "all_day_rain"))
+        or re.search(r"\b(?:nắng\s*ráo|trời\s*nắng|tạnh\s*ráo)\b", low)
+    )
 
     services: list[dict[str, Any]] = []
     if "cho thú ăn" in low:
@@ -150,6 +160,7 @@ def parse_request(text: str) -> dict[str, Any]:
         "gio_bat_dau": start,
         "gio_ket_thuc": end,
         "kich_ban": kich_ban,
+        "co_nhac_thoi_tiet": weather_mentioned,
         "chi_trong_nha": "trong nhà" in low,
         "dich_vu_le": services,
         "asks_unpriced": any(k in low for k in ("combo", "buffet", "wonder15", "vip", "zipline", "buggy", "xe điện")),

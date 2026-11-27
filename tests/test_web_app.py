@@ -41,8 +41,11 @@ class TestWebAppUI(unittest.TestCase):
         cls.server.server_close()
         cls.thread.join(timeout=2)
 
-    def _post_plan(self, text: str) -> tuple[int, dict[str, object]]:
-        body = json.dumps({"text": text}, ensure_ascii=False).encode("utf-8")
+    def _post_plan(self, text: str, selected_day: dict[str, object] | None = None) -> tuple[int, dict[str, object]]:
+        payload: dict[str, object] = {"text": text}
+        if selected_day is not None:
+            payload["selected_day"] = selected_day
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         req = urlrequest.Request(
             f"{self.base_url}/api/plan",
             data=body,
@@ -140,12 +143,36 @@ class TestWebAppUI(unittest.TestCase):
         for day in data["days"]:
             for key in ("date", "rel_label", "temp_min", "temp_max", "scenario_id", "weather_label"):
                 self.assertIn(key, day)
-            self.assertIn(day["scenario_id"], ("SUNNY", "AFTERNOON_RAIN", "EVENING_RAIN", "ALL_DAY_RAIN"))
+            self.assertIn(day["scenario_id"], ("SUNNY", "MORNING_RAIN", "AFTERNOON_RAIN", "EVENING_RAIN", "ALL_DAY_RAIN"))
 
         with urlrequest.urlopen(f"{self.base_url}/", timeout=5) as resp:
             html = resp.read().decode("utf-8")
         for marker in ('data-tab="explore"', 'data-tab="tickets"', 'data-tab="shows"', 'data-tab="result"', 'id="dateWeatherStrip"'):
             self.assertIn(marker, html)
+
+    def test_07_selected_day_weather_overrides_conflicting_text(self) -> None:
+        """Dự báo Open-Meteo của ngày đang chọn phải thắng giờ mưa gõ mâu thuẫn trong prompt."""
+        selected_day = {
+            "date": "2026-11-28",
+            "rel_label": "Hôm nay",
+            "full_date": "28/11/2026",
+            "scenario_id": "MORNING_RAIN",
+            "weather_label": "Mưa sáng (09:00–12:00)",
+        }
+        with patch.object(agent, "call_model", side_effect=_fake_call_model):
+            status, data = self._post_plan(
+                "Gia đình vào Hôm nay (28/11/2026), 2 bố mẹ, ông nội 68 tuổi và 1 bé 5 tuổi cao 108cm, "
+                "đi từ 09:00 đến 18:00, ngân sách 4.000.000đ, dự báo mưa rào buổi chiều 14:00-16:00.",
+                selected_day=selected_day,
+            )
+        self.assertEqual(status, 200)
+        parsed = data["parsed"]
+        self.assertEqual(parsed["kind"], "schedule")
+        self.assertIn("MORNING_RAIN", data["output"])
+        self.assertTrue(any("Đối chiếu dự báo thời tiết" in n for n in parsed["notes"]))
+        for item in parsed["items"]:
+            if "Ngoài trời" in item["env"]:
+                self.assertGreaterEqual(item["start"], "12:00")
 
 
 if __name__ == "__main__":
