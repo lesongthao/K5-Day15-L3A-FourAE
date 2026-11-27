@@ -109,5 +109,6 @@ Trò hoặc show hoàn toàn tự dựng có hậu tố **"(mẫu)"** trong tên
 
 **Kiểm:**
 - Phần thật được trích từ trang nguồn bằng công cụ AI (Claude Code), xem `docs/ai-usage.md`.
-- **Chưa có người đối chiếu tay.** Trước CP3, Tuấn cần mở 3 link trên và so A01–A07 cùng bảng giá.
+- **Đã đối chiếu tay:** Tuấn so 67 ô (A01–A07, bảng giá, giờ mở cửa và tên khu) với 3 trang nguồn ngày 27/11/2026. Khớp 67/67, lệch 0, không phải sửa data. Bảng kiểm từng ô: [`data/KIEM_TAY.md`](KIEM_TAY.md).
+- Phạm vi kiểm tay chỉ gồm các trường thật (`verified`). Phần `synthetic` (lịch show, thời gian chờ, đi bộ, thời tiết, giá dịch vụ lẻ *(tự ước tính)*) không có nguồn để đối chiếu.
 - Script kiểm tính nhất quán đã chạy ngày 27/11/2026, không lỗi: mã khu, mã nguồn, ma trận đối xứng, giờ trò nằm trong giờ mở cửa.

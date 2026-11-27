@@ -1,52 +1,57 @@
-# Mô phỏng chi phí khi dùng thật — điền ở guide bước 4.2.
-# Ôn lại: ngày 13, ngày 1, ngày 14 · lab ngày 13, lab ngày 14.
-# Mọi số phải có nguồn (data / phỏng vấn / khảo sát / quy mô khoá có nguồn) hoặc ghi rõ "(tự ước tính)".
+# Mô phỏng chi phí khi dùng thật — điền ở guide bước 4.2. Bản nháp CP3 · Trần Quốc Tuấn · 27/11/2026.
+# Mọi số phải có nguồn (data / phỏng vấn / khảo sát) hoặc ghi rõ "(tự ước tính)".
 # Chạy: python run.py simulate --try   (10 phiên, kiểm khung — làm trước CP3)
 #       python run.py simulate         (đủ số phiên dưới đây — bản nộp CP4)
-# Thay mọi dòng "(ví dụ)" bằng số và nguồn của nhóm; simulate nhắc nếu còn sót.
+#
+# Persona và số lần / tháng lấy theo spec.md §2 (mục "Số lần / tháng của từng kiểu người dùng", Dũng, PR #10).
+# §2 ghi số lượt / phiên dạng khoảng (1–2, 2–3, 3–4); turns_per_session phải là số nguyên → lấy CẬN TRÊN
+# (ước tính chi phí theo phía cao, không đánh giá thấp chi phí).
 
 sessions: 50        # số phiên mô phỏng — bản nộp ≥50
 seed: 42            # giữ cố định để chạy lại ra cùng chuỗi phiên
 
-users:              # số người dùng thật nếu đưa vào dùng — 3 kịch bản, ở quy mô thật của sản phẩm
-                    # track A: khoá học · track B–F: người dùng của sản phẩm / nhóm nhắm tới, nguồn công khai có link
-  low: 300
-  base: 700
-  high: 1000
-  source: "(ví dụ) track A — thay bằng số của nhóm. Cơ sở: lớp L3 hơn 700 học viên (README hackathon); thấp, cao: (tự ước tính)"
+users:              # số gia đình dùng công cụ / tháng tại 1 khu vui chơi lớn — 3 kịch bản, khớp spec.md §2
+  low: 1124
+  base: 5620
+  high: 10000
+  source: "Cơ sở 5.620 = 10.000 gia đình/tháng (tự ước tính) × 56,2% (9/16 review gia đình gặp planning_ops_pain, evidence/data-mining.md) — đúng số người gặp pain ở spec.md §2 · Cao 10.000 = toàn bộ gia đình/tháng (tự ước tính, §2) · Thấp 1.124 = 20% của mức cơ sở dùng công cụ (tự ước tính). Không có số khách / năm công khai của VinWonders Nha Trang để thay (đã tra vinwonders.com 27/11/2026)."
 
-personas:           # ≥3 kiểu người dùng; share cộng lại = 1
-  - name: dung_it
-    share: 0.5              # tỉ lệ người dùng kiểu này
-    uses_per_month: 4       # số phiên / người / tháng
-    turns_per_session: 1    # số lượt hỏi trong một phiên
-    source: "(ví dụ) phỏng vấn P1, P3 — thay bằng nguồn của nhóm"
-  - name: dung_vua
-    share: 0.3
-    uses_per_month: 10
-    turns_per_session: 3
-    source: "(ví dụ) khảo sát n = 24, câu 3"
-  - name: dung_nhieu
-    share: 0.2
-    uses_per_month: 20
-    turns_per_session: 5
-    source: "(ví dụ) data/preclass: đếm số lượt / người — cách đếm ở evidence/data-mining.md"
-# Mỗi lượt hỏi lấy ngẫu nhiên một đầu vào trong eval/benchmark.csv (type thuong và kho).
-# Persona hỏi kiểu riêng: thêm vào persona đó
-#     types: [thuong, kho, tu_choi]
-# hoặc
-#     inputs: ["câu hỏi kiểu 1", "câu hỏi kiểu 2"]
+personas:           # ≥3 kiểu người dùng; share cộng lại = 1 — theo spec.md §2
+  - name: lap_lich_nhanh
+    share: 0.50
+    uses_per_month: 1
+    turns_per_session: 2    # §2: 1–2 lượt / phiên → cận trên
+    source: "spec.md §2 kiểu 1 — gia đình lập lịch nhanh 1 lần trước chuyến đi: ~50%, 1 phiên/tháng, 1–2 lượt/phiên (tự ước tính từ hành vi chuẩn bị nhanh ở P4, P5)"
+  - name: len_lich_ky
+    share: 0.35
+    uses_per_month: 3
+    turns_per_session: 3    # §2: 2–3 lượt / phiên → cận trên
+    source: "spec.md §2 kiểu 2 — gia đình lên lịch kỹ, chỉnh nhiều lần theo tuổi con và ngân sách: ~35%, 3 phiên/tháng, 2–3 lượt/phiên (tự ước tính từ hành vi chuẩn bị 60–90 phút ở P1, P3)"
+  - name: xep_lai_dot_xuat
+    share: 0.15
+    uses_per_month: 2
+    turns_per_session: 4    # §2: 3–4 lượt / phiên → cận trên
+    types: [thuong, kho, tu_choi]   # tình huống mưa / huỷ show / bảo trì → hay hỏi cả câu ngoài phạm vi (đặt lại vé…)
+    source: "spec.md §2 kiểu 3 — gia đình xếp lại lịch đột xuất do mưa / huỷ show / bảo trì: ~15% (tham chiếu 16,0% review thoi_tiet_mua, evidence/data-mining.md; P2, P5), 2 phiên/tháng, 3–4 lượt/phiên (tự ước tính)"
+# Mỗi lượt hỏi lấy ngẫu nhiên một đầu vào trong eval/benchmark.csv (mặc định type thuong và kho).
 
-prices:             # USD / 1 triệu token — chép từ further-reading/model-prices.md của repo đề. ≥2 mức model
-  - model: gemini-3.1-flash-lite
-    input: 0.25
-    output: 1.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
-  - model: gemini-4-hydrogen
-    input: 1.50
-    output: 7.50
-    source: "(ví dụ) https://ai.google.dev/gemini-api/docs/pricing · xem 25/11/2026"
+prices:             # USD / 1 triệu token, giá chuẩn (không batch, không cache), ngữ cảnh ngắn ≤272K token
+  # Token ĐO trên cx/gpt-5.6-luna qua proxy định dạng OpenAI của nhóm. Giá tính theo bảng giá chính thức OpenAI.
+  # Lưu ý: proxy cộng thêm ~2.500 token vào mỗi lần gọi (đo ở eval --try 27/11/2026: câu ngắn, SYSTEM trống vẫn ~2.530 token vào)
+  # → chi phí mô phỏng có thể cao hơn khi gọi API gốc. Ghi rõ trong cost/cost-estimate.md.
+  - model: cx/gpt-5.6-luna
+    input: 0.20
+    output: 1.20
+    source: "giá gpt-5.6-luna (model proxy chuyển tới — tên 'cx/' là tiền tố của proxy) · https://developers.openai.com/api/docs/pricing · xem 27/11/2026"
+  - model: gpt-6-luna
+    input: 0.10
+    output: 0.50
+    source: "mức rẻ hơn · https://developers.openai.com/api/docs/pricing · xem 27/11/2026"
+  - model: gpt-5.6-terra
+    input: 2.00
+    output: 12.00
+    source: "mức mạnh hơn · https://developers.openai.com/api/docs/pricing · xem 27/11/2026"
 
-usd_to_vnd:         # tuỳ chọn: điền thì bản tóm tắt in thêm tiền Việt
+usd_to_vnd:         # tuỳ chọn: điền thì bản tóm tắt in thêm tiền Việt — để trống, chưa có tỉ giá có nguồn
   rate:
   source:
