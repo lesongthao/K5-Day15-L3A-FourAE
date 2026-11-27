@@ -1986,6 +1986,7 @@
     let selectedDayIdx = 0;
     let activeTab = "explore";
     let showFilter = "all";
+    let promptAutoSynced = false;
 
     function setServerState(mode, label) {
       statusDot.className = "dot" + (mode ? " " + mode : "");
@@ -2153,8 +2154,10 @@
       selectedDayIdx = idx;
       renderWeatherViews();
       refreshEstimate();
+      if (promptAutoSynced || scrollToDock || !inputEl.value.trim()) {
+        applyBuilderToPrompt(false, false);
+      }
       if (scrollToDock) {
-        if (!inputEl.value.trim()) applyBuilderToPrompt();
         document.getElementById("conciergeDock").scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
@@ -2381,6 +2384,7 @@
       } else if (!base.toLowerCase().includes(phrase.toLowerCase())) {
         inputEl.value = `${base.replace(/[.]+$/, "")}, thêm ${phrase}.`;
       }
+      promptAutoSynced = false;
       charCount.textContent = `${inputEl.value.length} / 2000`;
       if (scrollFocus) {
         inputEl.focus();
@@ -2791,6 +2795,7 @@
         if (!cfg) return;
         document.querySelectorAll(".preset-pill").forEach((p) => p.classList.toggle("active", p === btn));
         if (cfg.mode === "exact") {
+          promptAutoSynced = false;
           inputEl.value = cfg.text;
         } else {
           const days = (forecastData && forecastData.days) || [];
@@ -2806,10 +2811,11 @@
           }
           document.getElementById("bWindow").value = cfg.window;
           budgetInput.value = String(cfg.budget);
-          updateGuestUI();
+          updateGuestUI(false);
           const chosen = getSelectedDay();
           const dateNote = chosen ? `vào ${chosen.rel_label} (${chosen.full_date}), ` : "";
           inputEl.value = `Gia đình ${dateNote}${cfg.body}`;
+          promptAutoSynced = true;
         }
         charCount.textContent = `${inputEl.value.length} / 2000`;
         inputEl.focus();
@@ -2837,7 +2843,7 @@
       return { id: "ADULT", label: "Vé người lớn (≥140cm)", cls: "adult" };
     }
 
-    function updateGuestUI() {
+    function updateGuestUI(syncPrompt = true) {
       valAdults.textContent = String(guestState.adults);
       valChildren.textContent = String(guestState.children.length);
       valSeniors.textContent = String(guestState.seniors.length);
@@ -2874,6 +2880,7 @@
           el.addEventListener("input", () => {
             const idx = Number(el.dataset.idx);
             guestState.children[idx].age = Math.min(15, Math.max(1, Number(el.value || 6)));
+            if (promptAutoSynced) applyBuilderToPrompt(false, false);
           });
         });
         childrenList.querySelectorAll(".ch-h-in").forEach((el) => {
@@ -2905,13 +2912,14 @@
           el.addEventListener("input", () => {
             const idx = Number(el.dataset.idx);
             guestState.seniors[idx] = Math.min(95, Math.max(60, Number(el.value || 65)));
+            if (promptAutoSynced) applyBuilderToPrompt(false, false);
           });
         });
       }
-      refreshEstimate();
+      refreshEstimate(syncPrompt);
     }
 
-    function refreshEstimate() {
+    function refreshEstimate(syncPrompt = true) {
       budgetPretty.textContent = fmtCompactBudget(budgetInput.value);
       const win = document.getElementById("bWindow").value;
       const isAfter16 = win.startsWith("16:00");
@@ -2922,9 +2930,10 @@
       guestState.children.forEach((ch) => { total += prices[getChildTier(ch.height).id]; });
       estTicketType.textContent = isAfter16 ? "Vé sau 16:00" : "Vé cả ngày";
       estGateTotal.textContent = fmtVnd(total);
+      if (syncPrompt && promptAutoSynced) applyBuilderToPrompt(false, false);
     }
 
-    function applyBuilderToPrompt() {
+    function applyBuilderToPrompt(closePop = true, keepFocus = true) {
       const budget = Math.max(500000, Number(budgetInput.value || 3500000));
       const win = document.getElementById("bWindow").value;
       const day = getSelectedDay();
@@ -2942,10 +2951,13 @@
         groupParts.push(chText);
       }
       inputEl.value = `Gia đình ${groupParts.join(", ")}, ${dayPart}từ ${win}, ngân sách ${budget.toLocaleString("vi-VN")}đ${weather || ""}.`;
+      promptAutoSynced = true;
       charCount.textContent = `${inputEl.value.length} / 2000`;
-      guestPopover.classList.add("hidden");
-      guestTrigger.setAttribute("aria-expanded", "false");
-      inputEl.focus();
+      if (closePop) {
+        guestPopover.classList.add("hidden");
+        guestTrigger.setAttribute("aria-expanded", "false");
+      }
+      if (keepFocus) inputEl.focus();
     }
 
     guestTrigger.addEventListener("click", () => {
@@ -2984,18 +2996,22 @@
         updateGuestUI();
       });
     });
-    budgetInput.addEventListener("input", refreshEstimate);
-    document.getElementById("bWindow").addEventListener("change", refreshEstimate);
-    document.getElementById("applyBuilderBtn").addEventListener("click", applyBuilderToPrompt);
-    document.getElementById("popApplyBtn").addEventListener("click", applyBuilderToPrompt);
-    updateGuestUI();
+    budgetInput.addEventListener("input", () => refreshEstimate(true));
+    document.getElementById("bWindow").addEventListener("change", () => refreshEstimate(true));
+    document.getElementById("applyBuilderBtn").addEventListener("click", () => applyBuilderToPrompt(true, true));
+    document.getElementById("popApplyBtn").addEventListener("click", () => applyBuilderToPrompt(true, true));
+    updateGuestUI(false);
 
-    inputEl.addEventListener("input", () => { charCount.textContent = `${inputEl.value.length} / 2000`; });
+    inputEl.addEventListener("input", () => {
+      promptAutoSynced = false;
+      charCount.textContent = `${inputEl.value.length} / 2000`;
+    });
     form.addEventListener("submit", (e) => { e.preventDefault(); submitRequest(); });
     inputEl.addEventListener("keydown", (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); submitRequest(); }
     });
     clearBtn.addEventListener("click", () => {
+      promptAutoSynced = false;
       inputEl.value = "";
       charCount.textContent = "0 / 2000";
       document.querySelectorAll(".preset-pill.active").forEach((p) => p.classList.remove("active"));

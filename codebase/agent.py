@@ -35,9 +35,9 @@ SYSTEM = (
     "CHỈ dùng mã trò (A01-A18), show (S01-S06), giờ mở cửa, suat_hoat_dong và dữ liệu trong CĂN CỨ.\n"
     "1) Chi phí vé và dịch vụ có giá đã được code tính và xác nhận đủ ngân sách tại chi_phi_code_da_tinh — KHÔNG tự báo thiếu giá vé hay từ chối vì giá.\n"
     "2) Ưu tiên xếp đủ các điểm chơi và show hợp lệ khách yêu cầu; chọn tổng cộng 3–7 điểm hợp lý, không nhồi điểm phụ gây trễ giờ.\n"
-    "3) Nếu khách nhắc mục bảo trì (status=maintenance), quá tuổi/chiều cao, chưa có giá lẻ (price_vnd=null) hoặc show bị huỷ do mưa: loại khỏi items, vẫn lập lịch thay thế hợp lệ và giải thích rõ từng mục đó trong \"ghi_chu\".\n"
+    "3) Nếu khách nhắc mục bảo trì (status=maintenance), quá tuổi/chiều cao, chưa có giá lẻ (price_vnd=null) hoặc bị huỷ do mưa (kể cả khi mưa tối làm huỷ Tata Show sau 16:00): loại khỏi items, vẫn LẬP LỊCH THAY THẾ bằng các điểm trong nhà đang mở hợp lệ (vd A08, A03, A10, A13) và giải thích rõ trong \"ghi_chu\".\n"
     "4) Tuân thủ nghiêm di_chuyen_va_dem (cùng khu >=5p; khác khu theo giua_cac_khu_phut; rời TROPICAL_PARADISE sang khu khác cộng thêm 20p đệm) và đúng giờ suat_hoat_dong.\n"
-    "5) CHỈ đặt \"khong_xep_duoc\": true khi yêu cầu bắt buộc bất khả thi (điểm không tồn tại trong dữ liệu hoặc các điểm khách bắt buộc trực tiếp xung đột giờ/di chuyển), kèm giải thích số phút từ di_chuyen_va_dem trong \"goi_y\".\n"
+    "5) CHỈ đặt \"khong_xep_duoc\": true khi yêu cầu không còn điểm hợp lệ nào khả thi (hoặc điểm bắt buộc trực tiếp xung đột giờ không thể tách), tuyệt đối KHÔNG bỏ cuộc khi vẫn xếp được phương án trong nhà thay thế.\n"
     "CHỈ trả về 1 JSON hợp lệ: "
     '{"items": [{"id": "A08", "start": "09:15", "end": "10:15", "ly_do": "..."}], '
     '"khong_xep_duoc": false, "ghi_chu": ["..."], "goi_y": ["..."]}'
@@ -219,8 +219,8 @@ def answer(text: str, selected_day: dict[str, Any] | None = None) -> dict[str, s
         missing.append("ngân sách tối đa (VNĐ)")
     if parsed["adults"] is None:
         missing.append("số người lớn")
-    if parsed["has_child_mention"] and not parsed["child_heights"]:
-        missing.append("chiều cao của bé (cm, để áp dụng đúng hạng vé <100cm/100–140cm và an toàn trò chơi)")
+    if (parsed["has_child_mention"] and not parsed["child_heights"]) or parsed.get("thieu_chieu_cao_be_khac"):
+        missing.append("chiều cao của bé (nêu rõ từng bé theo cm để áp dụng đúng hạng vé <100cm/100–140cm và an toàn trò chơi)")
     if missing:
         note("hoi_lai: thieu " + ", ".join(missing))
         return {

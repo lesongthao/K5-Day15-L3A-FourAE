@@ -233,6 +233,40 @@ class TestTrackC1VinWonders(unittest.TestCase):
         parsed_dot_date = request_parser.parse_request("Đi ngày 28.11.2026, 2 người lớn, 1 bé cao 115cm, ngân sách 3.500.000đ")
         self.assertEqual(parsed_dot_date["ngan_sach_vnd"], 3_500_000)
 
+    def test_15_edge_case_conflicts_regression(self) -> None:
+        """Khử hoàn toàn nhầm 'dự báo mưa'→áo mưa, bắt nhiều bé (B06), giờ mưa trước giờ đi, và câu phủ định."""
+        p_forecast = request_parser.parse_request(
+            "2 bố mẹ, ông nội 68 tuổi và 1 bé 5 tuổi cao 108cm, dự báo mưa chiều 14:00-16:00, đi từ 09:00 đến 18:00, ngân sách 4.000.000đ."
+        )
+        self.assertEqual(p_forecast["dich_vu_le"], [])
+        self.assertEqual((p_forecast["gio_bat_dau"], p_forecast["gio_ket_thuc"]), ("09:00", "18:00"))
+        self.assertEqual(p_forecast["kich_ban"], "AFTERNOON_RAIN")
+
+        p_b06 = request_parser.parse_request("Gia đình 2 người lớn và 2 bé 8 tuổi cao 125cm, đi từ 09:00 đến 18:00, ngân sách 4.500.000đ.")
+        self.assertEqual(p_b06["child_heights"], [125, 125])
+        chk_b06 = tools.kiem_lich_trinh([], 4_500_000, p_b06["nhom_khach"])
+        self.assertEqual(chk_b06["tong_tien_vnd"], 3_700_000)
+
+        ask_partial = agent.answer("2 người lớn, 2 bé 4 tuổi và 7 tuổi, bé lớn cao 120cm, ngân sách 4 triệu")
+        self.assertIn("nêu rõ từng bé", ask_partial["output"])
+
+        p_neg = request_parser.parse_request("2 người lớn, 1 bé cao 115cm, hôm nay không mưa, có cần mang áo mưa không, ngân sách 3.5 triệu")
+        self.assertEqual(p_neg["kich_ban"], "SUNNY")
+        self.assertTrue(p_neg["co_nhac_thoi_tiet"])
+        self.assertEqual(p_neg["dich_vu_le"], [])
+
+        p_b17 = request_parser.parse_request("2 người lớn, 1 bé cao 115cm, muốn thêm 1 áo mưa giấy (SV04) dự phòng, ngân sách 3.5 triệu")
+        self.assertEqual(p_b17["kich_ban"], "SUNNY")
+        self.assertEqual(p_b17["dich_vu_le"], [{"id": "SV04", "so_luong": 1}])
+
+        p_qty = request_parser.parse_request("2 người lớn, 1 bé 115cm, thuê 2 tủ đồ và mua 3 áo mưa, ngân sách 3.5 triệu")
+        chk_qty = tools.kiem_lich_trinh([], 3_500_000, p_qty["nhom_khach"], dich_vu_le=p_qty["dich_vu_le"])
+        self.assertEqual(chk_qty["chi_tiet_chi_phi"]["phu_thu"], 190_000)
+
+        p_natural = request_parser.parse_request("ba mẹ và 1 bé 5 tuổi cao 1 mét, ngân sách 3 triệu")
+        self.assertEqual(p_natural["adults"], 2)
+        self.assertEqual(p_natural["child_heights"], [100])
+
 
 if __name__ == "__main__":
     unittest.main()
