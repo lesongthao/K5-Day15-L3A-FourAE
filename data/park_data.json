@@ -1,0 +1,304 @@
+{
+  "metadata": {
+    "name": "Khu vui chơi Mẫu WonderPark",
+    "seed": 42,
+    "synthetic": true,
+    "created_date": "2026-11-27",
+    "currency": "VND",
+    "entry_fee": {
+      "adult": 350000,
+      "child_3_10": 250000,
+      "infant_under_3": 0
+    },
+    "extra_services": {
+      "xe_dien_noi_khu": 50000,
+      "thue_locker": 30000,
+      "thuc_an_cho_thu": 40000
+    },
+    "note": "Dữ liệu dựng có seed dùng cho chạy thử Track C1; không phải bảng giá của khu vui chơi thật."
+  },
+  "zones": [
+    "CongChao",
+    "CoTich",
+    "ThuyCung",
+    "MaoHiem"
+  ],
+  "attractions": [
+    {
+      "id": "DC01",
+      "name": "Vườn Thú Thân Thiện",
+      "zone": "CoTich",
+      "indoor": false,
+      "open": "08:30",
+      "close": "17:30",
+      "duration_min": 60,
+      "min_age": 1,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["dong_vat", "gia_dinh", "tre_nho"],
+      "description": "Khu tham quan và cho thỏ, hươu sao ăn, đường đi bằng phẳng cho xe đẩy."
+    },
+    {
+      "id": "DC02",
+      "name": "Đoàn Tàu Cổ Tích",
+      "zone": "CoTich",
+      "indoor": false,
+      "open": "09:00",
+      "close": "17:00",
+      "duration_min": 30,
+      "min_age": 2,
+      "min_height_cm": 80,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["nhe_nhang", "gia_dinh", "tre_nho"],
+      "description": "Tàu hỏa chạy vòng quanh khu Cổ Tích, ngắm cảnh nhẹ nhàng."
+    },
+    {
+      "id": "DC03",
+      "name": "Vòng Quay Ngựa Gỗ",
+      "zone": "CongChao",
+      "indoor": false,
+      "open": "09:00",
+      "close": "18:00",
+      "duration_min": 30,
+      "min_age": 2,
+      "min_height_cm": 85,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["nhe_nhang", "tre_nho", "chup_anh"],
+      "description": "Vòng quay 2 tầng ngay sau cổng chào, bé dưới 100cm cần người lớn đi cùng."
+    },
+    {
+      "id": "DC04",
+      "name": "Công Viên Nước Tí Hon",
+      "zone": "CoTich",
+      "indoor": false,
+      "open": "10:00",
+      "close": "16:30",
+      "duration_min": 60,
+      "buffer_after_min": 20,
+      "min_age": 3,
+      "min_height_cm": 90,
+      "price_adult": 50000,
+      "price_child": 50000,
+      "tags": ["nuoc", "tre_nho", "nang_dong"],
+      "description": "Khu té nước nông dành riêng cho trẻ nhỏ, đóng cửa sớm lúc 16:30 và cần 20 phút đệm tắm tráng/thay đồ."
+    },
+    {
+      "id": "DC05",
+      "name": "Thủy Cung Đại Dương Xanh",
+      "zone": "ThuyCung",
+      "indoor": true,
+      "open": "09:00",
+      "close": "18:00",
+      "duration_min": 60,
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 100000,
+      "price_child": 70000,
+      "tags": ["trong_nha", "dong_vat", "gia_dinh", "giao_duc"],
+      "description": "Đường hầm kính ngắm cá mập và rùa biển, mát mẻ tránh nắng mưa."
+    },
+    {
+      "id": "DC06",
+      "name": "Nhà Banh Khổng Lồ & Lâu Đài Mềm",
+      "zone": "CoTich",
+      "indoor": true,
+      "open": "08:30",
+      "close": "18:00",
+      "duration_min": 45,
+      "min_age": 2,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 40000,
+      "tags": ["trong_nha", "tre_nho", "nang_dong"],
+      "description": "Khu vui chơi vận động trong nhà có điều hòa và ghế chờ cho phụ huynh."
+    },
+    {
+      "id": "DC07",
+      "name": "Xưởng Làm Gốm & Tô Tượng Sáng Tạo",
+      "zone": "CongChao",
+      "indoor": true,
+      "open": "09:30",
+      "close": "17:00",
+      "duration_min": 45,
+      "min_age": 3,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 60000,
+      "tags": ["trong_nha", "thu_cong", "tre_nho"],
+      "description": "Hoạt động thủ công trong nhà, phù hợp nghỉ trưa hoặc tránh mưa."
+    },
+    {
+      "id": "DC08",
+      "name": "Rạp Chiếu Phim 4D Khám Phá Rừng Xanh",
+      "zone": "ThuyCung",
+      "indoor": true,
+      "open": "13:00",
+      "close": "17:30",
+      "duration_min": 30,
+      "min_age": 4,
+      "min_height_cm": 95,
+      "price_adult": 50000,
+      "price_child": 30000,
+      "tags": ["trong_nha", "gia_dinh", "giao_duc"],
+      "description": "Phim 4D nhẹ nhàng về thiên nhiên, chỉ mở từ 13:00."
+    },
+    {
+      "id": "DC09",
+      "name": "Tàu Lượn Rồng Lửa",
+      "zone": "MaoHiem",
+      "indoor": false,
+      "open": "09:30",
+      "close": "17:30",
+      "duration_min": 40,
+      "min_age": 10,
+      "min_height_cm": 135,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["cam_giac_manh"],
+      "description": "Tàu lượn tốc độ cao, yêu cầu nghiêm ngặt từ 10 tuổi và cao từ 135cm."
+    },
+    {
+      "id": "DC10",
+      "name": "Tháp Rơi Tự Do 40m",
+      "zone": "MaoHiem",
+      "indoor": false,
+      "open": "10:00",
+      "close": "17:00",
+      "duration_min": 30,
+      "min_age": 12,
+      "min_height_cm": 140,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["cam_giac_manh"],
+      "description": "Trò chơi cảm giác mạnh, cấm trẻ dưới 12 tuổi hoặc dưới 140cm."
+    },
+    {
+      "id": "DC11",
+      "name": "Đua Xe Điện Đụng Gia Đình",
+      "zone": "MaoHiem",
+      "indoor": true,
+      "open": "09:30",
+      "close": "18:00",
+      "duration_min": 30,
+      "min_age": 6,
+      "min_height_cm": 110,
+      "price_adult": 0,
+      "price_child": 0,
+      "tags": ["trong_nha", "nang_dong", "gia_dinh"],
+      "description": "Xe điện đụng trong nhà, bé từ 6 tuổi và cao từ 110cm mới được tham gia."
+    },
+    {
+      "id": "DC12",
+      "name": "Khu Ẩm Thực & Nghỉ Trưa Gia Đình",
+      "zone": "CongChao",
+      "indoor": true,
+      "open": "10:30",
+      "close": "17:30",
+      "duration_min": 60,
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 120000,
+      "price_child": 80000,
+      "tags": ["trong_nha", "an_uong", "gia_dinh"],
+      "description": "Khu ăn trưa có phòng thay tã và thực đơn trẻ em."
+    }
+  ],
+  "shows": [
+    {
+      "id": "SH01",
+      "name": "Diễu Hành Nhân Vật Cổ Tích",
+      "zone": "CongChao",
+      "indoor": false,
+      "start": "10:30",
+      "end": "11:00",
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 0,
+      "description": "Diễu hành ngoài trời dọc đại lộ Cổng Chào, miễn phí."
+    },
+    {
+      "id": "SH02",
+      "name": "Show Nàng Tiên Cá Dưới Nước",
+      "zone": "ThuyCung",
+      "indoor": true,
+      "start": "11:30",
+      "end": "12:00",
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 0,
+      "description": "Biểu diễn tại bể kính lớn trong Thủy Cung, miễn phí."
+    },
+    {
+      "id": "SH03",
+      "name": "Rạp Xiếc Cá Heo & Hải Cẩu",
+      "zone": "ThuyCung",
+      "indoor": true,
+      "start": "14:30",
+      "end": "15:10",
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 80000,
+      "price_child": 50000,
+      "description": "Nhà hát mái che trong nhà, có phụ thu vé riêng."
+    },
+    {
+      "id": "SH04",
+      "name": "Nhạc Nước Ánh Sáng Hoàng Hôn",
+      "zone": "CongChao",
+      "indoor": false,
+      "start": "17:00",
+      "end": "17:30",
+      "min_age": 0,
+      "min_height_cm": 0,
+      "price_adult": 0,
+      "price_child": 0,
+      "description": "Show nhạc nước ngoài trời cuối ngày, tạm huỷ khi trời mưa."
+    }
+  ],
+  "weather_scenarios": {
+    "2026-11-28": {
+      "summary": "Nắng nhẹ cả ngày, thuận lợi hoạt động ngoài trời và trong nhà.",
+      "windows": [
+        {"start": "08:30", "end": "18:00", "condition": "nang"}
+      ],
+      "cancelled_shows": [],
+      "maintenance_attractions": []
+    },
+    "2026-11-29": {
+      "summary": "Sáng nắng đẹp, chiều mưa rào từ 13:00; các điểm ngoài trời và show SH04 tạm dừng buổi chiều.",
+      "windows": [
+        {"start": "08:30", "end": "13:00", "condition": "nang"},
+        {"start": "13:00", "end": "18:00", "condition": "mua"}
+      ],
+      "cancelled_shows": ["SH04"],
+      "maintenance_attractions": []
+    },
+    "2026-11-30": {
+      "summary": "Mưa rào cả ngày; chỉ hoạt động các điểm và show trong nhà.",
+      "windows": [
+        {"start": "08:30", "end": "18:00", "condition": "mua"}
+      ],
+      "cancelled_shows": ["SH01", "SH04"],
+      "maintenance_attractions": []
+    },
+    "2026-12-01": {
+      "summary": "Nắng đẹp cả ngày nhưng điểm DC02 (Đoàn Tàu Cổ Tích) và show SH03 (Rạp Xiếc Cá Heo) tạm dừng bảo trì định kỳ.",
+      "windows": [
+        {"start": "08:30", "end": "18:00", "condition": "nang"}
+      ],
+      "cancelled_shows": ["SH03"],
+      "maintenance_attractions": ["DC02"]
+    }
+  },
+  "travel_times_min": {
+    "CongChao": {"CongChao": 5, "CoTich": 10, "ThuyCung": 12, "MaoHiem": 15},
+    "CoTich": {"CongChao": 10, "CoTich": 5, "ThuyCung": 12, "MaoHiem": 15},
+    "ThuyCung": {"CongChao": 12, "CoTich": 12, "ThuyCung": 5, "MaoHiem": 18},
+    "MaoHiem": {"CongChao": 15, "CoTich": 15, "ThuyCung": 18, "MaoHiem": 5}
+  }
+}

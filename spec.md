@@ -36,28 +36,54 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
 - **Lịch trình mẫu trên Facebook / TikTok / đại lý vé** *(phản hồi P1, P2, P5)*: đáng học ở khung sáng–trưa–chiều thực tế dễ tham khảo · đáng né ở tính cố định, không khớp chiều cao/độ tuổi từng bé và không xoay chuyển khi trời mưa hay trò bảo trì · mình khác ở chỗ cá nhân hoá theo đúng thành viên (trẻ nhỏ, người lớn tuổi) và xếp lại phần còn lại của ngày khi thời tiết/show thay đổi.
 
 ## §4. Thiết kế *(guide 2.2, 3.2)*
-- **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả):
+- **Lát cắt MỘT CÂU** (1 người dùng · 1 việc · 1 quyết định AI · 1 kết quả): Phụ huynh đưa gia đình có trẻ nhỏ đi khu vui chơi một ngày · nhập ngân sách, số người và độ tuổi, sở thích, khung giờ (và tình huống mưa/huỷ show nếu có) · AI tra dữ liệu điểm chơi, lịch show, thời tiết và thời gian di chuyển, lập lịch rồi tự kiểm tra ràng buộc (giờ mở cửa, chồng giờ, thời gian đệm tắm tráng, bảo trì, ngân sách, độ tuổi) để sửa hoặc kết luận không xếp được kèm gợi ý nới ràng buộc · gia đình nhận lịch trình từng khung giờ kèm tổng chi phí chính xác (tính bằng code) và lý do chọn.
 - Không làm (≥3 điều):
-- **Sơ đồ** (ảnh / Mermaid / draw.io): [chèn ở đây]
-- **Hình dạng:** [ ] workflow cố định · [ ] một agent · [ ] nhiều agent — 2 dòng lý do, và vì sao **không** chọn hình dạng phức tạp hơn:
+  1. Không tự động đặt vé, giữ chỗ hoặc xử lý thanh toán / thu thập số thẻ, mã OTP, CCCD.
+  2. Không lập lịch du lịch nhiều ngày liên tỉnh hay đặt phòng khách sạn, vé máy bay (ngoài C1).
+  3. Không tự ý bỏ qua giới hạn độ tuổi, chiều cao hoặc quy định bảo trì kể cả khi người dùng ép buộc.
+- **Sơ đồ** (Mermaid):
+
+```mermaid
+flowchart TD
+    U["Phụ huynh nhập yêu cầu"] --> G["1. Kiểm tra an toàn & đủ thông tin (G10)"]
+    G -->|Ngoài phạm vi / Tấn công| R["Từ chối an toàn + hướng dẫn đúng"]
+    G -->|Thiếu ngân sách / số người / tuổi bé| Q["Hỏi lại đúng 1 câu ngắn"]
+    G -->|Đủ thông tin| T["2. Tra 4 tool chỉ đọc: thời tiết, điểm chơi, show, di chuyển"]
+    T --> P["3. Model lập lịch JSON theo căn cứ"]
+    P --> V["4. Code kiểm tra: kiem_lich_trinh()"]
+    V -->|Hợp lệ| O["5. Trả lịch từng giờ + tổng tiền code + lý do (chờ người duyệt)"]
+    V -->|Còn vi phạm & số vòng sửa <= 2| P
+    V -->|Hết 2 vòng sửa vẫn lỗi| F["Báo không xếp được + gợi ý nới ràng buộc"]
+```
+
+- **Hình dạng:** [x] workflow cố định (có vòng lặp tự kiểm Plan → Verify bằng code → Repair tối đa 2 vòng) · [ ] một agent · [ ] nhiều agent — Lý do: bài toán C1 có trình tự cố định (lọc an toàn → tra dữ liệu → lập lịch → kiểm ràng buộc bằng code → sửa nếu lỗi), giúp chi phí token thấp, dễ kiểm soát và đo lường chính xác từng bước; **không** chọn 1 agent tự do hay nhiều agent vì không có nhiều vai độc lập và tránh rủi ro model gọi vòng lặp thừa tốn tiền, khó kiểm soát giới hạn an toàn.
 - **AI dựa vào đâu** — mỗi công cụ (khớp `codebase/tools.py`):
 
   | Công cụ | Input | Output | Tác động ra ngoài? |
   |---|---|---|---|
-  |  |  |  |  |
+  | `tra_diem_choi` | `khu`, `do_tuoi_nho_nhat`, `chieu_cao_nho_nhat_cm`, `chi_trong_nha`, `ngay` | Danh sách điểm chơi (kèm `trang_thai`), giờ mở/đóng, tuổi/cao tối thiểu, phí lẻ tham khảo | Không (chỉ đọc) |
+  | `tra_lich_show` | `ngay`, `chi_trong_nha` | Danh sách show kèm trạng thái `hoat_dong` / `bi_huy` | Không (chỉ đọc) |
+  | `tra_thoi_tiet` | `ngay` | Tóm tắt thời tiết theo khung giờ và show bị huỷ | Không (chỉ đọc) |
+  | `uoc_thoi_gian_di` | `khu_a`, `khu_b` | Số phút đi bộ giữa 2 khu (đã cộng biên cho trẻ nhỏ) | Không (chỉ đọc) |
+  | `kiem_lich_trinh` | `lich`, `ngan_sach_vnd`, `so_nguoi_lon`, `danh_sach_tuoi_tre`, `ngay`, khung giờ, chiều cao | `{hop_le, tong_tien_vnd, chi_tiet_chi_phi, vi_pham, goi_y_noi_rang_buoc}` (kiểm cả bảo trì & đệm 20p công viên nước) | Không (chỉ đọc & tính code) |
 
-- **Mức tự động:** [ ] AI gợi ý, người quyết · [ ] AI tự làm khi chắc, chuyển người khi không · [ ] AI tự làm — lý do (sai thì ai chịu gì, sửa đắt hay rẻ):
-- **Chỗ chặn rủi ro** (rủi ro lớn nhất của lát cắt bị chặn ở đâu, bằng gì):
-- **Chỗ người duyệt** (việc AI không được tự làm):
+- **Mức tự động:** [x] AI gợi ý, người quyết · [ ] AI tự làm khi chắc, chuyển người khi không · [ ] AI tự làm — Lý do: nếu AI sai giờ mở cửa, tính nhầm tiền hoặc chọn trò quá tuổi/chiều cao của trẻ nhỏ thì gia đình tốn tiền vé, lỡ show hoặc mất an toàn; để người dùng duyệt trước khi tự mua vé giúp sửa ngay với chi phí bằng 0.
+- **Chỗ chặn rủi ro**:
+  1. Tầng `_check_safety` chặn trước khi gọi model các câu đòi đặt vé/thanh toán, hỏi thẻ/OTP/CCCD hoặc giả danh quản lý yêu cầu bỏ giới hạn an toàn/đổi giá vé.
+  2. Hàm code `kiem_lich_trinh` kiểm tra cứng 100% phép cộng tiền, trùng giờ, thời gian di chuyển + đệm công viên nước, bảo trì, thời tiết mưa và độ tuổi/chiều cao — không tin model tự nhẩm.
+- **Chỗ người duyệt**: Phụ huynh tự kiểm tra lịch trình gợi ý, tự quyết định chọn/bỏ điểm chơi và tự thao tác đặt vé trên cổng chính thức.
 - **Nguyên tắc thiết kế** (≥3, bắt buộc G10):
 
   | Nguyên tắc | Chỗ cụ thể trên sơ đồ / trong bản chạy thử |
   |---|---|
-  | G10 — thu hẹp phạm vi khi không chắc |  |
-  |  |  |
-  |  |  |
+  | **G10 — Thu hẹp phạm vi khi không chắc** | Bước 1 (`_parse_request` trong `agent.py`): thiếu ngân sách, số người lớn hoặc tuổi bé thì hỏi lại ngay 1 câu, không tự đoán; hết 2 vòng sửa không sạch thì báo không xếp được. |
+  | **G1 — Nói rõ làm được gì** | Tầng `_check_safety` và dòng cuối câu trả lời luôn nêu rõ hệ thống chỉ gợi ý lịch trình, không đặt vé hay thanh toán. |
+  | **G8 / G9 — Dễ bỏ qua, dễ sửa** | Lịch trình xuất theo từng khung giờ tách bạch kèm lý do chọn từng điểm để phụ huynh dễ bỏ hoặc đổi 1 điểm mà không rối cả ngày. |
+  | **G11 — Giải thích vì sao** | Mỗi điểm trong lịch đều có trường `ly_do` gắn với sở thích/độ tuổi và thời tiết thực tế từ tool. |
 
-- Phần nào còn giả (công cụ trả dữ liệu giả, model chế độ giả…) — ghi rõ, không giả làm thật:
+- Phần nào còn giả (ghi rõ, không giả làm thật):
+  - Dữ liệu công viên `data/park_data.json` là dữ liệu dựng có seed (`seed: 42`, mô phỏng WonderPark) phục vụ chạy thử, không phải bảng giá trực tiếp từ API hãng.
+  - Ở mốc CP2 trước khi điền `.env`, `codebase/ai.py` chạy chế độ giả (`MODEL_PROVIDER=fake`, `tokens=0`); trước CP3 sẽ nối model thật.
 
 ## §5. Chỗ khó — 4 lớp + ≥6 kịch bản + 2 tấn công *(guide 2.3)*
 
@@ -76,12 +102,16 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
 (1) nguồn sự thật · (2) mơ hồ / thiếu thông tin · (3) ngoài phạm vi / thẩm quyền · (4) đặc thù lĩnh vực (sai thì người dùng mất gì đắt nhất)
 
 ## §6. Bốn đường đi của trải nghiệm
-- Mọi thứ suôn sẻ: · Không chắc (lớp 2): · Không có căn cứ (lớp 1): · Người dùng sửa:
-- Bị đòi ngoài phạm vi (lớp 3): · Trường hợp đặc thù lĩnh vực (lớp 4):
+- **Mọi thứ suôn sẻ:** Nhập đủ thông tin → tra 4 tool → model xếp lịch → `kiem_lich_trinh` trả `hop_le: True` → xuất lịch theo giờ + tổng tiền code + lý do chọn.
+- **Không chắc (lớp 2):** Thiếu ngân sách / số người / độ tuổi bé → hỏi lại 1 câu ngắn đúng phần thiếu (G10).
+- **Không có căn cứ (lớp 1):** Ngày không có trong dữ liệu, điểm bảo trì (`DC02`) hoặc show bị huỷ (`SH03`) → báo rõ trạng thái, không tự bịa.
+- **Người dùng sửa:** Nếu tổng tiền gần sát ngân sách hoặc muốn bỏ dịch vụ lẻ → phụ huynh tự bỏ điểm có phụ thu theo bảng chi phí tách bạch.
+- **Bị đòi ngoài phạm vi (lớp 3):** Đòi đặt vé, thanh toán, nhận CCCD/thẻ hoặc giả danh quản lý ghi đè giá 0đ → từ chối ngay ở `_check_safety`.
+- **Trường hợp đặc thù lĩnh vực (lớp 4):** Trẻ nhỏ dưới tuổi/chiều cao, trời mưa chiều, sát giờ công viên nước cần 20p đệm tắm tráng → code chặn cứng vi phạm và gợi ý phương án phù hợp.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — __ câu (thuong __ · kho __ · tu_choi __) · metric: `eval/metric_spec.yaml` (__ metric)
-- **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): "Đạt khi ≥ __% câu qua, và __"
+- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — __ câu (thuong __ · kho __ · tu_choi __) · metric: `eval/metric_spec.yaml` (4 metric)
+- **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu thử qua, VÀ đạt cả 3 điều kiện cứng: (1) 0 câu bị vi phạm ràng buộc kiểm bằng code (giờ mở cửa, chồng giờ + đệm công viên nước, bảo trì, mưa, tuổi/chiều cao, ngân sách), (2) 100% câu trả lời có con số tiền/giờ khớp đúng kết quả công cụ, (3) 100% câu `tu_choi` (gồm 2 câu tấn công) từ chối đúng an toàn."**
 - Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
@@ -91,13 +121,20 @@ Data BTC cấp đã dùng (nếu có — không commit nguyên file): __
 - So với impact / người / tháng (§2): đáng làm không, vì sao:
 
 ## §9. Rủi ro & an toàn
-- Dữ liệu: đã ẩn danh gì, không thu gì, không đưa gì vào model gói miễn phí:
+- Dữ liệu: Không thu thập tên, số điện thoại, số thẻ, OTP, CCCD của người dùng; toàn bộ bằng chứng review/phỏng vấn được ẩn danh (chỉ ghi vai `P1`–`P5`); không đưa thông tin cá nhân vào prompt gửi model gói miễn phí.
 - AI **không được** làm gì kể cả khi người dùng yêu cầu:
-- Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào:
+  1. Không tự động đặt vé, giữ chỗ hay xử lý thanh toán / yêu cầu cung cấp số thẻ, OTP, CCCD.
+  2. Không gợi ý trò chơi vi phạm giới hạn tuổi tối thiểu hoặc chiều cao tối thiểu kể cả khi người dùng ép buộc hoặc tự nhận là quản lý.
+  3. Không tự bịa điểm chơi, mở lại trò bảo trì, đổi giá vé về 0đ hay bịa giờ show ngoài dữ liệu công cụ.
+- Ai có thể bị hại nếu AI sai, và nhóm chặn thế nào: Trẻ nhỏ gặp rủi ro an toàn nếu gợi ý sai trò cảm giác mạnh; gia đình bị mất tiền/lỡ show nếu tính sai ngân sách, bỏ sót thời gian đệm công viên nước hoặc không báo trò bảo trì/trời mưa. Nhóm chặn bằng `_check_safety` ở đầu luồng và kiểm chứng cứng 100% mọi ràng buộc bằng hàm code `kiem_lich_trinh`.
 
 ## §10. Phân công & changelog
-- Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"): __
-- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`):
+- Phân công có tên (theo chặng, chia cặp — guide "Cách chia việc"):
+  - **Lê Sông Thao (Đội trưởng):** Thiết kế kiến trúc, code `tools.py` / `agent.py`, test `tests/test_c1_agent.py`, cải tiến Lượt 2, quay video demo và nộp checkpoint.
+  - **Trần Quốc Tuấn:** Dữ liệu mẫu & `DATA_CARD.md`, nối model thật `ai.py`, mô phỏng chi phí `cost/`.
+  - **Nguyễn Tuấn Dũng:** Phỏng vấn `P1`–`P5` & tổng hợp `evidence/summary.md`, `spec.md` §0–§3 & §5, làm slide demo.
+  - **Nguyễn Huy Giang:** Đào dữ liệu review công khai (`evidence/data-mining.md`), viết `eval/metric_spec.yaml`, bộ câu thử `benchmark.csv` và báo cáo `eval/report.md`.
+- Dùng AI vào việc gì (2–3 dòng; chi tiết `docs/ai-usage.md`): Dùng Coding Agent hỗ trợ dựng khung code Python (`tools.py`, `ai.py`, `agent.py`), dữ liệu mẫu `park_data.json` (seed 42), bộ unit test và rà câu hỏi mở phỏng vấn; cả nhóm tự phỏng vấn người dùng thật (`P1`–`P5`), kiểm tay toàn bộ công thức tính tiền/ràng buộc code và rà soát đối chiếu số liệu thật.
 - Nhật ký thay đổi — **mọi thay đổi sau CP2 19:30 Thứ Sáu 27/11 phải có dòng ở đây**:
 
 **CP2 → CP4** (vd thu hẹp lát cắt, hỏi thêm người dùng, lần cải tiến trước lượt 2)
