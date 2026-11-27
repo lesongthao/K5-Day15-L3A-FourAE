@@ -172,6 +172,16 @@ class TestTrackC1VinWonders(unittest.TestCase):
         self.assertFalse(unpriced["hop_le"])
         self.assertIn("SV02", " | ".join(unpriced["muc_khong_co_gia"]))
 
+    def test_13_budget_exceeded_by_optional_services(self) -> None:
+        """Vé cổng <= ngân sách nhưng cộng dịch vụ lẻ (SV01 + SV03) vượt 80,000đ phải bị chặn sớm."""
+        res = agent.answer(
+            "Gia đình 2 người lớn và 1 bé 7 tuổi cao 120cm đi từ 09:00 đến 18:00, "
+            "ngân sách 2.920.000đ, muốn mua thêm cho thú ăn và thuê tủ đồ locker."
+        )
+        self.assertIn("Không thể xếp lịch", res["output"])
+        self.assertIn("3,000,000đ", res["output"])
+        self.assertIn("80,000đ", res["output"])
+
 
 if __name__ == "__main__":
     unittest.main()
