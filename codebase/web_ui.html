@@ -1219,7 +1219,7 @@
             <div class="pop-row">
               <div>
                 <div class="pop-title">Trẻ em</div>
-                <div class="pop-rule nums">Dưới 100cm miễn phí, 100–139cm tính giá trẻ em</div>
+                <div class="pop-rule nums">100–139cm: 800.000đ (sau 16h: 550.000đ); dưới 100cm miễn phí</div>
               </div>
               <div class="stepper">
                 <button type="button" class="step-btn" data-step="children:-1" aria-label="Giảm trẻ em">−</button>
@@ -2846,18 +2846,27 @@
 
     const guestState = { adults: 2, children: [{ age: 6, height: 115 }], seniors: [] };
 
-    function getChildTier(heightCm) {
-      const h = Number(heightCm || 115);
-      if (h < 100) return { id: "INFANT", label: "Miễn phí (<100cm)", cls: "free" };
-      if (h < 140) return { id: "CHILD", label: "Vé trẻ em (100–139cm)", cls: "" };
-      return { id: "ADULT", label: "Vé người lớn (≥140cm)", cls: "adult" };
+    function getTicketPrices(isAfter16 = null) {
+      const after16 = isAfter16 === null
+        ? String(document.getElementById("bWindow").value || "").startsWith("16:00")
+        : Boolean(isAfter16);
+      return after16
+        ? { ADULT: 700000, CHILD: 550000, SENIOR: 550000, INFANT: 0 }
+        : { ADULT: 1050000, CHILD: 800000, SENIOR: 800000, INFANT: 0 };
     }
 
-    function getSeniorTier(ageVal) {
+    function getChildTier(heightCm, prices = getTicketPrices()) {
+      const h = Number(heightCm || 115);
+      if (h < 100) return { id: "INFANT", label: "Miễn phí (<100cm)", cls: "free" };
+      if (h < 140) return { id: "CHILD", label: `Vé trẻ em: ${fmtVnd(prices.CHILD)}`, cls: "" };
+      return { id: "ADULT", label: `Vé người lớn: ${fmtVnd(prices.ADULT)}`, cls: "adult" };
+    }
+
+    function getSeniorTier(ageVal, prices = getTicketPrices()) {
       const a = Number(ageVal || 65);
-      if (a >= 60) return { id: "SENIOR", label: "Vé người cao tuổi (≥60t)", cls: "" };
-      if (a >= 50) return { id: "ADULT", label: "Dưới 60t: vé người lớn (lọc trò ≥50t)", cls: "adult" };
-      return { id: "ADULT", label: "Dưới 60t: tính vé người lớn", cls: "adult" };
+      if (a >= 60) return { id: "SENIOR", label: `Vé cao tuổi: ${fmtVnd(prices.SENIOR)}`, cls: "" };
+      if (a >= 50) return { id: "ADULT", label: `Dưới 60t: ${fmtVnd(prices.ADULT)} (lọc trò ≥50t)`, cls: "adult" };
+      return { id: "ADULT", label: `Dưới 60t: ${fmtVnd(prices.ADULT)}`, cls: "adult" };
     }
 
     function updateGuestSummaryText() {
@@ -2968,12 +2977,28 @@
       budgetPretty.textContent = fmtCompactBudget(budgetInput.value);
       const win = document.getElementById("bWindow").value;
       const isAfter16 = win.startsWith("16:00");
-      const prices = isAfter16
-        ? { ADULT: 700000, CHILD: 550000, SENIOR: 550000, INFANT: 0 }
-        : { ADULT: 1050000, CHILD: 800000, SENIOR: 800000, INFANT: 0 };
+      const prices = getTicketPrices(isAfter16);
       let total = guestState.adults * prices.ADULT;
-      guestState.seniors.forEach((age) => { total += prices[getSeniorTier(age).id]; });
-      guestState.children.forEach((ch) => { total += prices[getChildTier(ch.height).id]; });
+      guestState.seniors.forEach((age, idx) => {
+        const st = getSeniorTier(age, prices);
+        total += prices[st.id];
+        const row = seniorsList.children[idx];
+        const badge = row && row.querySelector(".tier-badge");
+        if (badge) {
+          badge.className = `tier-badge ${st.cls}`;
+          badge.textContent = st.label;
+        }
+      });
+      guestState.children.forEach((ch, idx) => {
+        const ct = getChildTier(ch.height, prices);
+        total += prices[ct.id];
+        const row = childrenList.children[idx];
+        const badge = row && row.querySelector(".tier-badge");
+        if (badge) {
+          badge.className = `tier-badge ${ct.cls}`;
+          badge.textContent = ct.label;
+        }
+      });
       estTicketType.textContent = isAfter16 ? "Vé sau 16:00" : "Vé cả ngày";
       estGateTotal.textContent = fmtVnd(total);
       if (syncPrompt && promptAutoSynced) applyBuilderToPrompt(false, false);
