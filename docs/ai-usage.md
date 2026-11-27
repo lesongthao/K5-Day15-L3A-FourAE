@@ -11,7 +11,7 @@ README của nhóm có mục "Dùng AI vào việc gì" (2–3 dòng, bắt bu�
 | Đào data (viết script đếm, gợi ý nhãn) | *(Chưa chạy / cập nhật CP3)* | Viết script đếm review công khai và gợi ý gom nhãn | Kiểm tay __ dòng, khớp __ | Nguyễn Huy Giang |
 | Rà câu hỏi phỏng vấn / khảo sát | Coding Agent | Rà câu hỏi mở không dẫn dắt theo Mom Test | Phỏng vấn trực tiếp 5 người ngoài nhóm (`P1.md`–`P5.md`), tự ghi chép câu trả lời thật | Nguyễn Tuấn Dũng |
 | Viết câu thử (benchmark) | *(Chưa chạy / cập nhật CP2–CP3)* | Gợi ý biến thể câu chữ dựa trên lưới input | Mỗi câu thử có `source`; câu thử AI viết được ghi rõ mã `sinh_seed` | Nguyễn Huy Giang |
-| Sinh data `synthetic` (nếu có) | Coding Agent | Tạo bộ dữ liệu `data/park_data.json` mô phỏng công viên WonderPark (12 điểm, 4 show, 4 kịch bản thời tiết) | Seed 42 · kiểm tay 12/12 điểm chơi, 4/4 show, 4/4 ngày qua unit test | Lê Sông Thao, Trần Quốc Tuấn |
+| Sinh data `synthetic` (nếu có) | Tự dựng thủ công + rà soát bằng tool | Bổ sung khung kịch bản thời tiết, show mẫu (`data/park/*.json`) kết hợp dữ liệu thật từ VinWonders (`W_RULES`, `W_PRICE`, `W_HOURS`) | Không sinh ngẫu nhiên bằng prompt; kiểm tay 18 trò chơi, 6 show, 4 kịch bản qua `tests/test_c1_agent.py` | Trần Quốc Tuấn, Lê Sông Thao |
 | Chấm cột `pass` bằng LLM (nếu có) | *(Không dùng — chấm bằng code + người)* | — | Kiểm tra thủ công __ câu thử, khớp __/__ | Nguyễn Huy Giang, Nguyễn Tuấn Dũng |
 | Slide, văn bản | Coding Agent | Rà cấu trúc markdown, sơ đồ Mermaid và chính tả tài liệu `spec.md`, `canvas.md` | Đối chiếu từng số liệu với phiếu phỏng vấn thật `P1`–`P5`, không bịa số | Cả nhóm |
 

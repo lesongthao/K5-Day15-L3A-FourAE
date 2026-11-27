@@ -1,7 +1,7 @@
-"""Công cụ chỉ đọc cho bài toán Track C1 — Lịch trình khu vui chơi gia đình.
+"""Công cụ chỉ đọc cho Track C1 — sử dụng bộ dữ liệu VinWonders Nha Trang (data/park/*.json).
 
 Mỗi công cụ gắn @tool để tracing.py tự ghi lại input, output, độ trễ và lỗi.
-Không công cụ nào có tác động ra ngoài (chỉ đọc dữ liệu và kiểm tra logic).
+Không công cụ nào có tác động ra ngoài (chỉ đọc dữ liệu và kiểm tra ràng buộc bằng code).
 """
 from __future__ import annotations
 
@@ -12,22 +12,28 @@ from typing import Any
 
 from tracing import tool
 
-DATA_PATH = os.path.join(
+PARK_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
     "data",
-    "park_data.json",
+    "park",
 )
+WATERPARK_ZONE = "TROPICAL_PARADISE"
+WATERPARK_BUFFER_MIN = 20
 
 
 @functools.lru_cache(maxsize=1)
-def _load_park_data() -> dict[str, Any]:
-    """Đọc và cache dữ liệu khu vui chơi mẫu từ data/park_data.json."""
-    with open(DATA_PATH, encoding="utf-8") as f:
-        return json.load(f)
+def _load_park_bundle() -> dict[str, Any]:
+    """Đọc và cache toàn bộ 7 file JSON trong data/park/."""
+    bundle: dict[str, Any] = {}
+    for name in ("park", "attractions", "shows", "tickets", "services", "travel_times", "weather"):
+        path = os.path.join(PARK_DIR, f"{name}.json")
+        with open(path, encoding="utf-8") as f:
+            bundle[name] = json.load(f)
+    return bundle
 
 
-def _to_minutes(hhmm: str) -> int:
-    """Chuyển chuỗi giờ 'HH:MM' thành tổng số phút tính từ 00:00."""
+def _to_min(hhmm: str) -> int:
+    """Chuyển chuỗi giờ 'HH:MM' thành số phút tính từ 00:00."""
     parts = hhmm.strip().split(":")
     if len(parts) != 2:
         raise ValueError(f"Định dạng giờ không hợp lệ: {hhmm!r} (cần HH:MM)")
@@ -37,300 +43,310 @@ def _to_minutes(hhmm: str) -> int:
     return hour * 60 + minute
 
 
-def _is_raining(weather: dict[str, Any], start_min: int, end_min: int) -> bool:
-    """Kiểm tra khoảng [start_min, end_min] có giao với khung giờ mưa không."""
-    for w in weather.get("windows", []):
-        if w.get("condition") != "mua":
-            continue
-        ws, we = _to_minutes(w["start"]), _to_minutes(w["end"])
-        if max(start_min, ws) < min(end_min, we):
+def _add_min(hhmm: str, delta: int) -> str:
+    """Cộng thêm số phút vào mốc HH:MM và trả về chuỗi HH:MM."""
+    total = _to_min(hhmm) + delta
+    return f"{total // 60:02d}:{total % 60:02d}"
+
+
+def _overlaps_rain(rain_windows: list[dict[str, str]], s_min: int, e_min: int) -> bool:
+    """Kiểm tra khoảng [s_min, e_min] có giao với khung giờ mưa nào không."""
+    for w in rain_windows:
+        ws, we = _to_min(w["from"]), _to_min(w["to"])
+        if max(s_min, ws) < min(e_min, we):
             return True
     return False
 
 
-def _match_zone(zone_value: str, filter_zone: str) -> bool:
-    """So khớp tên khu không phân biệt hoa thường."""
-    if not filter_zone:
-        return True
-    return zone_value.strip().lower() == filter_zone.strip().lower()
+def _classify_guest(guest: dict[str, Any]) -> str:
+    """Phân nhóm vé khách theo đúng group_priority trong tickets.json."""
+    tuoi = guest.get("tuoi")
+    if tuoi is not None and int(tuoi) >= 60:
+        return "SENIOR"
+    cao = guest.get("cao_cm")
+    if cao is None:
+        return "ADULT"
+    cao_int = int(cao)
+    if cao_int < 100:
+        return "INFANT"
+    if cao_int < 140:
+        return "CHILD"
+    return "ADULT"
 
 
 @tool
 def tra_diem_choi(
     khu: str = "",
-    do_tuoi_nho_nhat: int | None = None,
-    chieu_cao_nho_nhat_cm: int | None = None,
+    chieu_cao_tre_cm: int | None = None,
+    tuoi_lon_nhat: int | None = None,
     chi_trong_nha: bool = False,
-    ngay: str = "2026-11-28",
+    bao_gom_bao_tri: bool = False,
 ) -> dict[str, Any]:
-    """Tra điểm chơi theo khu, độ tuổi, chiều cao trẻ nhỏ, trong nhà và trạng thái bảo trì theo ngày.
+    """Tra điểm chơi từ attractions.json theo khu, chiều cao/tuổi, trong nhà và trạng thái bảo trì.
 
-    Input: khu (str), do_tuoi_nho_nhat (int|None), chieu_cao_nho_nhat_cm (int|None), chi_trong_nha (bool), ngay (str).
-    Output: dict gồm danh sách điểm chơi phù hợp (kèm trang_thai), vé cổng và dịch vụ lẻ tham khảo.
+    Input: khu (str), chieu_cao_tre_cm (int|None), tuoi_lon_nhat (int|None), chi_trong_nha (bool), bao_gom_bao_tri (bool).
+    Output: dict gồm thông tin công viên, danh sách điểm chơi lọc được, bảng giá vé và dịch vụ lẻ.
     Tác động ra ngoài: Không (chỉ đọc).
     """
-    data = _load_park_data()
-    weather = data.get("weather_scenarios", {}).get(ngay, {})
-    maintenance = set(weather.get("maintenance_attractions", []))
+    b = _load_park_bundle()
+    khu_up = khu.strip().upper()
     items: list[dict[str, Any]] = []
-    for attr in data.get("attractions", []):
-        if not _match_zone(attr["zone"], khu):
+    for a in b["attractions"]["attractions"]:
+        if khu_up and a["zone"].upper() != khu_up:
             continue
-        if chi_trong_nha and not attr["indoor"]:
+        if not bao_gom_bao_tri and a.get("status") == "maintenance":
             continue
-        if do_tuoi_nho_nhat is not None and attr["min_age"] > do_tuoi_nho_nhat:
+        if chi_trong_nha and not a.get("indoor"):
             continue
-        if chieu_cao_nho_nhat_cm is not None and attr["min_height_cm"] > chieu_cao_nho_nhat_cm:
+        if chieu_cao_tre_cm is not None:
+            if a["min_height_cm"] is not None and a["min_height_cm"] > chieu_cao_tre_cm:
+                continue
+            if a["max_height_cm"] is not None and a["max_height_cm"] < chieu_cao_tre_cm:
+                continue
+        if tuoi_lon_nhat is not None and a["max_age"] is not None and a["max_age"] < tuoi_lon_nhat:
             continue
-        item = dict(attr)
-        item["trang_thai"] = "bao_tri" if attr["id"] in maintenance else "hoat_dong"
-        items.append(item)
+        items.append(a)
     return {
-        "cong_vien": data["metadata"]["name"],
-        "ve_cong_co_ban": data["metadata"]["entry_fee"],
-        "dich_vu_le_tham_khao": data["metadata"].get("extra_services", {}),
+        "cong_vien": b["park"]["park"]["name"],
+        "gio_mo_cua": f"{b['park']['park']['open']}-{b['park']['park']['close']}",
         "tong_so": len(items),
         "diem_choi": items,
+        "bang_gia_ve": b["tickets"]["ticket_types"],
+        "dich_vu_le": b["services"]["services"],
     }
 
 
 @tool
-def tra_lich_show(ngay: str = "2026-11-28", chi_trong_nha: bool = False) -> dict[str, Any]:
-    """Tra danh sách show biểu diễn và trạng thái hoạt động/bị huỷ theo ngày.
+def tra_lich_show(kich_ban_thoi_tiet: str = "SUNNY", chi_trong_nha: bool = False) -> dict[str, Any]:
+    """Tra danh sách show từ shows.json và đánh dấu suất bị huỷ theo kịch bản thời tiết.
 
-    Input: ngay (str, YYYY-MM-DD), chi_trong_nha (bool).
-    Output: dict gồm ngày, trạng thái có dữ liệu và danh sách show kèm trạng thái.
+    Input: kich_ban_thoi_tiet (str: SUNNY/AFTERNOON_RAIN/EVENING_RAIN/ALL_DAY_RAIN), chi_trong_nha (bool).
+    Output: dict gồm kịch bản thời tiết và danh sách show kèm danh sách suất hoạt động / bị huỷ.
     Tác động ra ngoài: Không (chỉ đọc).
     """
-    data = _load_park_data()
-    weather = data.get("weather_scenarios", {}).get(ngay)
-    if weather is None:
-        return {
-            "ngay": ngay,
-            "co_du_lieu": False,
-            "loi": f"Chưa có dữ liệu lịch show cho ngày {ngay}. Các ngày có sẵn: {list(data.get('weather_scenarios', {}).keys())}",
-            "shows": [],
-        }
-    cancelled = set(weather.get("cancelled_shows", []))
-    shows_out: list[dict[str, Any]] = []
-    for sh in data.get("shows", []):
-        if chi_trong_nha and not sh["indoor"]:
+    b = _load_park_bundle()
+    sc_id = kich_ban_thoi_tiet.strip().upper()
+    scenario = next((s for s in b["weather"]["scenarios"] if s["id"] == sc_id), None)
+    if scenario is None:
+        return {"co_du_lieu": False, "loi": f"Không có kịch bản thời tiết {kich_ban_thoi_tiet!r}.", "shows": []}
+    rain_windows = scenario["rain_windows"]
+    out: list[dict[str, Any]] = []
+    for sh in b["shows"]["shows"]:
+        if chi_trong_nha and not sh.get("indoor"):
             continue
+        active_times: list[str] = []
+        cancelled_times: list[str] = []
+        for t in sh["times"]:
+            s_m = _to_min(t)
+            e_m = s_m + int(sh["duration_min"])
+            if sh.get("cancel_in_rain") and _overlaps_rain(rain_windows, s_m, e_m):
+                cancelled_times.append(t)
+            else:
+                active_times.append(t)
         item = dict(sh)
-        item["trang_thai"] = "bi_huy" if sh["id"] in cancelled else "hoat_dong"
-        shows_out.append(item)
-    return {"ngay": ngay, "co_du_lieu": True, "shows": shows_out}
+        item["suat_hoat_dong"] = active_times
+        item["suat_bi_huy"] = cancelled_times
+        out.append(item)
+    return {"co_du_lieu": True, "kich_ban": scenario["id"], "mo_ta": scenario["label"], "shows": out}
 
 
 @tool
-def tra_thoi_tiet(ngay: str = "2026-11-28") -> dict[str, Any]:
-    """Tra dự báo thời tiết theo khung giờ và danh sách show bị huỷ trong ngày.
+def tra_thoi_tiet(kich_ban: str = "SUNNY") -> dict[str, Any]:
+    """Tra khung giờ mưa và quy tắc đóng trò/huỷ show từ weather.json.
 
-    Input: ngay (str, YYYY-MM-DD).
-    Output: dict gồm trạng thái có dữ liệu, mô tả thời tiết, các khung giờ và show bị huỷ.
+    Input: kich_ban (str: SUNNY | AFTERNOON_RAIN | EVENING_RAIN | ALL_DAY_RAIN).
+    Output: dict gồm trạng thái có dữ liệu, nhãn kịch bản, rain_windows và rain_rules.
     Tác động ra ngoài: Không (chỉ đọc).
     """
-    data = _load_park_data()
-    weather = data.get("weather_scenarios", {}).get(ngay)
-    if weather is None:
-        return {
-            "ngay": ngay,
-            "co_du_lieu": False,
-            "loi": f"Chưa có dữ liệu thời tiết cho ngày {ngay}.",
-        }
+    b = _load_park_bundle()
+    sc_id = kich_ban.strip().upper()
+    scenario = next((s for s in b["weather"]["scenarios"] if s["id"] == sc_id), None)
+    if scenario is None:
+        return {"co_du_lieu": False, "loi": f"Không có kịch bản thời tiết {kich_ban!r}."}
     return {
-        "ngay": ngay,
         "co_du_lieu": True,
-        "tom_tat": weather["summary"],
-        "khung_gio": weather["windows"],
-        "show_bi_huy": weather.get("cancelled_shows", []),
+        "id": scenario["id"],
+        "nhan": scenario["label"],
+        "rain_windows": scenario["rain_windows"],
+        "rain_rules": b["weather"]["rain_rules"],
     }
 
 
 @tool
 def uoc_thoi_gian_di(khu_a: str, khu_b: str) -> dict[str, Any]:
-    """Ước lượng thời gian di chuyển bộ giữa hai khu vực (đã cộng biên đi cùng trẻ nhỏ).
+    """Tra số phút đi bộ giữa hai khu cho gia đình có trẻ nhỏ từ travel_times.json.
 
     Input: khu_a (str), khu_b (str).
-    Output: dict gồm số phút di chuyển hoặc thông báo lỗi nếu tên khu không tồn tại.
+    Output: dict {hop_le, khu_a, khu_b, phut} (cùng khu trả same_zone_min=5).
     Tác động ra ngoài: Không (chỉ đọc).
     """
-    data = _load_park_data()
-    matrix: dict[str, dict[str, int]] = data.get("travel_times_min", {})
-    zone_map = {z.lower(): z for z in matrix}
-    za = zone_map.get(khu_a.strip().lower())
-    zb = zone_map.get(khu_b.strip().lower())
+    tt = _load_park_bundle()["travel_times"]
+    nodes = {n.upper(): n for n in tt["nodes"]}
+    za, zb = nodes.get(khu_a.strip().upper()), nodes.get(khu_b.strip().upper())
     if not za or not zb:
-        return {
-            "hop_le": False,
-            "phut": 15,
-            "loi": f"Không tìm thấy khu vực ({khu_a!r}, {khu_b!r}). Khu hợp lệ: {list(matrix.keys())}",
-        }
-    return {"hop_le": True, "khu_a": za, "khu_b": zb, "phut": matrix[za][zb]}
+        return {"hop_le": False, "phut": 15, "loi": f"Khu không hợp lệ ({khu_a!r}, {khu_b!r})."}
+    phut = int(tt["same_zone_min"]) if za == zb else int(tt["minutes"][za][zb])
+    return {"hop_le": True, "khu_a": za, "khu_b": zb, "phut": phut}
 
 
-def _calc_entry_fee(
-    entry_fee: dict[str, int],
-    so_nguoi_lon: int,
-    danh_sach_tuoi_tre: list[int],
-) -> tuple[int, int]:
-    """Tính tiền vé cổng và trả về (tổng vé cổng, số trẻ >= 3 tuổi phải mua vé)."""
-    paying_children = sum(1 for age in danh_sach_tuoi_tre if age >= 3)
-    total = so_nguoi_lon * entry_fee["adult"] + paying_children * entry_fee["child_3_10"]
-    return total, paying_children
+def _calc_ticket_cost(tickets_data: dict[str, Any], loai_ve: str, nhom_khach: list[dict[str, Any]]) -> tuple[int, dict[str, int], str | None]:
+    """Tính tiền vé cổng theo nhóm chiều cao/tuổi từ tickets.json."""
+    t_info = next((t for t in tickets_data["ticket_types"] if t["id"] == loai_ve), None)
+    if t_info is None:
+        return 0, {}, f"Không có loại vé {loai_ve!r} trong dữ liệu."
+    counts: dict[str, int] = {"ADULT": 0, "CHILD": 0, "SENIOR": 0, "INFANT": 0}
+    total = 0
+    for guest in nhom_khach:
+        grp = _classify_guest(guest)
+        counts[grp] += 1
+        total += int(t_info["price_vnd"][grp])
+    return total, counts, t_info["entry_from"]
 
 
 @tool
 def kiem_lich_trinh(
     lich: list[dict[str, Any]],
     ngan_sach_vnd: int,
-    so_nguoi_lon: int,
-    danh_sach_tuoi_tre: list[int],
-    ngay: str = "2026-11-28",
+    nhom_khach: list[dict[str, Any]],
+    kich_ban_thoi_tiet: str = "SUNNY",
+    loai_ve: str = "STANDARD",
     gio_bat_dau: str = "09:00",
-    gio_ket_thuc: str = "17:30",
-    chieu_cao_tre_cm: list[int] | None = None,
+    gio_ket_thuc: str = "20:00",
+    dich_vu_le: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Kiểm tra toàn bộ ràng buộc lịch trình (giờ, di chuyển, tuổi, chiều cao, mưa, tiền) bằng code.
+    """Kiểm tra toàn bộ ràng buộc lịch trình (giờ, di chuyển, đệm CVN, bảo trì, chiều cao/tuổi, mưa, tiền) bằng code.
 
-    Input: lich (list[{id, start, end}]), ngan_sach_vnd (int), so_nguoi_lon (int),
-           danh_sach_tuoi_tre (list[int]), ngay (str), gio_bat_dau (str), gio_ket_thuc (str), chieu_cao_tre_cm (list[int]|None).
-    Output: dict {hop_le, tong_tien_vnd, chi_tiet_chi_phi, vi_pham, goi_y_noi_rang_buoc}.
+    Input: lich (list[{id, start, end}]), ngan_sach_vnd (int), nhom_khach (list[{tuoi, cao_cm}]),
+           kich_ban_thoi_tiet (str), loai_ve (str), gio_bat_dau (str), gio_ket_thuc (str), dich_vu_le (list|None).
+    Output: dict {hop_le, tong_tien_vnd, chi_tiet_chi_phi, muc_khong_co_gia, vi_pham, goi_y_noi_rang_buoc}.
     Tác động ra ngoài: Không (chỉ đọc và tính toán).
     """
-    data = _load_park_data()
+    b = _load_park_bundle()
     vi_pham: list[str] = []
     goi_y: list[str] = []
+    khong_co_gia: list[str] = []
 
-    if so_nguoi_lon <= 0:
-        vi_pham.append("Phải có ít nhất 1 người lớn đi cùng trẻ nhỏ.")
+    ve_cong, dem_nhom, entry_from = _calc_ticket_cost(b["tickets"], loai_ve, nhom_khach)
+    if entry_from is None:
+        return {"hop_le": False, "tong_tien_vnd": 0, "chi_tiet_chi_phi": {}, "muc_khong_co_gia": [], "vi_pham": [f"Loại vé {loai_ve!r} không tồn tại."], "goi_y_noi_rang_buoc": []}
+    if dem_nhom.get("ADULT", 0) + dem_nhom.get("SENIOR", 0) == 0:
+        vi_pham.append("Phải có ít nhất 1 người lớn/người cao tuổi đi cùng trẻ nhỏ.")
 
-    entry_total, paying_children = _calc_entry_fee(
-        data["metadata"]["entry_fee"], so_nguoi_lon, danh_sach_tuoi_tre
-    )
-    weather = data.get("weather_scenarios", {}).get(ngay)
-    if weather is None:
-        vi_pham.append(f"Không có dữ liệu thời tiết/lịch show cho ngày {ngay}.")
-        return {
-            "hop_le": False,
-            "tong_tien_vnd": entry_total,
-            "chi_tiet_chi_phi": {"ve_cong": entry_total, "phu_thu": 0},
-            "vi_pham": vi_pham,
-            "goi_y_noi_rang_buoc": ["Chọn ngày có dữ liệu: " + ", ".join(data["weather_scenarios"].keys())],
-        }
+    scenario = next((s for s in b["weather"]["scenarios"] if s["id"] == kich_ban_thoi_tiet.strip().upper()), None)
+    if scenario is None:
+        vi_pham.append(f"Không có kịch bản thời tiết {kich_ban_thoi_tiet!r}.")
+        return {"hop_le": False, "tong_tien_vnd": ve_cong, "chi_tiet_chi_phi": {"ve_cong": ve_cong, "phu_thu": 0, "dem_nhom": dem_nhom}, "muc_khong_co_gia": [], "vi_pham": vi_pham, "goi_y_noi_rang_buoc": []}
 
-    catalog = {a["id"]: ("attraction", a) for a in data.get("attractions", [])}
-    for sh in data.get("shows", []):
+    catalog = {a["id"]: ("attraction", a) for a in b["attractions"]["attractions"]}
+    for sh in b["shows"]["shows"]:
         catalog[sh["id"]] = ("show", sh)
+    sv_map = {s["id"]: s for s in b["services"]["services"]}
 
-    win_start, win_end = _to_minutes(gio_bat_dau), _to_minutes(gio_ket_thuc)
-    min_age_group = min(danh_sach_tuoi_tre) if danh_sach_tuoi_tre else 99
-    min_height_group = min(chieu_cao_tre_cm) if chieu_cao_tre_cm else None
-    cancelled = set(weather.get("cancelled_shows", []))
-    maintenance = set(weather.get("maintenance_attractions", []))
-    matrix = data.get("travel_times_min", {})
+    win_s = max(_to_min(gio_bat_dau), _to_min(entry_from), _to_min(b["park"]["park"]["open"]))
+    win_e = min(_to_min(gio_ket_thuc), _to_min(b["park"]["park"]["close"]))
+    heights = [int(g["cao_cm"]) for g in nhom_khach if g.get("cao_cm") is not None]
+    child_heights = [int(g["cao_cm"]) for g in nhom_khach if g.get("cao_cm") is not None and int(g.get("tuoi", 30)) < 18]
+    ages = [int(g["tuoi"]) for g in nhom_khach if g.get("tuoi") is not None]
+    min_h = min(heights) if heights else None
+    max_age = max(ages) if ages else None
 
-    surcharge_total = 0
-    surcharge_items: list[dict[str, Any]] = []
     seen_ids: set[str] = set()
-    parsed_slots: list[tuple[int, int, dict[str, Any], str]] = []
+    slots: list[tuple[int, int, dict[str, Any], str]] = []
+    rain_windows = scenario["rain_windows"]
 
     for idx, step in enumerate(lich, start=1):
         item_id = str(step.get("id", "")).strip().upper()
         if item_id not in catalog:
-            vi_pham.append(f"Mục #{idx}: mã '{item_id}' không tồn tại trong dữ liệu công viên.")
+            vi_pham.append(f"Mục #{idx}: mã '{item_id}' không tồn tại trong dữ liệu VinWonders Nha Trang.")
             continue
         if item_id in seen_ids:
-            vi_pham.append(f"Mục #{idx} ({item_id}): bị lặp lại trong cùng ngày.")
+            vi_pham.append(f"Mục #{idx} ({item_id}): bị lặp lại trong lịch trình.")
         seen_ids.add(item_id)
-
         kind, meta = catalog[item_id]
         try:
-            s_min = _to_minutes(str(step.get("start", "")))
-            e_min = _to_minutes(str(step.get("end", "")))
+            s_m, e_m = _to_min(str(step.get("start", ""))), _to_min(str(step.get("end", "")))
         except ValueError as err:
             vi_pham.append(f"{item_id}: {err}")
             continue
-
-        if e_min <= s_min:
+        if e_m <= s_m:
             vi_pham.append(f"{item_id} ({meta['name']}): giờ kết thúc phải sau giờ bắt đầu.")
-        if s_min < win_start or e_min > win_end:
-            vi_pham.append(f"{item_id} ({meta['name']}): nằm ngoài khung giờ gia đình ({gio_bat_dau}-{gio_ket_thuc}).")
+        if s_m < win_s or e_m > win_e:
+            vi_pham.append(f"{item_id} ({meta['name']}): ngoài khung giờ hợp lệ ({_add_min('00:00', win_s)}-{_add_min('00:00', win_e)}).")
 
         if kind == "attraction":
-            if item_id in maintenance:
-                vi_pham.append(f"{item_id} ({meta['name']}): đang tạm dừng bảo trì trong ngày {ngay}.")
-            if s_min < _to_minutes(meta["open"]) or e_min > _to_minutes(meta["close"]):
-                vi_pham.append(f"{item_id} ({meta['name']}): ngoài giờ mở cửa ({meta['open']}-{meta['close']}).")
-            if e_min - s_min < meta["duration_min"]:
-                vi_pham.append(f"{item_id} ({meta['name']}): thời lượng {e_min - s_min}p ngắn hơn tối thiểu {meta['duration_min']}p.")
+            if meta.get("status") == "maintenance":
+                vi_pham.append(f"{item_id} ({meta['name']}): đang tạm đóng bảo trì.")
+            if s_m < _to_min(meta["open"]) or e_m > _to_min(meta["close"]):
+                vi_pham.append(f"{item_id} ({meta['name']}): ngoài giờ hoạt động ({meta['open']}-{meta['close']}).")
+            if e_m - s_m < int(meta["duration_min"]):
+                vi_pham.append(f"{item_id} ({meta['name']}): thời lượng {e_m - s_m}p < tối thiểu {meta['duration_min']}p.")
+            if not meta.get("included_in_ticket", True) and meta.get("extra_fee_vnd") is None:
+                khong_co_gia.append(f"{item_id} ({meta['name']}): không gồm trong vé và không có giá lẻ công khai")
+                vi_pham.append(f"{item_id} ({meta['name']}): chưa có giá lẻ công khai, không thể tính tổng chi phí chính xác.")
+            if meta.get("closes_in_rain") and _overlaps_rain(rain_windows, s_m, e_m):
+                vi_pham.append(f"{item_id} ({meta['name']}): tạm đóng trong khung giờ mưa.")
         else:
-            if item_id in cancelled:
-                vi_pham.append(f"{item_id} ({meta['name']}): show bị huỷ trong ngày {ngay}.")
-            if s_min != _to_minutes(meta["start"]) or e_min != _to_minutes(meta["end"]):
-                vi_pham.append(f"{item_id} ({meta['name']}): phải khớp đúng giờ show {meta['start']}-{meta['end']}.")
+            valid_slots = [(_to_min(t), _to_min(t) + int(meta["duration_min"])) for t in meta["times"]]
+            if (s_m, e_m) not in valid_slots:
+                vi_pham.append(f"{item_id} ({meta['name']}): không khớp suất diễn {meta['times']} ({meta['duration_min']}p).")
+            if meta.get("cancel_in_rain") and _overlaps_rain(rain_windows, s_m, e_m):
+                vi_pham.append(f"{item_id} ({meta['name']}): show bị huỷ do mưa.")
 
-        if meta["min_age"] > min_age_group:
-            vi_pham.append(f"{item_id} ({meta['name']}): yêu cầu từ {meta['min_age']} tuổi, nhóm có bé {min_age_group} tuổi.")
-        if min_height_group is not None and meta["min_height_cm"] > min_height_group:
-            vi_pham.append(f"{item_id} ({meta['name']}): yêu cầu cao tối thiểu {meta['min_height_cm']}cm (bé cao {min_height_group}cm).")
-        if not meta["indoor"] and _is_raining(weather, s_min, e_min):
-            vi_pham.append(f"{item_id} ({meta['name']}): điểm ngoài trời không hoạt động khi trời mưa.")
+        if min_h is not None and meta.get("min_height_cm") is not None and min_h < int(meta["min_height_cm"]):
+            vi_pham.append(f"{item_id} ({meta['name']}): yêu cầu cao tối thiểu {meta['min_height_cm']}cm (nhóm có người cao {min_h}cm).")
+        if child_heights and meta.get("max_height_cm") is not None and all(h > int(meta["max_height_cm"]) for h in child_heights):
+            vi_pham.append(f"{item_id} ({meta['name']}): chỉ dành cho trẻ cao tối đa {meta['max_height_cm']}cm.")
+        if max_age is not None and meta.get("max_age") is not None and max_age > int(meta["max_age"]):
+            vi_pham.append(f"{item_id} ({meta['name']}): giới hạn tối đa {meta['max_age']} tuổi (nhóm có người {max_age} tuổi).")
+        slots.append((s_m, e_m, meta, item_id))
 
-        fee = meta["price_adult"] * so_nguoi_lon + meta["price_child"] * paying_children
-        if fee > 0:
-            surcharge_total += fee
-            surcharge_items.append({"id": item_id, "name": meta["name"], "phi_vnd": fee})
-
-        parsed_slots.append((s_min, e_min, meta, item_id))
-
-    parsed_slots.sort(key=lambda x: x[0])
-    for i in range(1, len(parsed_slots)):
-        prev_s, prev_e, prev_m, prev_id = parsed_slots[i - 1]
-        cur_s, cur_e, cur_m, cur_id = parsed_slots[i]
-        travel = matrix.get(prev_m["zone"], {}).get(cur_m["zone"], 15)
-        buffer_after = int(prev_m.get("buffer_after_min", 0))
-        needed = travel + buffer_after
+    slots.sort(key=lambda x: x[0])
+    tt = b["travel_times"]
+    for i in range(1, len(slots)):
+        _, prev_e, prev_m, prev_id = slots[i - 1]
+        cur_s, _, cur_m, cur_id = slots[i]
+        za, zb = prev_m["zone"], cur_m["zone"]
+        travel = int(tt["same_zone_min"]) if za == zb else int(tt["minutes"][za][zb])
+        buffer_min = WATERPARK_BUFFER_MIN if (za == WATERPARK_ZONE and zb != WATERPARK_ZONE) else 0
+        needed = travel + buffer_min
         if prev_e > cur_s:
-            vi_pham.append(f"Chồng giờ giữa {prev_id} (kết thúc {prev_e//60:02d}:{prev_e%60:02d}) và {cur_id} (bắt đầu {cur_s//60:02d}:{cur_s%60:02d}).")
+            vi_pham.append(f"Chồng giờ giữa {prev_id} và {cur_id}.")
         elif prev_e + needed > cur_s:
-            if buffer_after > 0:
-                vi_pham.append(
-                    f"Thiếu thời gian di chuyển + đệm tắm tráng/thay đồ từ {prev_id} ({prev_m['zone']}) sang {cur_id} ({cur_m['zone']}): "
-                    f"cần {needed}p ({travel}p đi bộ + {buffer_after}p đệm), chỉ có {cur_s - prev_e}p."
-                )
-            else:
-                vi_pham.append(
-                    f"Thiếu thời gian di chuyển từ {prev_id} ({prev_m['zone']}) sang {cur_id} ({cur_m['zone']}): "
-                    f"cần {travel}p, chỉ có {cur_s - prev_e}p."
-                )
+            msg = f"Thiếu thời gian di chuyển từ {prev_id} ({za}) sang {cur_id} ({zb}): cần {needed}p"
+            if buffer_min > 0:
+                msg += f" ({travel}p đi bộ + {buffer_min}p đệm tắm tráng/thay đồ công viên nước)"
+            vi_pham.append(msg + f", chỉ có {cur_s - prev_e}p.")
 
-    tong_tien = entry_total + surcharge_total
-    if tong_tien > ngan_sach_vnd:
-        thieu = tong_tien - ngan_sach_vnd
-        vi_pham.append(f"Vượt ngân sách {thieu:,}đ (tổng {tong_tien:,}đ > ngân sách {ngan_sach_vnd:,}đ).")
-        if entry_total > ngan_sach_vnd:
-            goi_y.append(f"Ngân sách tối thiểu cho vé cổng nhóm này là {entry_total:,}đ; cần tăng thêm ít nhất {entry_total - ngan_sach_vnd:,}đ.")
+    phu_thu = 0
+    for sv in (dich_vu_le or []):
+        sv_id = str(sv.get("id", "")).strip().upper()
+        qty = int(sv.get("so_luong", 1))
+        sv_meta = sv_map.get(sv_id)
+        if not sv_meta:
+            vi_pham.append(f"Dịch vụ {sv_id} không có trong dữ liệu.")
+        elif sv_meta["price_vnd"] is None:
+            khong_co_gia.append(f"{sv_id} ({sv_meta['name']}): không có giá lẻ công khai")
+            vi_pham.append(f"{sv_id} ({sv_meta['name']}): không có giá lẻ công khai, không thể cộng vào tổng tiền.")
         else:
-            goi_y.append("Bỏ bớt điểm/show có phụ thu (như Thủy Cung, Show Hải Cẩu hoặc Ăn uống trong công viên) để khớp ngân sách.")
+            phu_thu += int(sv_meta["price_vnd"]) * qty
 
-    if not lich and not vi_pham:
-        vi_pham.append("Lịch trình đang rỗng.")
-    if any("mưa" in v for v in vi_pham):
-        goi_y.append("Chuyển các khung giờ mưa sang điểm trong nhà (DC05, DC06, DC07, DC08, DC11, DC12, SH02, SH03).")
-    if any("tuổi" in v or "cm" in v for v in vi_pham):
-        goi_y.append("Thay các trò cảm giác mạnh bằng điểm phù hợp độ tuổi/chiều cao của bé nhỏ nhất.")
+    tong_tien = ve_cong + phu_thu
+    if tong_tien > ngan_sach_vnd:
+        vi_pham.append(f"Vượt ngân sách {tong_tien - ngan_sach_vnd:,}đ (tổng {tong_tien:,}đ > {ngan_sach_vnd:,}đ).")
+        if ve_cong > ngan_sach_vnd:
+            goi_y.append(f"Vé cổng {loai_ve} tối thiểu cho nhóm là {ve_cong:,}đ; có thể cân nhắc vé AFTER_16H hoặc tăng ngân sách thêm {ve_cong - ngan_sach_vnd:,}đ.")
+        else:
+            goi_y.append("Giảm bớt dịch vụ phát sinh ngoài vé để tổng chi phí khớp ngân sách.")
     if any("bảo trì" in v for v in vi_pham):
-        goi_y.append("Loại bỏ điểm đang bảo trì và thay bằng điểm hoạt động cùng độ tuổi (vd DC01, DC03, DC05, DC06).")
+        goi_y.append("Thay trò đang bảo trì (A16, A17) bằng trò đang mở phù hợp chiều cao (vd A03, A08, A12, A13).")
+    if any("mưa" in v for v in vi_pham):
+        goi_y.append("Chuyển các mục ngoài trời trong khung giờ mưa sang điểm trong nhà (A03, A08, A10, A13, S02, S03, S06).")
 
     return {
         "hop_le": len(vi_pham) == 0,
         "tong_tien_vnd": tong_tien,
-        "chi_tiet_chi_phi": {
-            "ve_cong": entry_total,
-            "phu_thu": surcharge_total,
-            "cac_khoan_phu_thu": surcharge_items,
-        },
+        "chi_tiet_chi_phi": {"loai_ve": loai_ve, "ve_cong": ve_cong, "phu_thu": phu_thu, "dem_nhom": dem_nhom},
+        "muc_khong_co_gia": khong_co_gia,
         "vi_pham": vi_pham,
         "goi_y_noi_rang_buoc": goi_y,
     }
