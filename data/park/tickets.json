@@ -1,0 +1,25 @@
+{
+  "_note": "Giá vé chép nguyên văn từ W_PRICE (bảng giá, ngày trang 01/01/2026, xem 27/11/2026), đơn vị VND, đã gồm VAT và cáp treo 2 chiều. Nhóm khách xác định theo CHIỀU CAO (riêng người cao tuổi theo tuổi). Không đưa các combo (buffet, buggy, VIP, WONDER15) vào vì trang không ghi rõ tính theo người và thành phần — công cụ gặp yêu cầu combo phải nói 'không có dữ liệu'. Bảng giá khuyến mãi 01/12/2025–11/02/2026 đã hết hạn, không dùng.",
+  "src": "W_PRICE",
+  "verified": ["groups", "ticket_types", "includes", "policy"],
+  "groups": [
+    {"id": "ADULT", "label": "Người lớn (cao từ 140cm)", "rule": {"min_height_cm": 140}},
+    {"id": "CHILD", "label": "Trẻ em (cao 100cm đến dưới 140cm)", "rule": {"min_height_cm": 100, "max_height_cm_exclusive": 140}},
+    {"id": "SENIOR", "label": "Người cao tuổi (từ 60 tuổi, mang giấy tờ tùy thân)", "rule": {"min_age": 60}},
+    {"id": "INFANT", "label": "Trẻ em dưới 100cm", "rule": {"max_height_cm_exclusive": 100}}
+  ],
+  "group_priority": "SENIOR nếu từ 60 tuổi; còn lại xét chiều cao: <100 INFANT, 100–<140 CHILD, ≥140 ADULT.",
+  "ticket_types": [
+    {"id": "STANDARD", "name": "Vé vào cửa tiêu chuẩn (1 lần, gồm cáp treo 2 chiều)", "entry_from": "09:00",
+     "price_vnd": {"ADULT": 1050000, "CHILD": 800000, "SENIOR": 800000, "INFANT": 0}},
+    {"id": "AFTER_16H", "name": "Vé vào cửa sau 16:00 (gồm cáp treo 2 chiều)", "entry_from": "16:00",
+     "price_vnd": {"ADULT": 700000, "CHILD": 550000, "SENIOR": 550000, "INFANT": 0}},
+    {"id": "UNLIMITED_2D", "name": "Vé không giới hạn 02 ngày", "entry_from": "09:00", "days": 2,
+     "price_vnd": {"ADULT": 1350000, "CHILD": 1050000, "SENIOR": 1050000, "INFANT": 0}},
+    {"id": "UNLIMITED_3D", "name": "Vé không giới hạn 03 ngày", "entry_from": "09:00", "days": 3,
+     "price_vnd": {"ADULT": 1600000, "CHILD": 1050000, "SENIOR": 1200000, "INFANT": 0},
+     "caveat": "Trang W_HOURS cho giá CHILD khác (1.200.000) ở dòng này; dùng W_PRICE (đọc nguyên văn)."}
+  ],
+  "includes": "Cáp treo 2 chiều + các trò chơi và show trong khu (trừ trò ghi included_in_ticket=false, vd Zipline).",
+  "policy": "Vé không hoàn, không đổi, không trả."
+}

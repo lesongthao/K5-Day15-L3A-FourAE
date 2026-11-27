@@ -1,0 +1,53 @@
+{
+  "_note": "Thông tin chung VinWonders Nha Trang. Mỗi bản ghi trong data/park/*.json có 'src' (mã nguồn bên dưới) và 'verified' (danh sách trường lấy từ nguồn thật). Trường không nằm trong 'verified' là synthetic — xem data/DATA_CARD.md.",
+  "sources": {
+    "W_RULES": {
+      "url": "https://vinwonders.com/vi/wonderpedia/news/quy-dinh-tro-choi-vinwonders-nha-trang/",
+      "title": "Thông tin và quy định của các trò chơi tại VinWonders Nha Trang",
+      "page_date": "21/07/2026",
+      "accessed": "27/11/2026"
+    },
+    "W_PRICE": {
+      "url": "https://vinwonders.com/vi/wonderpedia/news/bang-gia-ve-vinwonders-nha-trang-cap-nhat/",
+      "title": "[MỚI NHẤT] Bảng giá vé VinWonders Nha Trang & ưu đãi hot",
+      "page_date": "01/01/2026",
+      "accessed": "27/11/2026"
+    },
+    "W_HOURS": {
+      "url": "https://vinwonders.com/vi/wonderpedia/news/vinwonders-nha-trang-gio-mo-cua/",
+      "title": "VinWonders Nha Trang giờ mở cửa & Giá vé cập nhật năm 2026",
+      "page_date": "01/01/2026",
+      "accessed": "27/11/2026"
+    },
+    "SYN": {
+      "note": "synthetic — nhóm FourAE tự dựng, không phải số liệu thật"
+    }
+  },
+  "park": {
+    "name": "VinWonders Nha Trang",
+    "address": "Đảo Hòn Tre, phường Nha Trang, tỉnh Khánh Hòa",
+    "open": "09:00",
+    "close": "20:00",
+    "days": "Thứ 2 – Chủ nhật",
+    "src": "W_HOURS",
+    "verified": ["name", "address", "open", "close", "days"],
+    "caveat": "Một bài khác của VinWonders ghi 08:30–20:00; dùng 09:00–20:00 theo trang giờ mở cửa."
+  },
+  "entry_point": {
+    "id": "GATE",
+    "name": "Ga cáp treo phía đảo (cổng vào)",
+    "src": "SYN",
+    "verified": [],
+    "note": "Vé tiêu chuẩn đã gồm cáp treo 2 chiều (W_PRICE). Vị trí ga như một nút trên bản đồ là synthetic."
+  },
+  "zones": [
+    {"id": "WORLD_GARDEN", "name": "The World Garden", "src": "W_HOURS", "verified": ["name"]},
+    {"id": "KINGS_GARDEN", "name": "King's Garden", "src": "W_HOURS", "verified": ["name"]},
+    {"id": "FAIRY_LAND", "name": "Fairy Land", "src": "W_HOURS", "verified": ["name"]},
+    {"id": "SEA_WORLD", "name": "Sea World", "src": "W_HOURS", "verified": ["name"]},
+    {"id": "FESTIVE_HILL", "name": "Festive Hill (Đồi Lễ Hội)", "src": "W_HOURS", "verified": ["name"]},
+    {"id": "TROPICAL_PARADISE", "name": "Tropical Paradise (công viên nước)", "src": "W_HOURS", "verified": ["name"],
+     "open": "10:00", "close": "17:30",
+     "caveat": "Giờ 10:00–17:30 của công viên nước chưa đọc được nguyên văn trên trang — coi như chưa kiểm (khớp giờ trò CVN ở W_RULES)."}
+  ]
+}
