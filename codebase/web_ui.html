@@ -419,13 +419,19 @@
     @media (max-width: 600px) { .zones-grid { grid-template-columns: 1fr; } }
 
     .zone-card {
+      position: relative; z-index: 1;
       background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+      border-radius: var(--radius); overflow: visible; box-shadow: var(--shadow-sm);
       display: flex; flex-direction: column;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .zone-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
-    .zone-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-soft); }
+    .zone-card.rides-open { z-index: 20; }
+    .zone-media {
+      position: relative; aspect-ratio: 4 / 3; overflow: visible;
+      background: var(--surface-soft); border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .zone-media-clip { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
     .zone-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
     .zone-card:hover .zone-media img { transform: scale(1.04); }
     .zone-walk-badge {
@@ -434,33 +440,43 @@
       font-size: 0.76rem; font-weight: 600; backdrop-filter: blur(4px);
     }
     .zone-hover-hint {
-      position: absolute; right: 10px; bottom: 10px; z-index: 2;
-      padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.32);
-      background: rgba(9, 40, 49, 0.86); color: #ffffff;
-      font-size: 0.73rem; font-weight: 600; backdrop-filter: blur(4px);
-      transition: opacity 0.18s ease;
+      position: absolute; right: 10px; bottom: 10px; z-index: 5;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(14, 77, 92, 0.18);
+      background: rgba(255, 255, 255, 0.94); color: var(--primary-deep);
+      font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(6px);
+      box-shadow: 0 4px 12px rgba(9, 40, 49, 0.16);
+      transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
-    .zone-rides-overlay {
-      position: absolute; inset: 0; z-index: 4; padding: 13px 14px; overflow-y: auto;
-      background: linear-gradient(180deg, rgba(9, 40, 49, 0.94) 0%, rgba(9, 56, 68, 0.97) 100%);
-      color: #ffffff; backdrop-filter: blur(6px);
+    .zone-hover-hint:hover,
+    .zone-card.rides-open .zone-hover-hint {
+      background: var(--primary-deep); color: #ffffff; border-color: var(--primary-deep);
+      box-shadow: 0 6px 16px rgba(9, 56, 68, 0.28);
+    }
+    .zone-rides-popover {
+      position: absolute; left: 10px; right: 10px; bottom: 48px; z-index: 12;
+      max-height: 310px; overflow-y: auto;
+      background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+      color: var(--ink); border: 1px solid #cfe0e4; border-top: 3px solid var(--primary);
+      border-radius: 13px; box-shadow: 0 16px 34px rgba(9, 56, 68, 0.18), 0 2px 6px rgba(9, 56, 68, 0.08);
       opacity: 0; transform: translateY(6px); pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease;
+      transition: opacity 0.18s ease, transform 0.18s ease;
     }
-    @media (min-width: 769px) {
-      .zone-card:hover .zone-hover-hint { opacity: 0; pointer-events: none; }
-      .zone-card:hover .zone-rides-overlay { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    }
-    .zone-card.rides-open .zone-hover-hint { opacity: 0; pointer-events: none; }
-    .zone-card.rides-open .zone-rides-overlay { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .overlay-head {
+    .zone-card.rides-open .zone-rides-popover { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .popover-head {
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      padding-bottom: 7px; margin-bottom: 7px; border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-      font-size: 0.82rem; font-weight: 700; color: var(--gold-light);
+      padding: 9px 12px; background: #eef5f6; border-bottom: 1px solid #dce9ec;
+      font-size: 0.81rem; font-weight: 700; color: var(--primary-deep);
+      position: sticky; top: 0; z-index: 1;
+    }
+    .popover-head-right { display: inline-flex; align-items: center; gap: 6px; }
+    .popover-count {
+      padding: 1px 7px; border-radius: 999px; background: #ffffff; border: 1px solid #c6dce1;
+      color: var(--primary); font-size: 0.72rem; font-weight: 700;
     }
     .overlay-close-btn {
-      display: none; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent;
-      color: #ffffff; padding: 1px 7px; font-size: 0.78rem; border-radius: 6px;
+      display: none; border: 1px solid #c6dce1; background: #ffffff;
+      color: var(--primary-deep); padding: 0 7px; line-height: 1.45; font-size: 0.85rem; border-radius: 6px;
     }
     .zone-card.rides-open .overlay-close-btn { display: inline-block; }
     .zone-body { padding: 15px 16px 16px; flex: 1; display: flex; flex-direction: column; }
@@ -469,13 +485,25 @@
     .zone-hours-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; font-size: 0.77rem; font-weight: 600; }
     .zone-included-pill { padding: 2px 8px; border-radius: 999px; background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
     .zone-time-pill { padding: 2px 8px; border-radius: 999px; background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border); }
-    .ride-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
-    .ride-item { padding-top: 6px; border-top: 1px dashed rgba(255, 255, 255, 0.18); display: flex; flex-direction: column; gap: 1px; }
+    .ride-list { margin: 0; padding: 8px 12px 10px; list-style: none; display: grid; gap: 8px; }
+    .ride-item { padding-top: 8px; border-top: 1px dashed var(--border); display: flex; flex-direction: column; gap: 5px; }
     .ride-item:first-child { padding-top: 0; border-top: none; }
-    .ride-name { font-weight: 700; color: #ffffff; font-size: 0.81rem; }
-    .ride-meta { color: #d5e7eb; font-size: 0.75rem; line-height: 1.38; }
-    .ride-warn { color: #ffb3be; font-weight: 700; }
-    .ride-paid { color: var(--gold-light); font-weight: 700; }
+    .ride-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .ride-name { font-weight: 700; color: var(--ink); font-size: 0.81rem; line-height: 1.3; }
+    .ride-hours {
+      flex-shrink: 0; padding: 1px 6px; border-radius: 6px;
+      background: var(--surface-soft); color: var(--ink-soft); font-size: 0.71rem; font-weight: 600;
+    }
+    .ride-chips { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+    .ride-chip {
+      display: inline-block; padding: 2px 7px; border-radius: 999px;
+      font-size: 0.71rem; font-weight: 600; line-height: 1.35;
+    }
+    .rc-rule { background: var(--primary-soft); color: var(--primary-deep); }
+    .rc-indoor { background: var(--emerald-bg); color: var(--emerald); }
+    .rc-outdoor { background: var(--surface-soft); color: var(--muted); }
+    .rc-maint { background: var(--rose-bg); color: var(--rose); font-weight: 700; }
+    .rc-paid { background: var(--amber-bg); color: var(--amber); font-weight: 700; }
     .zone-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .zone-tag { font-size: 0.77rem; font-weight: 600; color: var(--primary); background: var(--primary-soft); padding: 3px 10px; border-radius: 999px; }
 
@@ -860,7 +888,7 @@
     <section class="tab-panel" id="panelExplore" role="tabpanel" aria-labelledby="tabBtnExplore">
       <div class="explore-head">
         <h3 class="serif">Khám phá 6 phân khu tại VinWonders Nha Trang</h3>
-        <p>Tất cả 6 phân khu đều đã nằm trong 1 vé vào cổng. Di chuột lên ảnh từng khu (hoặc chạm nút trên ảnh) để xem trò chơi &amp; chiều cao.</p>
+        <p>Tất cả 6 phân khu đều đã nằm trong 1 vé vào cổng. Trỏ chuột (hoặc chạm) vào nút Xem trò &amp; chiều cao ở góc ảnh từng khu để xem chi tiết.</p>
       </div>
       <div class="zones-grid" id="zonesGrid"></div>
     </section>
@@ -1076,34 +1104,34 @@
 
     const ZONE_RIDES = {
       SEA_WORLD: [
-        { name: "Thủy cung Sea World", hours: "09:00–19:00", rule: "Mọi chiều cao & tuổi, Trong nhà (chơi được khi mưa)", state: "" },
-        { name: "Rạp Phim Bay", hours: "10:00–18:00", rule: "Từ 100cm, Trong nhà (chơi được khi mưa)", state: "" }
+        { name: "Thủy cung Sea World", hours: "09:00–19:00", rule: "Mọi chiều cao & tuổi", indoor: true, rainTag: "Trong nhà, chơi khi mưa", state: "" },
+        { name: "Rạp Phim Bay", hours: "10:00–18:00", rule: "Từ 100cm", indoor: true, rainTag: "Trong nhà, chơi khi mưa", state: "" }
       ],
       TROPICAL_PARADISE: [
-        { name: "Cụm đường trượt cảm giác mạnh CVN", hours: "10:00–17:30", rule: "Từ 130cm, ≤100kg, dưới 50 tuổi, Ngoài trời", state: "" },
-        { name: "Hồ bơi tạo sóng", hours: "10:00–17:30", rule: "Mọi chiều cao (<120cm cần người lớn kèm), Ngoài trời", state: "" },
-        { name: "Khu trượt nước trẻ em", hours: "10:00–17:30", rule: "Cho bé ≤120cm, Ngoài trời", state: "" }
+        { name: "Cụm đường trượt cảm giác mạnh CVN", hours: "10:00–17:30", rule: "Từ 130cm, ≤100kg, dưới 50 tuổi", indoor: false, rainTag: "Ngoài trời", state: "" },
+        { name: "Hồ bơi tạo sóng", hours: "10:00–17:30", rule: "Mọi chiều cao (<120cm cần người lớn kèm)", indoor: false, rainTag: "Ngoài trời", state: "" },
+        { name: "Khu trượt nước trẻ em", hours: "10:00–17:30", rule: "Cho bé ≤120cm", indoor: false, rainTag: "Ngoài trời", state: "" }
       ],
       KINGS_GARDEN: [
-        { name: "Vườn thú King's Garden", hours: "09:00–17:30", rule: "Mọi chiều cao, Cho thú ăn thu phí riêng (50k tham khảo)", state: "" },
-        { name: "Vườn bướm", hours: "09:00–18:00", rule: "Mọi chiều cao, Trong nhà (chơi được khi mưa)", state: "" }
+        { name: "Vườn thú King's Garden", hours: "09:00–17:30", rule: "Mọi chiều cao (cho thú ăn thu phí riêng)", indoor: false, rainTag: "Ngoài trời", state: "" },
+        { name: "Vườn bướm", hours: "09:00–18:00", rule: "Mọi chiều cao", indoor: true, rainTag: "Trong nhà, chơi khi mưa", state: "" }
       ],
       FAIRY_LAND: [
-        { name: "Alpine Coaster", hours: "09:00–18:30", rule: "Từ 100cm, Ngoài trời (dừng khi mưa)", state: "" },
-        { name: "Tata River Adventure", hours: "09:30–18:00", rule: "Từ 105cm, Ngoài trời (dừng khi mưa)", state: "" },
-        { name: "Đu quay ngựa gỗ", hours: "09:00–19:00", rule: "Mọi chiều cao (<100cm cần người lớn kèm), Ngoài trời", state: "" },
-        { name: "Zipline", hours: "09:00–17:00", rule: "Từ 130cm, ≤110kg, Ngoài trời", state: "paid" },
-        { name: "Tàu lượn mini trẻ em", hours: "09:00–18:00", rule: "90–140cm, Ngoài trời", state: "maint" }
+        { name: "Alpine Coaster", hours: "09:00–18:30", rule: "Từ 100cm", indoor: false, rainTag: "Ngoài trời, dừng khi mưa", state: "" },
+        { name: "Tata River Adventure", hours: "09:30–18:00", rule: "Từ 105cm", indoor: false, rainTag: "Ngoài trời, dừng khi mưa", state: "" },
+        { name: "Đu quay ngựa gỗ", hours: "09:00–19:00", rule: "Mọi chiều cao (<100cm cần người lớn kèm)", indoor: false, rainTag: "Ngoài trời", state: "" },
+        { name: "Zipline", hours: "09:00–17:00", rule: "Từ 130cm, ≤110kg", indoor: false, rainTag: "Ngoài trời", state: "paid" },
+        { name: "Tàu lượn mini trẻ em", hours: "09:00–18:00", rule: "90–140cm", indoor: false, rainTag: "Ngoài trời", state: "maint" }
       ],
       WORLD_GARDEN: [
-        { name: "Bánh xe bầu trời", hours: "09:00–20:00", rule: "Mọi chiều cao & tuổi, Ngoài trời (dừng khi mưa)", state: "" },
-        { name: "Đi dạo khu vườn thế giới", hours: "09:00–20:00", rule: "Mọi chiều cao, Phù hợp ông bà & bé nhỏ", state: "" }
+        { name: "Bánh xe bầu trời", hours: "09:00–20:00", rule: "Mọi chiều cao & tuổi", indoor: false, rainTag: "Ngoài trời, dừng khi mưa", state: "" },
+        { name: "Đi dạo khu vườn thế giới", hours: "09:00–20:00", rule: "Mọi chiều cao, hợp ông bà & bé nhỏ", indoor: false, rainTag: "Ngoài trời", state: "" }
       ],
       FESTIVE_HILL: [
-        { name: "Chuyến phiêu lưu hầm mỏ", hours: "09:00–19:30", rule: "Từ 110cm, Ngoài trời (dừng khi mưa)", state: "" },
-        { name: "Cú Lật Sấm Sét", hours: "09:00–18:00", rule: "Từ 120cm, Ngoài trời (dừng khi mưa)", state: "" },
-        { name: "Nhà bóng trong nhà", hours: "09:00–19:00", rule: "Cho bé ≤140cm, Trong nhà (chơi được khi mưa)", state: "" },
-        { name: "Xe điện đụng", hours: "09:00–19:30", rule: "Từ 110cm, Trong nhà", state: "maint" }
+        { name: "Chuyến phiêu lưu hầm mỏ", hours: "09:00–19:30", rule: "Từ 110cm", indoor: false, rainTag: "Ngoài trời, dừng khi mưa", state: "" },
+        { name: "Cú Lật Sấm Sét", hours: "09:00–18:00", rule: "Từ 120cm", indoor: false, rainTag: "Ngoài trời, dừng khi mưa", state: "" },
+        { name: "Nhà bóng trong nhà", hours: "09:00–19:00", rule: "Cho bé ≤140cm", indoor: true, rainTag: "Trong nhà, chơi khi mưa", state: "" },
+        { name: "Xe điện đụng", hours: "09:00–19:30", rule: "Từ 110cm", indoor: true, rainTag: "Trong nhà", state: "maint" }
       ]
     };
 
@@ -1416,21 +1444,42 @@
         const walk = TRAVEL_MIN.GATE[k];
         const rides = ZONE_RIDES[k] || [];
         const ridesHtml = rides.map((r) => {
-          const badge = r.state === "maint"
-            ? ', <span class="ride-warn">Tạm bảo trì</span>'
-            : (r.state === "paid" ? ', <span class="ride-paid">Thu phí riêng (ngoài vé)</span>' : "");
-          return `<li class="ride-item"><span class="ride-name">${esc(r.name)} (${esc(r.hours)})</span><span class="ride-meta">${esc(r.rule)}${badge}</span></li>`;
+          const envCls = r.indoor ? "rc-indoor" : "rc-outdoor";
+          const stateChip = r.state === "maint"
+            ? '<span class="ride-chip rc-maint">Tạm bảo trì</span>'
+            : (r.state === "paid" ? '<span class="ride-chip rc-paid">Thu phí riêng</span>' : "");
+          return `
+            <li class="ride-item">
+              <div class="ride-top">
+                <span class="ride-name">${esc(r.name)}</span>
+                <span class="ride-hours nums">${esc(r.hours)}</span>
+              </div>
+              <div class="ride-chips">
+                <span class="ride-chip rc-rule">${esc(r.rule)}</span>
+                <span class="ride-chip ${envCls}">${esc(r.rainTag)}</span>
+                ${stateChip}
+              </div>
+            </li>
+          `;
         }).join("");
         return `
           <article class="zone-card">
             <div class="zone-media">
-              <img src="${esc(z.img)}" alt="Hình ảnh minh họa phân khu ${esc(z.label)} tại VinWonders Nha Trang" />
+              <div class="zone-media-clip">
+                <img src="${esc(z.img)}" alt="Hình ảnh minh họa phân khu ${esc(z.label)} tại VinWonders Nha Trang" />
+              </div>
               <span class="zone-walk-badge nums">Từ cổng ${walk} phút đi bộ</span>
-              <button type="button" class="zone-hover-hint nums">Xem ${rides.length} trò &amp; chiều cao</button>
-              <div class="zone-rides-overlay">
-                <div class="overlay-head">
-                  <span>${esc(z.short)} (${rides.length} trò chơi)</span>
-                  <button type="button" class="overlay-close-btn" aria-label="Đóng danh sách trò">×</button>
+              <button type="button" class="zone-hover-hint nums" aria-expanded="false">
+                <svg class="ico" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
+                <span>Xem ${rides.length} trò &amp; chiều cao</span>
+              </button>
+              <div class="zone-rides-popover" role="region" aria-label="Danh sách trò chơi tại ${esc(z.short)}">
+                <div class="popover-head">
+                  <span>${esc(z.short)}</span>
+                  <span class="popover-head-right">
+                    <span class="popover-count nums">${rides.length} trò</span>
+                    <button type="button" class="overlay-close-btn" aria-label="Đóng danh sách trò">×</button>
+                  </span>
                 </div>
                 <ul class="ride-list">${ridesHtml}</ul>
               </div>
@@ -1451,21 +1500,74 @@
         `;
       }).join("");
 
+      const isDesktopHover = () => window.matchMedia("(min-width: 769px)").matches;
+      const closeAllCards = (exceptCard) => {
+        zonesGrid.querySelectorAll(".zone-card.rides-open").forEach((c) => {
+          if (c !== exceptCard) {
+            c.classList.remove("rides-open");
+            const b = c.querySelector(".zone-hover-hint");
+            if (b) b.setAttribute("aria-expanded", "false");
+          }
+        });
+      };
+
       zonesGrid.querySelectorAll(".add-zone-btn").forEach((btn) => {
         btn.addEventListener("click", () => appendHighlightToPrompt(`khu ${btn.dataset.zoneName}`));
       });
-      zonesGrid.querySelectorAll(".zone-hover-hint").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
+
+      zonesGrid.querySelectorAll(".zone-card").forEach((card) => {
+        const trigger = card.querySelector(".zone-hover-hint");
+        const pop = card.querySelector(".zone-rides-popover");
+        const closeBtn = card.querySelector(".overlay-close-btn");
+        let closeTimer = null;
+
+        const openCard = () => {
+          clearTimeout(closeTimer);
+          closeAllCards(card);
+          card.classList.add("rides-open");
+          trigger.setAttribute("aria-expanded", "true");
+        };
+        const closeCard = () => {
+          clearTimeout(closeTimer);
+          card.classList.remove("rides-open");
+          trigger.setAttribute("aria-expanded", "false");
+        };
+        const scheduleClose = () => {
+          clearTimeout(closeTimer);
+          closeTimer = setTimeout(closeCard, 110);
+        };
+
+        trigger.addEventListener("mouseenter", () => {
+          if (isDesktopHover()) openCard();
+        });
+        trigger.addEventListener("mouseleave", () => {
+          if (isDesktopHover()) scheduleClose();
+        });
+        pop.addEventListener("mouseenter", () => {
+          if (isDesktopHover()) clearTimeout(closeTimer);
+        });
+        pop.addEventListener("mouseleave", () => {
+          if (isDesktopHover()) scheduleClose();
+        });
+        trigger.addEventListener("click", (e) => {
           e.stopPropagation();
-          btn.closest(".zone-card").classList.add("rides-open");
+          if (card.classList.contains("rides-open")) closeCard();
+          else openCard();
+        });
+        closeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          closeCard();
         });
       });
-      zonesGrid.querySelectorAll(".overlay-close-btn").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
-          btn.closest(".zone-card").classList.remove("rides-open");
+
+      if (!window.__zoneDocBound) {
+        window.__zoneDocBound = true;
+        document.addEventListener("click", (e) => {
+          if (!zonesGrid.contains(e.target) || !e.target.closest(".zone-card")) {
+            closeAllCards(null);
+          }
         });
-      });
+      }
     }
 
     function renderShowsGrid() {
