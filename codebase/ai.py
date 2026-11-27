@@ -43,7 +43,8 @@ def _post_json(url: str, headers: dict[str, str], body: dict[str, Any], timeout:
         url,
         data=json.dumps(body).encode("utf-8"),
         method="POST",
-        headers={"Content-Type": "application/json", **headers},
+        # User-Agent riêng: Cloudflare trước proxy chặn UA mặc định "Python-urllib" (HTTP 403, error code 1010)
+        headers={"Content-Type": "application/json", "User-Agent": "hackathon-eval-client/1.0", **headers},
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -59,6 +60,8 @@ def _post_json(url: str, headers: dict[str, str], body: dict[str, Any], timeout:
 def _call_openai(system: str, user: str) -> dict[str, Any]:
     """Gọi OpenAI Chat Completions API (hoặc endpoint tương thích qua BASE_URL)."""
     url = BASE_URL or "https://api.openai.com/v1/chat/completions"
+    if not url.rstrip("/").endswith("/chat/completions"):   # BASE_URL dạng ".../v1" → nối thêm đường dẫn
+        url = url.rstrip("/") + "/chat/completions"
     messages = ([{"role": "system", "content": system}] if system else []) + [{"role": "user", "content": user}]
     data = _post_json(url, {"Authorization": "Bearer " + API_KEY}, {"model": MODEL_NAME, "messages": messages})
     usage = data.get("usage", {})
