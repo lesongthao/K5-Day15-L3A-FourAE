@@ -55,7 +55,8 @@ def extract_budget(text: str) -> int | None:
     m_k = re.search(r"(\d+(?:\.\d+)?)\s*(?:k|nghìn|nghin|ngàn|ngan)\b", norm)
     if m_k:
         return int(float(m_k.group(1)) * 1_000)
-    m_vnd = re.search(r"(\d[\d\.,]{4,})\s*(?:đ|d|vnđ|vnd)?", text.lower().replace(" ", ""))
+    cleaned_vnd = re.sub(r"\b\d{1,2}[./-]\d{1,2}(?:[./-]\d{2,4})?\b", " ", text.lower())
+    m_vnd = re.search(r"(\d[\d\.,]{4,})\s*(?:đ|d|vnđ|vnd)?", cleaned_vnd.replace(" ", ""))
     if m_vnd:
         digits = re.sub(r"[^\d]", "", m_vnd.group(1))
         return int(digits) if digits else None

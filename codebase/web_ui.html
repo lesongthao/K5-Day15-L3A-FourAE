@@ -17,6 +17,7 @@
       --border: #e6ddd0;
       --border-strong: #d5c8b6;
       --ink: #1b2428;
+      --ink-soft: #364349;
       --muted: #526067;
       --primary: #0e4d5c;
       --primary-deep: #093844;
@@ -55,6 +56,7 @@
 
     .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
     .nums { font-variant-numeric: tabular-nums; }
+    .hidden { display: none !important; }
     svg.ico {
       width: 17px; height: 17px; stroke: currentColor; fill: none;
       stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
@@ -79,31 +81,28 @@
       max-width: 1280px; margin: 0 auto; padding: 12px 24px;
       display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;
     }
+    @media (max-width: 600px) { .topbar-inner { padding: 10px 14px; } }
     .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: inherit; }
     .crest {
       width: 42px; height: 42px; border-radius: 12px;
-      background: var(--primary);
-      border: 1px solid rgba(198, 146, 58, 0.45);
+      background: var(--primary); border: 1px solid rgba(198, 146, 58, 0.45);
       display: grid; place-items: center;
-      box-shadow: 0 4px 12px rgba(14, 77, 92, 0.20);
-      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(14, 77, 92, 0.20); flex-shrink: 0;
     }
     .brand-title {
-      margin: 0; font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep);
-      line-height: 1.15;
+      margin: 0; font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); line-height: 1.15;
     }
     .brand-title em { font-style: italic; color: var(--accent); font-weight: 600; }
-    .brand-sub {
-      margin: 2px 0 0; font-size: 0.77rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em;
-    }
-    .top-nav { display: flex; align-items: center; gap: 20px; }
-    @media (max-width: 900px) { .top-nav { display: none; } }
+    .brand-sub { margin: 2px 0 0; font-size: 0.77rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; }
+
+    .top-nav { display: flex; align-items: center; gap: 18px; }
+    @media (max-width: 960px) { .top-nav { display: none; } }
     .top-nav a {
-      font-size: 0.86rem; font-weight: 600; color: var(--muted); text-decoration: none;
+      font-size: 0.85rem; font-weight: 600; color: var(--muted); text-decoration: none;
       padding: 4px 2px; border-bottom: 2px solid transparent;
       transition: color 0.16s ease, border-color 0.16s ease;
     }
-    .top-nav a:hover { color: var(--primary); border-bottom-color: var(--gold); }
+    .top-nav a:hover, .top-nav a.active { color: var(--primary); border-bottom-color: var(--gold); }
 
     .top-actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
     .status-inline {
@@ -122,16 +121,12 @@
     .btn-ghost:hover:not(:disabled) { background: var(--surface-soft); border-color: var(--primary); color: var(--primary-deep); }
     .btn-ghost:disabled { opacity: 0.45; cursor: not-allowed; }
 
-    /* Asymmetric Editorial Resort Hero */
+    /* Hero */
     .hero {
-      position: relative; min-height: 418px; overflow: hidden;
-      display: flex; align-items: flex-end;
-      background: #0a2d36;
+      position: relative; min-height: 404px; overflow: hidden;
+      display: flex; align-items: flex-end; background: #0a2d36;
     }
-    .hero-bg {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; object-position: center 42%;
-    }
+    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
     .hero-scrim {
       position: absolute; inset: 0;
       background:
@@ -140,67 +135,130 @@
     }
     .hero-content {
       position: relative; z-index: 2; max-width: 1280px; width: 100%; margin: 0 auto;
-      padding: 48px 24px 96px; color: #ffffff;
+      padding: 44px 24px 92px; color: #ffffff;
     }
+    @media (max-width: 600px) { .hero-content { padding: 34px 16px 84px; } }
     .hero-location {
       display: inline-flex; align-items: center; gap: 10px;
       font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--gold-light); margin-bottom: 12px;
     }
-    .hero-location::before {
-      content: ""; width: 28px; height: 1.5px; background: var(--gold-light);
-    }
+    .hero-location::before { content: ""; width: 28px; height: 1.5px; background: var(--gold-light); }
     .hero h2 {
-      margin: 0; max-width: 680px;
-      font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+      margin: 0; max-width: 680px; font-size: clamp(1.78rem, 3.3vw, 2.68rem);
       font-weight: 700; line-height: 1.15; letter-spacing: -0.015em;
     }
     .hero h2 em { font-style: italic; color: var(--gold-light); font-weight: 600; }
     .hero-sub {
-      margin: 13px 0 22px; max-width: 580px; font-size: 0.96rem;
-      color: rgba(250, 247, 242, 0.90); font-weight: 400;
+      margin: 12px 0 20px; max-width: 600px; font-size: 0.95rem;
+      color: rgba(250, 247, 242, 0.92); font-weight: 400;
     }
     .hero-metrics {
-      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 18px;
-      padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.24);
-      font-size: 0.85rem; color: rgba(250, 247, 242, 0.92);
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px;
+      padding-top: 13px; border-top: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.84rem; color: rgba(250, 247, 242, 0.92);
     }
     .hero-metric { display: inline-flex; align-items: baseline; gap: 6px; }
-    .hero-metric strong { font-size: 1.05rem; font-weight: 700; color: #ffffff; }
+    .hero-metric strong { font-size: 1.03rem; font-weight: 700; color: #ffffff; }
     .hero-sep { width: 1px; height: 14px; background: rgba(255, 255, 255, 0.28); }
     @media (max-width: 560px) { .hero-sep { display: none; } }
 
-    /* Seamless Floating Concierge Bar */
-    .shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 54px; }
+    /* Shell + Concierge Dock + 7-Day Weather Strip */
+    .shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 56px; }
+    @media (max-width: 600px) { .shell { padding: 0 14px 44px; } }
     .concierge-dock {
-      position: relative; z-index: 12; margin-top: -66px; margin-bottom: 28px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-top: 3px solid var(--gold);
-      border-radius: 20px; padding: 18px 22px 18px;
-      box-shadow: var(--shadow-lg);
+      position: relative; z-index: 12; margin-top: -62px; margin-bottom: 22px;
+      background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--gold);
+      border-radius: 20px; padding: 18px 20px; box-shadow: var(--shadow-lg);
+      min-width: 0; max-width: 100%;
     }
+    @media (max-width: 600px) { .concierge-dock { padding: 14px 13px; border-radius: 16px; } }
+
+    .date-weather-shell {
+      margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--border);
+      min-width: 0; max-width: 100%;
+    }
+    .date-strip-head {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 9px;
+    }
+    .date-strip-title {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+      color: var(--primary-deep); display: inline-flex; align-items: center; gap: 7px;
+    }
+    .weather-src-badge {
+      font-size: 0.74rem; font-weight: 600; color: var(--primary);
+      background: var(--primary-soft); border: 1px solid #b8d8df;
+      padding: 3px 9px; border-radius: 999px;
+    }
+    .date-cards-row {
+      display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+      min-width: 0; max-width: 100%;
+    }
+    @media (max-width: 960px) {
+      .date-cards-row {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(112px, 1fr);
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+    .date-card {
+      text-align: left; padding: 8px 10px; border-radius: 12px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      display: flex; flex-direction: column; gap: 4px; color: var(--ink);
+      min-width: 0;
+    }
+    .date-card:hover { border-color: var(--primary); background: var(--surface-soft); }
+    .date-card.active {
+      background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff;
+      box-shadow: 0 6px 16px rgba(9, 56, 68, 0.22);
+    }
+    .dc-top { display: flex; align-items: baseline; justify-content: space-between; gap: 4px; }
+    .dc-rel { font-size: 0.79rem; font-weight: 700; white-space: nowrap; }
+    .dc-date { font-size: 0.73rem; opacity: 0.82; }
+    .dc-mid { display: flex; align-items: center; gap: 6px; margin: 1px 0; }
+    .dc-temp { font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+    .dc-tag {
+      display: inline-block; align-self: flex-start;
+      padding: 2px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 700;
+      background: var(--emerald-bg); color: var(--emerald);
+    }
+    .dc-tag.rain { background: var(--amber-bg); color: var(--amber); }
+    .dc-tag.heavy { background: var(--rose-bg); color: var(--rose); }
+    .date-card.active .dc-tag { background: rgba(255, 255, 255, 0.16); color: var(--gold-light); }
+    .selected-date-note {
+      margin-top: 8px; padding: 7px 11px; border-radius: 10px;
+      background: var(--surface-tint); border: 1px solid #cfe2e6;
+      font-size: 0.81rem; color: var(--primary-deep); font-weight: 500;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px;
+    }
+
+    .w-ico { width: 18px; height: 18px; flex-shrink: 0; }
+    .w-ico.sun { color: #d9821f; }
+    .w-ico.rain { color: #167288; }
+    .w-ico.heavy { color: #0e4d5c; }
+    .date-card.active .w-ico { color: var(--gold-light); }
+
+    /* Booking Strip */
     .booking-strip {
       display: grid; grid-template-columns: 1.55fr 1fr 1.35fr auto;
       border: 1px solid var(--border); border-radius: 13px; overflow: visible;
-      background: var(--surface); margin-bottom: 14px;
+      background: var(--surface); margin-bottom: 13px;
     }
-    @media (max-width: 960px) {
-      .booking-strip { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 560px) {
-      .booking-strip { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 960px) { .booking-strip { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .booking-strip { grid-template-columns: 1fr; } }
     .booking-cell {
       position: relative; padding: 8px 13px; border-right: 1px solid var(--border);
-      transition: background-color 0.15s ease;
+      transition: background-color 0.15s ease; min-width: 0;
     }
     .booking-cell:hover, .booking-cell:focus-within { background: var(--surface-soft); }
-    @media (max-width: 960px) {
-      .booking-cell { border-bottom: 1px solid var(--border); }
-    }
+    @media (max-width: 960px) { .booking-cell { border-bottom: 1px solid var(--border); } }
+    @media (max-width: 560px) { .booking-cell { border-right: none; } }
     .booking-cell label {
-      display: block; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.03em;
+      display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
       text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
     }
     .booking-cell input, .booking-cell select {
@@ -214,7 +272,7 @@
     }
     .guest-popover {
       position: absolute; left: 0; top: calc(100% + 10px); z-index: 60;
-      width: min(460px, calc(100vw - 44px));
+      width: min(460px, calc(100vw - 36px));
       background: var(--surface); border: 1px solid var(--border-strong);
       border-top: 3px solid var(--primary); border-radius: 16px;
       padding: 16px; box-shadow: var(--shadow-lg);
@@ -224,10 +282,7 @@
       padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;
     }
     .pop-head strong { font-size: 0.94rem; color: var(--primary-deep); }
-    .pop-row {
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 8px 0;
-    }
+    .pop-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; }
     .pop-title { font-size: 0.89rem; font-weight: 700; color: var(--ink); }
     .pop-rule { font-size: 0.77rem; color: var(--muted); margin-top: 1px; }
     .stepper { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; }
@@ -241,12 +296,10 @@
     .step-val { min-width: 22px; text-align: center; font-weight: 700; font-size: 0.92rem; }
     .sub-list {
       margin: 4px 0 10px; padding: 9px 11px; border-radius: 11px;
-      background: var(--surface-soft); border: 1px solid var(--border);
-      display: grid; gap: 8px;
+      background: var(--surface-soft); border: 1px solid var(--border); display: grid; gap: 8px;
     }
     .sub-person {
-      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 7px; align-items: center;
-      font-size: 0.8rem;
+      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 7px; align-items: center; font-size: 0.8rem;
     }
     @media (max-width: 500px) { .sub-person { grid-template-columns: 1fr 1fr; } }
     .sub-person label { font-size: 0.72rem; color: var(--muted); text-transform: none; letter-spacing: 0; margin: 0; }
@@ -262,7 +315,7 @@
     .tier-badge.adult { background: var(--amber-bg); color: var(--amber); }
     .pop-foot {
       margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
     .pop-est { font-size: 0.82rem; color: var(--muted); }
     .pop-est strong { color: var(--primary-deep); font-size: 0.94rem; }
@@ -270,6 +323,7 @@
       display: flex; align-items: center; justify-content: center; padding: 8px 12px;
       background: var(--primary-soft); border-radius: 0 12px 12px 0;
     }
+    @media (max-width: 960px) { .booking-apply-cell { border-radius: 0 0 12px 12px; } }
     .btn-apply-cfg {
       border: none; background: transparent; color: var(--primary-deep);
       font-size: 0.84rem; font-weight: 700; padding: 8px 10px; white-space: nowrap;
@@ -277,37 +331,32 @@
     }
     .btn-apply-cfg:hover { color: var(--accent); }
 
-    .prompt-row {
-      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: stretch;
-    }
+    .prompt-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: stretch; }
     @media (max-width: 740px) { .prompt-row { grid-template-columns: 1fr; } }
     textarea {
-      width: 100%; min-height: 78px; padding: 12px 15px;
+      width: 100%; min-height: 76px; padding: 12px 14px;
       border: 1.5px solid var(--border-strong); border-radius: 13px;
       font-family: inherit; font-size: 0.94rem; line-height: 1.5;
       color: var(--ink); background: var(--bg); resize: vertical;
       transition: background-color 0.15s ease, border-color 0.15s ease;
     }
     textarea:focus { background: var(--surface); border-color: var(--primary); }
-    .char-count {
-      display: block; text-align: right; margin-top: 4px;
-      font-size: 0.75rem; font-weight: 600; color: var(--muted);
-    }
+    .char-count { display: block; text-align: right; margin-top: 4px; font-size: 0.75rem; font-weight: 600; color: var(--muted); }
     .cta-stack { display: flex; gap: 8px; align-items: flex-start; }
     .btn-cta {
-      min-width: 186px; height: 54px; padding: 0 24px; border: none;
+      min-width: 176px; height: 52px; padding: 0 22px; border: none;
       background: var(--accent); color: #ffffff;
-      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em;
+      font-size: 0.94rem; font-weight: 700; letter-spacing: 0.01em;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
       box-shadow: 0 8px 20px rgba(217, 107, 39, 0.28);
     }
     .btn-cta:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 10px 24px rgba(184, 85, 24, 0.34); }
     .btn-cta:disabled { opacity: 0.65; cursor: wait; transform: none; }
-    .btn-clear { height: 54px; padding: 0 15px; }
+    .btn-clear { height: 52px; padding: 0 15px; }
 
     .preset-strip {
       display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px;
-      padding-top: 12px; border-top: 1px dashed var(--border);
+      padding-top: 11px; border-top: 1px dashed var(--border);
     }
     .preset-caption { font-size: 0.81rem; font-weight: 600; color: var(--muted); margin-right: 4px; }
     .preset-pill {
@@ -316,14 +365,39 @@
       color: var(--ink); font-size: 0.81rem; font-weight: 600;
     }
     .preset-pill:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep); }
-    .preset-dot-safe { width: 7px; height: 7px; border-radius: 50%; background: var(--rose); }
 
-    /* Explore 6 Park Zones (preserved structure, harmonized palette) */
+    /* Commercial 4-Tab Bar */
+    .tabs-bar {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 15px;
+      padding: 6px; margin-bottom: 20px; box-shadow: var(--shadow-sm);
+    }
+    @media (max-width: 780px) { .tabs-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .tab-btn {
+      border: 1px solid transparent; background: transparent; color: var(--muted);
+      padding: 10px 12px; border-radius: 11px;
+      font-size: 0.86rem; font-weight: 700;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      text-align: center;
+    }
+    .tab-btn:hover { background: var(--surface-soft); color: var(--primary-deep); }
+    .tab-btn.active {
+      background: var(--primary-deep); color: #ffffff;
+      box-shadow: 0 4px 12px rgba(9, 56, 68, 0.20);
+    }
+    .tab-pill-badge {
+      padding: 1px 7px; border-radius: 999px; font-size: 0.71rem; font-weight: 700;
+      background: var(--surface-soft); color: var(--primary-deep);
+    }
+    .tab-btn.active .tab-pill-badge { background: rgba(255, 255, 255, 0.20); color: var(--gold-light); }
+    .tab-pill-badge.ready { background: var(--emerald-bg); color: var(--emerald); }
+
+    /* Tab 1: 6 Park Zones + 18 Rides */
     .explore-head {
       display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
       gap: 10px; margin-bottom: 16px;
     }
-    .explore-head h3 { margin: 0; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); }
+    .explore-head h3 { margin: 0; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); }
     .explore-head p { margin: 0; font-size: 0.88rem; color: var(--muted); }
     .zones-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
     @media (max-width: 960px) { .zones-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -337,36 +411,19 @@
     }
     .zone-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
     .zone-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-soft); }
-    .zone-media img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.35s ease;
-    }
+    .zone-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
     .zone-card:hover .zone-media img { transform: scale(1.04); }
     .zone-walk-badge {
       position: absolute; left: 12px; top: 12px; padding: 4px 10px; border-radius: 999px;
-      background: rgba(9, 56, 68, 0.84); color: #ffffff;
+      background: rgba(9, 56, 68, 0.86); color: #ffffff;
       font-size: 0.76rem; font-weight: 600; backdrop-filter: blur(4px);
     }
     .zone-body { padding: 15px 16px 16px; flex: 1; display: flex; flex-direction: column; }
-    .zone-body h4 { margin: 0 0 5px; font-size: 1.06rem; font-weight: 700; color: var(--primary-deep); }
-    .zone-body p { margin: 0 0 13px; font-size: 0.86rem; color: var(--muted); flex: 1; }
-    .zone-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .zone-tag {
-      font-size: 0.77rem; font-weight: 600; color: var(--primary);
-      background: var(--primary-soft); padding: 3px 10px; border-radius: 999px;
-    }
-    .zone-hours-row {
-      display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px;
-      font-size: 0.77rem; font-weight: 600;
-    }
-    .zone-included-pill {
-      padding: 2px 8px; border-radius: 999px;
-      background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border);
-    }
-    .zone-time-pill {
-      padding: 2px 8px; border-radius: 999px;
-      background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border);
-    }
+    .zone-body h4 { margin: 0 0 6px; font-size: 1.06rem; font-weight: 700; color: var(--primary-deep); }
+    .zone-body p { margin: 0 0 12px; font-size: 0.86rem; color: var(--muted); flex: 1; }
+    .zone-hours-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px; font-size: 0.77rem; font-weight: 600; }
+    .zone-included-pill { padding: 2px 8px; border-radius: 999px; background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
+    .zone-time-pill { padding: 2px 8px; border-radius: 999px; background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border); }
     details.zone-rides {
       margin: 0 0 12px; padding: 7px 10px; border-radius: 10px;
       background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.8rem;
@@ -377,109 +434,111 @@
     }
     details.zone-rides summary::-webkit-details-marker { display: none; }
     .ride-list { margin: 8px 0 2px; padding: 0; list-style: none; display: grid; gap: 6px; }
-    .ride-item {
-      padding-top: 6px; border-top: 1px dashed var(--border);
-      display: flex; flex-direction: column; gap: 2px;
-    }
+    .ride-item { padding-top: 6px; border-top: 1px dashed var(--border); display: flex; flex-direction: column; gap: 2px; }
     .ride-name { font-weight: 700; color: var(--ink); font-size: 0.81rem; }
     .ride-meta { color: var(--muted); font-size: 0.76rem; line-height: 1.4; }
     .ride-warn { color: var(--rose); font-weight: 700; }
     .ride-paid { color: var(--amber); font-weight: 700; }
+    .zone-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .zone-tag { font-size: 0.77rem; font-weight: 600; color: var(--primary); background: var(--primary-soft); padding: 3px 10px; border-radius: 999px; }
 
-    /* Practical Visitor Guide (Tickets, Hours, Shows) */
-    .guide-shell {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-sm);
-      padding: 18px 20px; margin-bottom: 20px; min-width: 0;
-    }
+    /* Tab 2: Tickets & Hours */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
+    .card-pad { padding: 20px 22px; }
     .guide-banner {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
-      padding: 10px 14px; border-radius: 12px; margin-bottom: 14px;
+      padding: 12px 16px; border-radius: 12px; margin-bottom: 18px;
       background: var(--primary-soft); border: 1px solid #9ec8d1;
-      color: var(--primary-deep); font-size: 0.89rem; font-weight: 700;
+      color: var(--primary-deep); font-size: 0.92rem; font-weight: 700;
     }
-    .guide-grid {
-      display: grid; grid-template-columns: 1fr 1.28fr 1fr; gap: 14px; align-items: stretch;
-    }
-    @media (max-width: 980px) { .guide-grid { grid-template-columns: 1fr; } }
-    .guide-box {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 13px; padding: 13px 14px; display: flex; flex-direction: column; gap: 8px;
-      min-width: 0;
-    }
-    .guide-box h4 { margin: 0; font-size: 0.96rem; font-weight: 700; color: var(--primary-deep); }
-    .guide-list { margin: 0; padding-left: 17px; font-size: 0.83rem; color: var(--ink-soft); display: grid; gap: 5px; }
-    .guide-note { margin: 0; font-size: 0.77rem; color: var(--muted); }
     .tbl-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
-    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 310px; }
+    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 520px; }
     table.price-tbl th, table.price-tbl td {
-      padding: 6px 6px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
+      padding: 10px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
     }
     table.price-tbl th:first-child, table.price-tbl td:first-child { text-align: left; white-space: normal; }
-    table.price-tbl th { font-size: 0.74rem; color: var(--muted); font-weight: 700; }
-    table.price-tbl td strong { color: var(--primary-deep); }
+    table.price-tbl th { font-size: 0.78rem; color: var(--muted); font-weight: 700; background: var(--surface-soft); }
+    table.price-tbl td strong { color: var(--primary-deep); font-size: 0.94rem; }
+    .two-col-info { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    @media (max-width: 820px) { .two-col-info { grid-template-columns: 1fr; } }
+    .guide-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px 20px; box-shadow: var(--shadow-sm); min-width: 0;
+    }
+    .guide-box h4 { margin: 0 0 10px; font-size: 1.05rem; font-weight: 700; color: var(--primary-deep); }
+    .guide-list { margin: 0; padding-left: 18px; font-size: 0.87rem; color: var(--ink-soft); display: grid; gap: 7px; }
+    .guide-note { margin: 10px 0 0; font-size: 0.81rem; color: var(--muted); }
 
-    .shows-shell {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-sm);
-      padding: 16px 20px; margin-bottom: 22px;
+    /* Tab 3: Shows & Detailed 7-Day Weather */
+    .weather-detail-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 24px;
     }
-    .shows-grid {
-      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;
+    @media (max-width: 1080px) { .weather-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 580px) { .weather-detail-grid { grid-template-columns: 1fr; } }
+    .wd-card {
+      background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px;
+      padding: 14px 15px; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; gap: 8px; min-width: 0;
     }
-    @media (max-width: 900px) { .shows-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .wd-card.active { border-color: var(--primary); background: var(--surface-tint); }
+    .wd-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .wd-title { font-weight: 700; color: var(--primary-deep); font-size: 0.95rem; }
+    .wd-sub { font-size: 0.78rem; color: var(--muted); }
+    .wd-temp-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .wd-temp { font-size: 1.08rem; font-weight: 700; color: var(--ink); }
+    .wd-prob { font-size: 0.79rem; font-weight: 600; color: var(--muted); }
+    .wd-advice { margin: 0; font-size: 0.81rem; color: var(--ink-soft); flex: 1; }
+
+    .filter-strip { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .filter-btn {
+      padding: 6px 13px; border-radius: 999px; font-size: 0.81rem; font-weight: 600;
+      background: var(--surface); border: 1px solid var(--border-strong); color: var(--muted);
+    }
+    .filter-btn.active { background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff; }
+    .shows-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    @media (max-width: 960px) { .shows-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 580px) { .shows-grid { grid-template-columns: 1fr; } }
     .show-card {
-      padding: 10px 12px; border-radius: 11px; background: var(--bg);
-      border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;
+      padding: 14px 15px; border-radius: 14px; background: var(--surface);
+      border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; gap: 6px; min-width: 0;
     }
     .show-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
-    .show-time {
-      padding: 2px 8px; border-radius: 7px; font-size: 0.78rem; font-weight: 700;
-      background: var(--primary-soft); color: var(--primary-deep);
-    }
-    .show-name { margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
-    .show-meta { margin: 0; font-size: 0.78rem; color: var(--muted); }
+    .show-time { padding: 3px 9px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; background: var(--primary-soft); color: var(--primary-deep); }
+    .show-name { margin: 2px 0 0; font-size: 0.98rem; font-weight: 700; color: var(--ink); }
+    .show-meta { margin: 0; font-size: 0.82rem; color: var(--muted); flex: 1; }
 
-    /* Results Split-Screen Workspace */
-    .hidden { display: none !important; }
+    /* Tab 4: Results Workspace */
     .workspace {
       display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(350px, 0.88fr);
       gap: 22px; align-items: start;
     }
     @media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } }
-
-    .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); box-shadow: var(--shadow-sm);
-    }
-    .card-pad { padding: 19px 21px; }
     .right-sticky { display: grid; gap: 16px; position: sticky; top: 82px; }
     @media (max-width: 980px) { .right-sticky { position: static; } }
 
-    .sec-head {
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 8px; margin-bottom: 14px;
-    }
+    .sec-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
     .sec-title { margin: 0; font-size: 1.12rem; font-weight: 700; color: var(--primary-deep); display: inline-flex; align-items: center; gap: 8px; }
     .sec-sub { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
 
     .banner {
       display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
-      padding: 12px 15px; border-radius: 12px; border: 1px solid; font-size: 0.9rem; font-weight: 700;
-      margin-bottom: 16px;
+      padding: 12px 15px; border-radius: 12px; border: 1px solid; font-size: 0.9rem; font-weight: 700; margin-bottom: 16px;
     }
     .banner.ok { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
     .banner.warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
     .banner.danger { background: var(--rose-bg); border-color: var(--rose-border); color: var(--rose); }
     .banner.info { background: var(--primary-soft); border-color: #9ec8d1; color: var(--primary-deep); }
 
-    /* Vertical Wanderlog Timeline */
-    .timeline-wrap { position: relative; padding-left: 28px; display: grid; gap: 0; }
-    .timeline-wrap::before {
-      content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px;
-      width: 2px; background: var(--border-strong);
+    .empty-state {
+      background: var(--surface); border: 1px dashed var(--border-strong); border-radius: var(--radius);
+      padding: 36px 22px; text-align: center; box-shadow: var(--shadow-sm);
     }
+    .empty-state h3 { margin: 0 0 8px; color: var(--primary-deep); font-size: 1.25rem; }
+    .empty-state p { margin: 0 auto 18px; max-width: 520px; font-size: 0.9rem; color: var(--muted); }
+
+    .timeline-wrap { position: relative; padding-left: 28px; display: grid; gap: 0; }
+    .timeline-wrap::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px; background: var(--border-strong); }
     .gate-start {
       position: relative; display: flex; align-items: center; gap: 10px;
       padding: 9px 13px; border-radius: 11px; background: var(--surface-soft);
@@ -500,76 +559,43 @@
 
     .stop-card {
       position: relative; display: grid; grid-template-columns: 118px 1fr; gap: 14px;
-      padding: 13px; border-radius: 14px;
-      border: 1px solid var(--border); border-left: 4px solid var(--zone-color, var(--primary));
+      padding: 13px; border-radius: 14px; border: 1px solid var(--border);
+      border-left: 4px solid var(--zone-color, var(--primary));
       background: var(--surface); box-shadow: var(--shadow-sm); cursor: pointer;
       transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
     }
     @media (max-width: 560px) { .stop-card { grid-template-columns: 1fr; } }
-    .stop-card:hover, .stop-card.active {
-      transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary);
-    }
+    .stop-card:hover, .stop-card.active { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary); }
     .stop-num {
       position: absolute; left: -29px; top: 16px; width: 24px; height: 24px; border-radius: 50%;
       background: var(--zone-color, var(--primary)); color: #ffffff; font-size: 0.8rem; font-weight: 800;
       display: grid; place-items: center; border: 2px solid var(--surface); box-shadow: var(--shadow-sm);
     }
-    .stop-thumb {
-      width: 118px; height: 88px; border-radius: 10px; object-fit: cover;
-      background: var(--surface-soft); display: block;
-    }
+    .stop-thumb { width: 118px; height: 88px; border-radius: 10px; object-fit: cover; background: var(--surface-soft); display: block; }
     @media (max-width: 560px) { .stop-thumb { width: 100%; height: 150px; } }
     .stop-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; margin-bottom: 5px; }
-    .time-chip {
-      display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 8px;
-      background: var(--primary-soft); color: var(--primary-deep); font-weight: 700; font-size: 0.84rem;
-    }
-    .tag {
-      display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px;
-      font-size: 0.76rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface-soft); color: var(--muted);
-    }
+    .time-chip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 8px; background: var(--primary-soft); color: var(--primary-deep); font-weight: 700; font-size: 0.84rem; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 0.76rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface-soft); color: var(--muted); }
     .tag.indoor { background: var(--primary-soft); border-color: #b7d7de; color: var(--primary-deep); }
     .tag.outdoor { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
     .stop-name { margin: 2px 0 4px; font-size: 0.99rem; font-weight: 700; color: var(--ink); }
     .stop-reason { margin: 0; font-size: 0.87rem; color: var(--muted); }
 
-    .notes-box {
-      margin-top: 15px; padding: 12px 14px; border-radius: 12px;
-      background: var(--amber-bg); border: 1px solid var(--amber-border); font-size: 0.88rem;
-    }
+    .notes-box { margin-top: 15px; padding: 12px 14px; border-radius: 12px; background: var(--amber-bg); border: 1px solid var(--amber-border); font-size: 0.88rem; }
     .notes-box ul { margin: 5px 0 0; padding-left: 18px; }
-    .raw-msg {
-      padding: 15px 17px; border-radius: 12px; background: var(--surface-soft);
-      border: 1px solid var(--border); white-space: pre-wrap; font-size: 0.93rem;
-    }
-    .disclaimer-row {
-      margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
-      font-size: 0.82rem; color: var(--muted);
-    }
+    .raw-msg { padding: 15px 17px; border-radius: 12px; background: var(--surface-soft); border: 1px solid var(--border); white-space: pre-wrap; font-size: 0.93rem; }
+    .disclaimer-row { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--muted); }
 
-    /* Interactive Island Map + Cost Receipt + Trace */
-    .map-stage {
-      position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden;
-      border: 1px solid var(--border); background: #c5e8ef;
-    }
+    .map-stage { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: #c5e8ef; }
     .map-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .map-overlay-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .zone-node { cursor: pointer; }
-    .zone-info-bar {
-      margin-top: 10px; padding: 10px 12px; border-radius: 10px;
-      background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.84rem;
-    }
+    .zone-info-bar { margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.84rem; }
     .map-caption { margin: 8px 0 0; font-size: 0.77rem; color: var(--muted); }
 
-    .receipt-hero {
-      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
-      padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 11px;
-    }
+    .receipt-hero { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 11px; }
     .receipt-total { font-size: 1.75rem; font-weight: 700; color: var(--primary-deep); letter-spacing: -0.02em; }
-    .receipt-badge {
-      padding: 4px 10px; border-radius: 999px; font-size: 0.77rem; font-weight: 700;
-      background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border);
-    }
+    .receipt-badge { padding: 4px 10px; border-radius: 999px; font-size: 0.77rem; font-weight: 700; background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border); }
     .receipt-rows { display: grid; gap: 8px; font-size: 0.88rem; }
     .receipt-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); }
     .receipt-row strong { color: var(--ink); font-weight: 600; text-align: right; }
@@ -578,20 +604,16 @@
     details.trace-box { font-size: 0.84rem; }
     details.trace-box summary { cursor: pointer; font-weight: 700; color: var(--primary-deep); }
     .trace-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 10px 0; }
-    .trace-kpi {
-      padding: 7px 6px; border-radius: 9px; background: var(--surface-soft);
-      border: 1px solid var(--border); text-align: center;
-    }
+    .trace-kpi { padding: 7px 6px; border-radius: 9px; background: var(--surface-soft); border: 1px solid var(--border); text-align: center; }
     .trace-kpi span { display: block; font-size: 0.73rem; color: var(--muted); }
     .trace-kpi strong { font-size: 0.89rem; }
     table.trace-tbl { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
-    table.trace-tbl th, table.trace-tbl td {
-      text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--border);
-    }
+    table.trace-tbl th, table.trace-tbl td { text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--border); }
 
     @media print {
       body { background-image: none; background: #ffffff; }
-      .topbar, .hero, .concierge-dock, .explore-section, details.trace-box, .receipt-actions, #backExploreBtn { display: none !important; }
+      .topbar, .hero, .concierge-dock, .tabs-bar, #panelExplore, #panelTickets, #panelShows, #resultEmptyState, details.trace-box, .receipt-actions, #backExploreBtn { display: none !important; }
+      #panelResult { display: block !important; }
       .shell { padding: 0; }
       .workspace { display: block; }
       .right-sticky { position: static; margin-top: 16px; }
@@ -602,7 +624,7 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="#exploreSection">
+      <a class="brand" href="#conciergeDock">
         <div class="crest" aria-hidden="true">
           <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
             <circle cx="14" cy="11.5" r="6.5" stroke="#f6d28b" stroke-width="1.65" />
@@ -618,9 +640,9 @@
       </a>
 
       <nav class="top-nav" aria-label="Điều hướng nhanh">
-        <a href="#parkGuide">Giá vé &amp; Giờ mở</a>
-        <a href="#showsGuide">Lịch show</a>
-        <a href="#exploreSection">6 phân khu</a>
+        <a href="#mainTabs" data-jump-tab="explore" class="active">6 phân khu</a>
+        <a href="#mainTabs" data-jump-tab="tickets">Giá vé &amp; Giờ mở</a>
+        <a href="#mainTabs" data-jump-tab="shows">Show &amp; Thời tiết 7 ngày</a>
         <a href="#conciergeDock">Lập lịch trình</a>
       </nav>
 
@@ -647,11 +669,11 @@
     <div class="hero-content">
       <div class="hero-location">Đảo Hòn Tre · Nha Trang · 09:00 – 20:00</div>
       <h2 class="serif">Lên lịch một ngày <em>trọn vẹn</em> cho gia đình tại VinWonders</h2>
-      <p class="hero-sub">Ghép sẵn điểm chơi, giờ show, đường đi bộ, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
+      <p class="hero-sub">Chọn ngày đi theo dự báo thời tiết 7 ngày, ghép sẵn điểm chơi, giờ show, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
       <div class="hero-metrics nums">
-        <span class="hero-metric"><strong>6</strong> phân khu Đảo Hòn Tre</span>
+        <span class="hero-metric"><strong>6</strong> phân khu · 1 vé trọn gói</span>
         <span class="hero-sep" aria-hidden="true"></span>
-        <span class="hero-metric"><strong>100%</strong> theo bảng giá vé niêm yết</span>
+        <span class="hero-metric"><strong>7 ngày</strong> chọn lịch &amp; xem thời tiết</span>
         <span class="hero-sep" aria-hidden="true"></span>
         <span class="hero-metric"><strong>20 phút</strong> đệm thay đồ công viên nước</span>
       </div>
@@ -660,6 +682,20 @@
 
   <main class="shell">
     <section class="concierge-dock" id="conciergeDock" aria-label="Thiết lập chuyến đi gia đình">
+      <!-- 7-Day Date & Weather Picker -->
+      <div class="date-weather-shell" id="dateWeatherStrip">
+        <div class="date-strip-head">
+          <span class="date-strip-title">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Chọn ngày đi trong 7 ngày tới
+          </span>
+          <span class="weather-src-badge" id="weatherSourceBadge">Đang tải dự báo thời tiết...</span>
+        </div>
+        <div class="date-cards-row" id="dateCardsRow" role="listbox" aria-label="Chọn ngày đi trong 7 ngày tới"></div>
+        <div class="selected-date-note" id="selectedDateNote">Đang tải lịch 7 ngày tại Đảo Hòn Tre...</div>
+      </div>
+
+      <!-- Guest / Budget / Time Strip -->
       <div class="booking-strip">
         <div class="booking-cell" id="guestCell">
           <label for="guestTrigger">Đoàn khách</label>
@@ -707,7 +743,7 @@
               </div>
             </div>
             <div class="sub-list hidden" id="seniorsList"></div>
-            <div class="pop-foot" style="flex-wrap:nowrap;">
+            <div class="pop-foot">
               <div class="pop-est">Tạm tính (<span id="estTicketType">Vé tiêu chuẩn</span>): <strong class="nums" id="estGateTotal">2.900.000đ</strong></div>
               <button type="button" class="btn-ghost" id="popApplyBtn" style="padding:6px 13px;font-size:0.81rem;border-color:var(--primary);color:var(--primary-deep);white-space:nowrap;">Áp dụng</button>
             </div>
@@ -740,7 +776,7 @@
         <div class="prompt-row">
           <div>
             <label class="hidden" for="queryInput">Nhập yêu cầu chuyến đi VinWonders Nha Trang</label>
-            <textarea id="queryInput" maxlength="2000" placeholder="Chia sẻ thêm sở thích của gia đình (ví dụ: thích thủy cung, hạn chế đi bộ nhiều, muốn xem Tata Show buổi tối)..."></textarea>
+            <textarea id="queryInput" maxlength="2000" placeholder="Chia sẻ thêm nhu cầu gia đình (ví dụ: đi ngày mai, 2 người lớn, 1 bé 7 tuổi cao 1m2, ngân sách 3 triệu 5, thích thủy cung và Tata Show)..."></textarea>
             <span class="char-count nums" id="charCount">0 / 2000</span>
           </div>
           <div class="cta-stack">
@@ -762,180 +798,211 @@
       </div>
     </section>
 
-    <!-- View 1: Practical Visitor Guide + Explore 6 Park Zones -->
-    <section class="explore-section" id="exploreSection" aria-label="Thông tin giá vé, lịch show và 6 phân khu VinWonders Nha Trang">
-      <section class="guide-shell" id="parkGuide" aria-label="Giờ mở cửa và Bảng giá vé trọn gói 6 phân khu">
-        <div class="guide-banner">
-          <span>1 vé trọn gói đã gồm cáp treo 2 chiều và vui chơi cả 6 phân khu — không bán vé lẻ từng khu, không chia ca sáng / ca chiều.</span>
-          <span class="nums" style="font-size:0.81rem;">Mở cửa 09:00–20:00 · Công viên nước 10:00–17:30</span>
-        </div>
-        <div class="guide-grid">
-          <article class="guide-box">
-            <h4>Giờ mở cửa &amp; Cách tính hạng vé</h4>
-            <ul class="guide-list">
-              <li><strong>Toàn khu:</strong> 09:00–20:00 hằng ngày; riêng Công viên nước <strong>10:00–17:30</strong> (+20 phút tắm tráng, thay đồ khi rời khu).</li>
-              <li><strong>2 khung vào cổng trong ngày:</strong> Vé cả ngày (từ 09:00) và Vé sau 16:00 (ngoài ra có gói 2 ngày / 3 ngày).</li>
-              <li><strong>Hạng vé theo tuổi &amp; chiều cao:</strong> từ 60 tuổi tính vé Người cao tuổi (mang giấy tờ tùy thân); còn lại &lt;1m miễn phí, 1m–&lt;1m4 vé Trẻ em, ≥1m4 vé Người lớn.</li>
-            </ul>
-          </article>
+    <!-- 4 Commercial Tabs -->
+    <div class="tabs-bar" id="mainTabs" role="tablist" aria-label="Thông tin VinWonders Nha Trang và lịch trình">
+      <button type="button" class="tab-btn active" id="tabBtnExplore" role="tab" aria-selected="true" aria-controls="panelExplore" data-tab="explore">
+        <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect></svg>
+        <span>6 phân khu &amp; Trò chơi</span>
+      </button>
+      <button type="button" class="tab-btn" id="tabBtnTickets" role="tab" aria-selected="false" aria-controls="panelTickets" data-tab="tickets">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2M13 17v2M13 11v2"></path></svg>
+        <span>Giá vé &amp; Giờ mở cửa</span>
+      </button>
+      <button type="button" class="tab-btn" id="tabBtnShows" role="tab" aria-selected="false" aria-controls="panelShows" data-tab="shows">
+        <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg>
+        <span>Lịch show &amp; Thời tiết 7 ngày</span>
+      </button>
+      <button type="button" class="tab-btn" id="tabBtnResult" role="tab" aria-selected="false" aria-controls="panelResult" data-tab="result">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
+        <span>Lịch trình đề xuất</span>
+        <span class="tab-pill-badge" id="resultTabBadge">Chưa tạo</span>
+      </button>
+    </div>
 
-          <article class="guide-box">
-            <h4>Bảng giá vé niêm yết trọn gói (VNĐ)</h4>
-            <div class="tbl-scroll">
-              <table class="price-tbl nums">
-                <thead>
-                  <tr>
-                    <th>Nhóm khách</th>
-                    <th>Cả ngày (09:00)</th>
-                    <th>Sau 16:00</th>
-                    <th>2 ngày</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Người lớn (≥1m4)</td>
-                    <td><strong>1.050.000đ</strong></td>
-                    <td>700.000đ</td>
-                    <td>1.350.000đ</td>
-                  </tr>
-                  <tr>
-                    <td>Trẻ em (1m–&lt;1m4)</td>
-                    <td><strong>800.000đ</strong></td>
-                    <td>550.000đ</td>
-                    <td>1.050.000đ</td>
-                  </tr>
-                  <tr>
-                    <td>Người cao tuổi (≥60t)</td>
-                    <td><strong>800.000đ</strong></td>
-                    <td>550.000đ</td>
-                    <td>1.050.000đ</td>
-                  </tr>
-                  <tr>
-                    <td>Bé dưới 1m</td>
-                    <td><strong>Miễn phí</strong></td>
-                    <td>Miễn phí</td>
-                    <td>Miễn phí</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p class="guide-note">Đã gồm VAT &amp; cáp treo 2 chiều. Vé không hoàn, không đổi, không trả (gói 3 ngày: 1.600k / 1.050k / 1.200k).</p>
-          </article>
-
-          <article class="guide-box">
-            <h4>Phụ thu ngoài vé &amp; Bảo trì</h4>
-            <ul class="guide-list">
-              <li><strong>Dịch vụ lẻ tham khảo:</strong> Cho thú ăn (50.000đ/phần), Tủ đồ Công viên nước (50.000đ/tủ), Áo mưa giấy (30.000đ/cái).</li>
-              <li><strong>Thu phí riêng tại quầy:</strong> Zipline (≥1m3, ≤110kg) và Xe điện Buggy nội khu chưa có giá lẻ niêm yết sẵn.</li>
-              <li><strong>Đang tạm bảo trì:</strong> Xe điện đụng (Festive Hill) và Tàu lượn mini trẻ em (Fairy Land) — hệ thống tự tránh khi xếp lịch.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section class="shows-shell" id="showsGuide" aria-label="Lịch 6 show biểu diễn trong ngày">
-        <div class="explore-head" style="margin-bottom:12px;">
-          <h3 class="serif" style="font-size:1.22rem;">Lịch 6 show biểu diễn tham khảo trong ngày</h3>
-          <p>Show ngoài trời tạm huỷ khi trời mưa; show trong nhà vẫn diễn bình thường.</p>
-        </div>
-        <div class="shows-grid">
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">19:30 (30p)</span><span class="tag outdoor">Ngoài trời</span></div>
-            <p class="show-name">Tata Show</p>
-            <p class="show-meta">Festive Hill · Đã gồm trong vé · Huỷ nếu mưa tối</p>
-          </div>
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">11:00 · 15:00 (20p)</span><span class="tag indoor">Trong nhà</span></div>
-            <p class="show-name">Show nàng tiên cá</p>
-            <p class="show-meta">Sea World · Chơi được khi mưa · Hợp mọi lứa tuổi</p>
-          </div>
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">10:00 · 14:00 (15p)</span><span class="tag indoor">Trong nhà</span></div>
-            <p class="show-name">Show cho cá ăn</p>
-            <p class="show-meta">Sea World · Chơi được khi mưa · Hợp trẻ nhỏ &amp; ông bà</p>
-          </div>
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">10:30 · 15:30 (25p)</span><span class="tag outdoor">Ngoài trời</span></div>
-            <p class="show-name">Show chim muông</p>
-            <p class="show-meta">King's Garden · Cách Sea World 20p đi bộ · Huỷ khi mưa</p>
-          </div>
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">16:30 (30p)</span><span class="tag outdoor">Ngoài trời</span></div>
-            <p class="show-name">Diễu hành lễ hội</p>
-            <p class="show-meta">Festive Hill · Không khí gia đình · Huỷ khi mưa</p>
-          </div>
-          <div class="show-card">
-            <div class="show-top"><span class="show-time nums">09:30 · 13:30 · 16:00 (20p)</span><span class="tag indoor">Trong nhà</span></div>
-            <p class="show-name">Kịch rối cho bé</p>
-            <p class="show-meta">Fairy Land · Hợp bé nhỏ, tránh nắng mưa</p>
-          </div>
-        </div>
-      </section>
-
+    <!-- Tab 1: 6 Zones & 18 Rides -->
+    <section class="tab-panel" id="panelExplore" role="tabpanel" aria-labelledby="tabBtnExplore">
       <div class="explore-head">
         <h3 class="serif">Khám phá 6 phân khu tại VinWonders Nha Trang</h3>
-        <p>Tất cả 6 khu đều nằm trong 1 vé vào cổng · Mở mục "Xem trò chơi" để xem chi tiết chiều cao &amp; giờ mở cửa.</p>
+        <p>Tất cả 6 phân khu đều đã nằm trong 1 vé vào cổng · Mở mục "Xem trò chơi" trên từng thẻ để xem chiều cao &amp; giờ mở cửa.</p>
       </div>
       <div class="zones-grid" id="zonesGrid"></div>
     </section>
 
-    <!-- View 2: Wanderlog Split-Screen Results -->
-    <section class="workspace hidden" id="resultsWorkspace" aria-live="polite" aria-label="Kết quả lịch trình và bản đồ">
-      <div class="card card-pad">
-        <div class="sec-head">
-          <h3 class="sec-title serif">
-            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Lịch trình đề xuất trong ngày
-          </h3>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <span class="sec-sub nums" id="routeSummary">Chưa có lộ trình</span>
-            <button type="button" class="btn-ghost" id="backExploreBtn" style="padding:5px 10px;font-size:0.8rem;">Xem 6 phân khu</button>
-          </div>
-        </div>
-        <div id="timelineRoot"></div>
+    <!-- Tab 2: Tickets & Opening Hours -->
+    <section class="tab-panel hidden" id="panelTickets" role="tabpanel" aria-labelledby="tabBtnTickets">
+      <div class="explore-head">
+        <h3 class="serif">Bảng giá vé niêm yết &amp; Giờ mở cửa</h3>
+        <p>Giá gồm VAT và cáp treo vượt biển 2 chiều · Không bán vé lẻ từng khu.</p>
       </div>
 
-      <aside class="right-sticky" aria-label="Bản đồ đảo Hòn Tre và phiếu chi phí">
-        <section class="card card-pad">
-          <div class="sec-head" style="margin-bottom:10px;">
-            <h3 class="sec-title serif">
-              <svg class="ico" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
-              Bản đồ lộ trình Đảo Hòn Tre
-            </h3>
-            <span class="sec-sub">Chọn khu để xem chi tiết</span>
-          </div>
-          <div class="map-stage">
-            <img class="map-bg-img" src="/assets/island_map.jpg" alt="Bản đồ minh họa 6 phân khu khu vui chơi Đảo Hòn Tre" />
-            <svg id="parkMapSvg" class="map-overlay-svg" viewBox="0 0 960 720" role="img" aria-label="Tuyến đường di chuyển giữa các phân khu"></svg>
-          </div>
-          <div class="zone-info-bar" id="zoneInfoBar">
-            Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.
-          </div>
-          <p class="map-caption">Sơ đồ 6 phân khu &amp; thời gian di chuyển ước tính cho gia đình có trẻ nhỏ.</p>
-        </section>
+      <div class="guide-banner">
+        <span>1 vé trọn gói đi được cả 6 phân khu — không chia ca sáng / ca chiều, chỉ phân biệt Vé cả ngày (vào từ 09:00) và Vé sau 16:00.</span>
+        <span class="nums" style="font-size:0.83rem;">Toàn khu 09:00–20:00 · Công viên nước 10:00–17:30</span>
+      </div>
 
-        <section class="card card-pad">
-          <div class="sec-head" style="margin-bottom:10px;">
-            <h3 class="sec-title serif">
-              <svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              Chi phí dự kiến
-            </h3>
-            <span class="receipt-badge">Theo bảng giá niêm yết</span>
-          </div>
-          <div id="costRoot"></div>
-          <div class="receipt-actions">
-            <button type="button" class="btn-ghost" id="sideCopyBtn" disabled>Sao chép gửi Zalo</button>
-            <button type="button" class="btn-ghost" id="sidePrintBtn" disabled>In / Lưu PDF</button>
-          </div>
-        </section>
+      <div class="card card-pad">
+        <div class="sec-head" style="margin-bottom:10px;">
+          <h4 class="sec-title serif">Bảng giá vé tham quan trọn gói (VNĐ / người)</h4>
+          <span class="sec-sub">Xét theo chiều cao; riêng người từ 60 tuổi xét theo giấy tờ tùy thân</span>
+        </div>
+        <div class="tbl-scroll">
+          <table class="price-tbl nums">
+            <thead>
+              <tr>
+                <th>Nhóm khách hàng</th>
+                <th>Vé cả ngày (09:00–20:00)</th>
+                <th>Vé sau 16:00</th>
+                <th>Gói 2 ngày</th>
+                <th>Gói 3 ngày</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Người lớn</strong> (cao từ 140cm)</td>
+                <td><strong>1.050.000đ</strong></td>
+                <td>700.000đ</td>
+                <td>1.350.000đ</td>
+                <td>1.600.000đ</td>
+              </tr>
+              <tr>
+                <td><strong>Trẻ em</strong> (100cm đến dưới 140cm)</td>
+                <td><strong>800.000đ</strong></td>
+                <td>550.000đ</td>
+                <td>1.050.000đ</td>
+                <td>1.050.000đ</td>
+              </tr>
+              <tr>
+                <td><strong>Người cao tuổi</strong> (từ 60 tuổi)</td>
+                <td><strong>800.000đ</strong></td>
+                <td>550.000đ</td>
+                <td>1.050.000đ</td>
+                <td>1.200.000đ</td>
+              </tr>
+              <tr>
+                <td><strong>Trẻ em dưới 100cm</strong></td>
+                <td><strong>Miễn phí</strong></td>
+                <td>Miễn phí</td>
+                <td>Miễn phí</td>
+                <td>Miễn phí</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="guide-note">Chính sách cổng: Vé đã mua không hoàn, không đổi, không trả. Giá đã bao gồm cáp treo 2 chiều, hầu hết trò chơi và show diễn.</p>
+      </div>
 
-        <section class="card card-pad" style="padding:13px 18px;">
-          <details class="trace-box" id="traceDetails">
-            <summary style="font-size:0.8rem;color:var(--muted);font-weight:600;">Chi tiết xử lý hệ thống</summary>
-            <div id="traceRoot" style="margin-top:8px;color:var(--muted);">Chưa có lượt tra cứu nào.</div>
-          </details>
-        </section>
-      </aside>
+      <div class="two-col-info">
+        <article class="guide-box">
+          <h4>Giờ mở cửa các phân khu chính</h4>
+          <ul class="guide-list nums">
+            <li><strong>Toàn khu VinWonders Nha Trang:</strong> 09:00 – 20:00 hằng ngày.</li>
+            <li><strong>Tropical Paradise (Công viên nước):</strong> 10:00 – 17:30 <em>(+20 phút đệm tắm tráng, thay đồ khi rời khu)</em>.</li>
+            <li><strong>Sea World (Thủy cung):</strong> 09:00 – 19:00 · Rạp Phim Bay: 10:00 – 18:00.</li>
+            <li><strong>King's Garden (Vườn thú):</strong> 09:00 – 17:30 · Vườn bướm: 09:00 – 18:00.</li>
+            <li><strong>The World Garden:</strong> 09:00 – 20:00 · Bánh xe bầu trời: 09:00 – 20:00.</li>
+            <li><strong>Festive Hill &amp; Fairy Land:</strong> 09:00 – 19:30 · Tata Show lúc 19:30.</li>
+          </ul>
+        </article>
+
+        <article class="guide-box">
+          <h4>Phí dịch vụ ngoài vé &amp; Trò tạm bảo trì</h4>
+          <ul class="guide-list">
+            <li><strong>Dịch vụ lẻ ngoài vé (tham khảo):</strong> Cho thú ăn (50.000đ/phần), Thuê tủ đồ Công viên nước (50.000đ/tủ), Áo mưa giấy (30.000đ/cái).</li>
+            <li><strong>Thu phí riêng, hỏi trực tiếp tại quầy:</strong> Trò Zipline (≥130cm, ≤110kg), Xe điện Buggy nội khu và các gói Combo/Buffet.</li>
+            <li><strong>Đang tạm bảo trì (hệ thống tự bỏ qua khi lập lịch):</strong> Xe điện đụng (Festive Hill) và Tàu lượn mini trẻ em (Fairy Land).</li>
+            <li><strong>Giới hạn an toàn đáng chú ý:</strong> Cụm đường trượt cảm giác mạnh Công viên nước không phục vụ khách từ 50 tuổi trở lên.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- Tab 3: Shows & 7-Day Weather Details -->
+    <section class="tab-panel hidden" id="panelShows" role="tabpanel" aria-labelledby="tabBtnShows">
+      <div class="explore-head">
+        <h3 class="serif">Dự báo thời tiết 7 ngày tại Đảo Hòn Tre</h3>
+        <p id="weatherTabSub">Chọn sẵn ngày đi phù hợp — hệ thống tự đồng bộ kịch bản nắng/mưa vào lịch trình.</p>
+      </div>
+      <div class="weather-detail-grid" id="weather7dGrid"></div>
+
+      <div class="explore-head" style="margin-top:8px;">
+        <div>
+          <h3 class="serif">Lịch 6 show biểu diễn trong ngày</h3>
+          <p>Show ngoài trời tạm huỷ khi trời mưa; show trong nhà vẫn phục vụ bình thường.</p>
+        </div>
+        <div class="filter-strip" id="showFilterStrip">
+          <button type="button" class="filter-btn active" data-show-filter="all">Tất cả (6)</button>
+          <button type="button" class="filter-btn" data-show-filter="indoor">Trong nhà · Không sợ mưa (3)</button>
+          <button type="button" class="filter-btn" data-show-filter="outdoor">Ngoài trời (3)</button>
+        </div>
+      </div>
+      <div class="shows-grid" id="showsGrid"></div>
+    </section>
+
+    <!-- Tab 4: Proposed Itinerary & Map -->
+    <section class="tab-panel hidden" id="panelResult" role="tabpanel" aria-labelledby="tabBtnResult">
+      <div class="empty-state" id="resultEmptyState">
+        <h3 class="serif">Chưa có lịch trình nào được tạo</h3>
+        <p>Chọn ngày đi ở dải 7 ngày phía trên, chỉnh số người lớn / trẻ em / ngân sách rồi bấm <strong>Lập lịch ngay</strong> — kết quả lịch trình từng giờ, bản đồ Đảo Hòn Tre và bảng tiền sẽ xuất hiện tại đây.</p>
+        <button type="button" class="btn-cta" id="goDockBtn" style="height:44px;min-width:190px;">Lên lịch ngay</button>
+      </div>
+
+      <div class="workspace hidden" id="resultsWorkspace" aria-live="polite" aria-label="Kết quả lịch trình và bản đồ">
+        <div class="card card-pad">
+          <div class="sec-head">
+            <h3 class="sec-title serif">
+              <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              Lịch trình đề xuất trong ngày
+            </h3>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span class="sec-sub nums" id="routeSummary">Chưa có lộ trình</span>
+              <button type="button" class="btn-ghost" id="backExploreBtn" style="padding:5px 10px;font-size:0.8rem;">Xem 6 phân khu</button>
+            </div>
+          </div>
+          <div id="timelineRoot"></div>
+        </div>
+
+        <aside class="right-sticky" aria-label="Bản đồ đảo Hòn Tre và phiếu chi phí">
+          <section class="card card-pad">
+            <div class="sec-head" style="margin-bottom:10px;">
+              <h3 class="sec-title serif">
+                <svg class="ico" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+                Bản đồ lộ trình Đảo Hòn Tre
+              </h3>
+              <span class="sec-sub">Chọn khu để xem chi tiết</span>
+            </div>
+            <div class="map-stage">
+              <img class="map-bg-img" src="/assets/island_map.jpg" alt="Bản đồ minh họa 6 phân khu khu vui chơi Đảo Hòn Tre" />
+              <svg id="parkMapSvg" class="map-overlay-svg" viewBox="0 0 960 720" role="img" aria-label="Tuyến đường di chuyển giữa các phân khu"></svg>
+            </div>
+            <div class="zone-info-bar" id="zoneInfoBar">
+              Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.
+            </div>
+            <p class="map-caption">Sơ đồ 6 phân khu &amp; thời gian di chuyển ước tính cho gia đình có trẻ nhỏ.</p>
+          </section>
+
+          <section class="card card-pad">
+            <div class="sec-head" style="margin-bottom:10px;">
+              <h3 class="sec-title serif">
+                <svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Chi phí dự kiến
+              </h3>
+              <span class="receipt-badge">Theo bảng giá niêm yết</span>
+            </div>
+            <div id="costRoot"></div>
+            <div class="receipt-actions">
+              <button type="button" class="btn-ghost" id="sideCopyBtn" disabled>Sao chép gửi Zalo</button>
+              <button type="button" class="btn-ghost" id="sidePrintBtn" disabled>In / Lưu PDF</button>
+            </div>
+          </section>
+
+          <section class="card card-pad" style="padding:13px 18px;">
+            <details class="trace-box" id="traceDetails">
+              <summary style="font-size:0.8rem;color:var(--muted);font-weight:600;">Chi tiết xử lý hệ thống</summary>
+              <div id="traceRoot" style="margin-top:8px;color:var(--muted);">Chưa có lượt tra cứu nào.</div>
+            </details>
+          </section>
+        </aside>
+      </div>
     </section>
   </main>
 
@@ -943,7 +1010,7 @@
     const ZONES = {
       GATE: {
         label: "Ga cáp treo Đảo Hòn Tre", short: "Cổng vào", x: 228, y: 344, color: "#1b2428",
-        img: "/assets/hero_vinwonders.jpg", tag: "Điểm xuất phát",
+        img: "/assets/hero_vinwonders.jpg", tag: "Điểm xuất phát", hours: "09:00–20:00",
         desc: "Cổng cáp treo vượt biển phía đảo, đã gồm trong vé tiêu chuẩn 2 chiều."
       },
       WORLD_GARDEN: {
@@ -1011,6 +1078,15 @@
       ]
     };
 
+    const SHOWS_DATA = [
+      { id: "S01", name: "Tata Show", times: "19:30", dur: "30p", zone: "FESTIVE_HILL", zoneName: "Festive Hill", indoor: false, note: "Đã gồm trong vé · Tạm huỷ nếu mưa tối" },
+      { id: "S02", name: "Show nàng tiên cá", times: "11:00 · 15:00", dur: "20p", zone: "SEA_WORLD", zoneName: "Sea World", indoor: true, note: "Trong nhà · Không sợ mưa · Hợp mọi lứa tuổi" },
+      { id: "S03", name: "Show cho cá ăn", times: "10:00 · 14:00", dur: "15p", zone: "SEA_WORLD", zoneName: "Sea World", indoor: true, note: "Trong nhà · Hợp trẻ nhỏ & ông bà" },
+      { id: "S04", name: "Show chim muông", times: "10:30 · 15:30", dur: "25p", zone: "KINGS_GARDEN", zoneName: "King's Garden", indoor: false, note: "Ngoài trời · Cách Sea World 20p đi bộ · Huỷ khi mưa" },
+      { id: "S05", name: "Diễu hành lễ hội", times: "16:30", dur: "30p", zone: "FESTIVE_HILL", zoneName: "Festive Hill", indoor: false, note: "Ngoài trời · Không khí gia đình · Huỷ khi mưa" },
+      { id: "S06", name: "Kịch rối cho bé", times: "09:30 · 13:30 · 16:00", dur: "20p", zone: "FAIRY_LAND", zoneName: "Fairy Land", indoor: true, note: "Trong nhà · Hợp bé nhỏ, tránh nắng mưa" }
+    ];
+
     const TRAVEL_MIN = {
       GATE:              { GATE: 0, WORLD_GARDEN: 5, KINGS_GARDEN: 12, FAIRY_LAND: 15, SEA_WORLD: 8, FESTIVE_HILL: 15, TROPICAL_PARADISE: 20 },
       WORLD_GARDEN:      { GATE: 5, WORLD_GARDEN: 0, KINGS_GARDEN: 10, FAIRY_LAND: 12, SEA_WORLD: 6, FESTIVE_HILL: 12, TROPICAL_PARADISE: 18 },
@@ -1038,9 +1114,15 @@
     const printBtn = document.getElementById("printBtn");
     const sideCopyBtn = document.getElementById("sideCopyBtn");
     const sidePrintBtn = document.getElementById("sidePrintBtn");
-    const exploreSection = document.getElementById("exploreSection");
+    const dateCardsRow = document.getElementById("dateCardsRow");
+    const weatherSourceBadge = document.getElementById("weatherSourceBadge");
+    const selectedDateNote = document.getElementById("selectedDateNote");
+    const weather7dGrid = document.getElementById("weather7dGrid");
+    const showsGrid = document.getElementById("showsGrid");
     const zonesGrid = document.getElementById("zonesGrid");
+    const resultEmptyState = document.getElementById("resultEmptyState");
     const resultsWorkspace = document.getElementById("resultsWorkspace");
+    const resultTabBadge = document.getElementById("resultTabBadge");
     const timelineRoot = document.getElementById("timelineRoot");
     const routeSummary = document.getElementById("routeSummary");
     const parkMapSvg = document.getElementById("parkMapSvg");
@@ -1051,6 +1133,10 @@
     const statusText = document.getElementById("statusText");
 
     let currentData = null;
+    let forecastData = null;
+    let selectedDayIdx = 0;
+    let activeTab = "explore";
+    let showFilter = "all";
 
     function esc(v) {
       return String(v ?? "")
@@ -1092,6 +1178,156 @@
       sideCopyBtn.disabled = !canCopy;
       printBtn.disabled = !canPrint;
       sidePrintBtn.disabled = !canPrint;
+    }
+
+    function switchTab(tabName) {
+      activeTab = tabName;
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        const isActive = btn.dataset.tab === tabName;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      const panelMap = { explore: "panelExplore", tickets: "panelTickets", shows: "panelShows", result: "panelResult" };
+      Object.entries(panelMap).forEach(([key, pid]) => {
+        document.getElementById(pid).classList.toggle("hidden", key !== tabName);
+      });
+      document.querySelectorAll(".top-nav a[data-jump-tab]").forEach((a) => {
+        a.classList.toggle("active", a.dataset.jumpTab === tabName);
+      });
+    }
+
+    function weatherIconSvg(kind) {
+      if (kind === "sun" || kind === "partly") {
+        return `<svg class="w-ico sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path></svg>`;
+      }
+      if (kind === "rain_heavy") {
+        return `<svg class="w-ico heavy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M8 19v2M12 19v2M16 19v2M10 15v2M14 15v2"></path></svg>`;
+      }
+      return `<svg class="w-ico rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M9 17v2M15 17v2"></path></svg>`;
+    }
+
+    function getSelectedDay() {
+      const days = (forecastData && forecastData.days) || [];
+      return days[selectedDayIdx] || days[0] || null;
+    }
+
+    function syncWindowWithSelectedDay(day) {
+      if (!day) return;
+      const sel = document.getElementById("bWindow");
+      const curAfter16 = sel.value.startsWith("16:00");
+      if (day.scenario_id === "ALL_DAY_RAIN") {
+        sel.value = "09:00 đến 18:00|, dự báo mưa cả ngày";
+      } else if (day.scenario_id === "AFTERNOON_RAIN") {
+        sel.value = "09:00 đến 18:00|, dự báo mưa chiều 14:00-16:00";
+      } else if (day.scenario_id === "EVENING_RAIN") {
+        sel.value = "16:00 đến 20:00|, dự báo mưa tối 18:30-20:00";
+      } else {
+        sel.value = curAfter16 ? "16:00 đến 20:00|" : "09:00 đến 18:00|";
+      }
+      refreshEstimate();
+    }
+
+    function renderWeatherViews() {
+      const days = (forecastData && forecastData.days) || [];
+      if (!days.length) return;
+      weatherSourceBadge.textContent = forecastData.source_label || "Dự báo 7 ngày";
+      const tabSub = document.getElementById("weatherTabSub");
+      if (tabSub) tabSub.textContent = `${forecastData.source_label} · Chọn một ngày để đồng bộ tự động vào lịch trình.`;
+
+      dateCardsRow.innerHTML = days.map((d, idx) => {
+        const isActive = idx === selectedDayIdx;
+        const tagCls = d.scenario_id === "ALL_DAY_RAIN" ? "heavy" : (d.scenario_id === "SUNNY" ? "" : "rain");
+        return `
+          <button type="button" class="date-card ${isActive ? "active" : ""}" data-day-idx="${idx}" role="option" aria-selected="${isActive ? "true" : "false"}">
+            <div class="dc-top">
+              <span class="dc-rel">${esc(d.rel_label)}</span>
+              <span class="dc-date nums">${esc(d.display_date)}</span>
+            </div>
+            <div class="dc-mid">
+              ${weatherIconSvg(d.icon)}
+              <span class="dc-temp nums">${d.temp_min}°–${d.temp_max}°</span>
+            </div>
+            <span class="dc-tag ${tagCls}">${esc(d.short_label)}</span>
+          </button>
+        `;
+      }).join("");
+
+      const activeDay = getSelectedDay();
+      if (activeDay) {
+        selectedDateNote.innerHTML = `
+          <span>Đang chọn: <strong>${esc(activeDay.rel_label)} (${esc(activeDay.weekday_vi)} ${esc(activeDay.full_date)})</strong> · ${esc(activeDay.weather_label)} (${activeDay.temp_min}°–${activeDay.temp_max}°C · mưa ${activeDay.rain_prob}%)</span>
+          <span>${esc(activeDay.advice)}</span>
+        `;
+      }
+
+      weather7dGrid.innerHTML = days.map((d, idx) => {
+        const isActive = idx === selectedDayIdx;
+        const badgeCls = d.scenario_id === "ALL_DAY_RAIN" ? "heavy" : (d.scenario_id === "SUNNY" ? "" : "rain");
+        return `
+          <article class="wd-card ${isActive ? "active" : ""}">
+            <div class="wd-head">
+              <div>
+                <div class="wd-title">${esc(d.rel_label)} · ${esc(d.weekday_vi)}</div>
+                <div class="wd-sub nums">${esc(d.full_date)}</div>
+              </div>
+              ${weatherIconSvg(d.icon)}
+            </div>
+            <div class="wd-temp-row">
+              <span class="wd-temp nums">${d.temp_min}° – ${d.temp_max}°C</span>
+              <span class="wd-prob nums">Khả năng mưa: ${d.rain_prob}%</span>
+            </div>
+            <div><span class="dc-tag ${badgeCls}">${esc(d.weather_label)}</span></div>
+            <p class="wd-advice">${esc(d.advice)}</p>
+            <button type="button" class="btn-ghost pick-day-detail-btn" data-day-idx="${idx}" style="width:100%;justify-content:center;">
+              ${isActive ? "Đang chọn ngày này" : "Chọn ngày này lập lịch"}
+            </button>
+          </article>
+        `;
+      }).join("");
+
+      dateCardsRow.querySelectorAll(".date-card").forEach((btn) => {
+        btn.addEventListener("click", () => selectVisitDay(Number(btn.dataset.dayIdx), false));
+      });
+      weather7dGrid.querySelectorAll(".pick-day-detail-btn").forEach((btn) => {
+        btn.addEventListener("click", () => selectVisitDay(Number(btn.dataset.dayIdx), true));
+      });
+    }
+
+    function selectVisitDay(idx, scrollToDock) {
+      selectedDayIdx = idx;
+      const day = getSelectedDay();
+      syncWindowWithSelectedDay(day);
+      renderWeatherViews();
+      if (scrollToDock) {
+        if (!inputEl.value.trim()) applyBuilderToPrompt();
+        document.getElementById("conciergeDock").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    async function loadWeather7d() {
+      try {
+        const res = await fetch("/api/weather-7d");
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        forecastData = await res.json();
+      } catch {
+        const base = new Date();
+        const wdNames = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
+        const fallbackDays = Array.from({ length: 7 }, (_, i) => {
+          const dt = new Date(base.getTime() + i * 86400000);
+          const dd = String(dt.getDate()).padStart(2, "0");
+          const mm = String(dt.getMonth() + 1).padStart(2, "0");
+          const yyyy = dt.getFullYear();
+          const rel = i === 0 ? "Hôm nay" : (i === 1 ? "Ngày mai" : (i === 2 ? "Ngày kia" : wdNames[dt.getDay()]));
+          return {
+            date: `${yyyy}-${mm}-${dd}`, display_date: `${dd}/${mm}`, full_date: `${dd}/${mm}/${yyyy}`,
+            weekday_vi: wdNames[dt.getDay()], rel_label: rel, temp_min: 25, temp_max: 31, rain_prob: 15,
+            icon: "sun", scenario_id: "SUNNY", weather_label: "Nắng ráo", short_label: "Nắng ráo",
+            advice: "Thuận lợi vui chơi cả trong nhà và ngoài trời.", prompt_hint: ""
+          };
+        });
+        forecastData = { source: "offline_sample", source_label: "Dự báo tham khảo (ngoại tuyến)", days: fallbackDays };
+      }
+      renderWeatherViews();
     }
 
     function renderExploreGrid() {
@@ -1136,19 +1372,43 @@
       }).join("");
 
       zonesGrid.querySelectorAll(".add-zone-btn").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const name = btn.getAttribute("data-zone-name");
-          const base = inputEl.value.trim();
-          if (!base) {
-            inputEl.value = `Gia đình 2 người lớn, 1 bé 6 tuổi cao 115cm, đi từ 09:00 đến 18:00, ngân sách 3.500.000đ, thích khu ${name}.`;
-          } else if (!base.toLowerCase().includes(name.toLowerCase())) {
-            inputEl.value = `${base.replace(/[.]+$/, "")}, thêm khu ${name}.`;
-          }
-          charCount.textContent = `${inputEl.value.length} / 2000`;
-          inputEl.focus();
-          inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
+        btn.addEventListener("click", () => appendHighlightToPrompt(`khu ${btn.dataset.zoneName}`));
       });
+    }
+
+    function renderShowsGrid() {
+      const list = SHOWS_DATA.filter((s) => showFilter === "all" || (showFilter === "indoor" ? s.indoor : !s.indoor));
+      showsGrid.innerHTML = list.map((s) => `
+        <article class="show-card">
+          <div class="show-top">
+            <span class="show-time nums">${esc(s.times)} (${esc(s.dur)})</span>
+            <span class="tag ${s.indoor ? "indoor" : "outdoor"}">${s.indoor ? "Trong nhà" : "Ngoài trời"}</span>
+          </div>
+          <h4 class="show-name">${esc(s.name)}</h4>
+          <p class="show-meta">${esc(s.zoneName)} · ${esc(s.note)}</p>
+          <div>
+            <button type="button" class="btn-ghost add-show-btn" data-show-name="${esc(s.name)}" style="padding:5px 11px;font-size:0.79rem;">+ Thêm show vào lịch</button>
+          </div>
+        </article>
+      `).join("");
+
+      showsGrid.querySelectorAll(".add-show-btn").forEach((btn) => {
+        btn.addEventListener("click", () => appendHighlightToPrompt(`xem ${btn.dataset.showName}`));
+      });
+    }
+
+    function appendHighlightToPrompt(phrase) {
+      const base = inputEl.value.trim();
+      const day = getSelectedDay();
+      const dayPrefix = day ? `đi ${day.rel_label} (${day.full_date}), ` : "";
+      if (!base) {
+        inputEl.value = `Gia đình 2 người lớn, 1 bé 6 tuổi cao 115cm, ${dayPrefix}từ 09:00 đến 18:00, ngân sách 3.500.000đ, muốn ${phrase}.`;
+      } else if (!base.toLowerCase().includes(phrase.toLowerCase())) {
+        inputEl.value = `${base.replace(/[.]+$/, "")}, thêm ${phrase}.`;
+      }
+      charCount.textContent = `${inputEl.value.length} / 2000`;
+      inputEl.focus();
+      inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function renderParkMap(items, activeZone) {
@@ -1234,12 +1494,15 @@
 
     function renderCostCard(parsed) {
       const cost = parsed && parsed.cost ? parsed.cost : null;
+      const day = getSelectedDay();
+      const dayTxt = day ? `${day.rel_label} (${day.full_date})` : "Hôm nay";
       if (!cost) {
         costRoot.innerHTML = `
           <div class="receipt-hero">
             <div><div class="sec-sub">Tổng chi phí dự kiến</div><div class="receipt-total nums">—</div></div>
           </div>
           <div class="receipt-rows">
+            <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
             <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>Chưa xếp lịch</strong></div>
             <div class="receipt-row"><span>Vé cổng</span><strong class="nums">—</strong></div>
             <div class="receipt-row"><span>Dịch vụ lẻ</span><strong class="nums">—</strong></div>
@@ -1257,6 +1520,7 @@
           </div>
         </div>
         <div class="receipt-rows">
+          <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
           <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>${esc(ticketLabel)}</strong></div>
           <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">${fmtVnd(cost.gate_vnd)}</strong></div>
           <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">${fmtVnd(cost.extra_vnd)}</strong></div>
@@ -1294,21 +1558,26 @@
       `;
     }
 
-    function showExploreMode() {
+    function showEmptyResultState() {
       currentData = null;
       setActionButtons(false, false);
-      exploreSection.classList.remove("hidden");
+      resultEmptyState.classList.remove("hidden");
       resultsWorkspace.classList.add("hidden");
+      resultTabBadge.textContent = "Chưa tạo";
+      resultTabBadge.classList.remove("ready");
     }
 
-    function showWorkspaceMode() {
-      exploreSection.classList.add("hidden");
+    function openResultWorkspace() {
+      switchTab("result");
+      resultEmptyState.classList.add("hidden");
       resultsWorkspace.classList.remove("hidden");
     }
 
     function renderLoading() {
-      showWorkspaceMode();
+      openResultWorkspace();
       setActionButtons(false, false);
+      resultTabBadge.textContent = "Đang xử lý...";
+      resultTabBadge.classList.remove("ready");
       routeSummary.textContent = "Đang sắp xếp...";
       zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.";
       renderParkMap([], null);
@@ -1316,15 +1585,17 @@
       renderTrace(null);
       timelineRoot.innerHTML = `
         <div class="banner info">
-          <span>Đang đối chiếu giờ mở cửa, giới hạn chiều cao &amp; chọn lộ trình phù hợp cho gia đình...</span>
+          <span>Đang đối chiếu giờ mở cửa, thời tiết, giới hạn chiều cao &amp; chọn lộ trình phù hợp cho gia đình...</span>
         </div>
       `;
     }
 
     function renderError(msg, canRetry) {
-      showWorkspaceMode();
+      openResultWorkspace();
       currentData = null;
       setActionButtons(false, false);
+      resultTabBadge.textContent = "Có lỗi";
+      resultTabBadge.classList.remove("ready");
       routeSummary.textContent = "Chưa hoàn tất";
       timelineRoot.innerHTML = `
         <div class="banner danger"><span>Không thể hoàn tất yêu cầu: ${esc(msg)}</span></div>
@@ -1336,22 +1607,27 @@
     }
 
     function renderResult(data) {
-      showWorkspaceMode();
+      openResultWorkspace();
       currentData = data;
       const p = data.parsed || {};
       renderTrace(data.trace);
       renderCostCard(p);
 
+      const day = getSelectedDay();
+      const dayTag = day ? `${day.rel_label} (${day.full_date})` : "Hôm nay";
+
       if (p.kind === "schedule") {
         setActionButtons(true, true);
         const items = p.items || [];
+        resultTabBadge.textContent = `${items.length} điểm`;
+        resultTabBadge.classList.add("ready");
         routeSummary.textContent = `${items.length} điểm dừng · ${(p.cost && fmtVnd(p.cost.total_vnd)) || ""}`;
         renderParkMap(items, null);
 
         const bannerCls = p.is_mock ? "warn" : "ok";
         const bannerTitle = p.is_mock
-          ? "Lịch trình tham khảo nhanh (chế độ dự phòng)"
-          : "Lịch trình phù hợp · Đã đối chiếu giờ mở cửa, chiều cao & chi phí";
+          ? `Lịch trình tham khảo nhanh · ${esc(dayTag)}`
+          : `Lịch trình phù hợp (${esc(dayTag)}) · Đã đối chiếu giờ mở cửa, chiều cao & chi phí`;
 
         let prevZone = "GATE";
         let stopsHtml = `
@@ -1432,6 +1708,8 @@
       setActionButtons(true, false);
       renderParkMap([], null);
       zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ để xem thời gian di chuyển từ cổng.";
+      resultTabBadge.textContent = p.kind === "blocked" ? "Từ chối" : "Cần bổ sung";
+      resultTabBadge.classList.remove("ready");
       routeSummary.textContent = p.kind === "blocked" ? "Không hỗ trợ yêu cầu" : "Cần thêm thông tin";
       const metaMap = {
         blocked: { cls: "danger", title: "Không thể đáp ứng yêu cầu vượt quy định an toàn hoặc ngoài phạm vi hỗ trợ" },
@@ -1456,7 +1734,7 @@
       submitBtn.disabled = true;
       setServerState("busy", "Đang lập lịch...");
       renderLoading();
-      resultsWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("mainTabs").scrollIntoView({ behavior: "smooth", block: "start" });
       try {
         const res = await fetch("/api/plan", {
           method: "POST",
@@ -1479,6 +1757,20 @@
       }
     }
 
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    });
+    document.querySelectorAll(".top-nav a[data-jump-tab]").forEach((a) => {
+      a.addEventListener("click", () => switchTab(a.dataset.jumpTab));
+    });
+    document.querySelectorAll("#showFilterStrip .filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        showFilter = btn.dataset.showFilter;
+        document.querySelectorAll("#showFilterStrip .filter-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        renderShowsGrid();
+      });
+    });
+
     document.querySelectorAll(".preset-pill").forEach((btn) => {
       btn.addEventListener("click", () => {
         inputEl.value = PRESETS[btn.dataset.preset] || "";
@@ -1499,11 +1791,7 @@
     const estTicketType = document.getElementById("estTicketType");
     const estGateTotal = document.getElementById("estGateTotal");
 
-    const guestState = {
-      adults: 2,
-      children: [{ age: 6, height: 115 }],
-      seniors: []
-    };
+    const guestState = { adults: 2, children: [{ age: 6, height: 115 }], seniors: [] };
 
     function getChildTier(heightCm) {
       const h = Number(heightCm || 115);
@@ -1601,6 +1889,8 @@
     function applyBuilderToPrompt() {
       const budget = Math.max(500000, Number(document.getElementById("bBudget").value || 3500000));
       const [win, weather] = document.getElementById("bWindow").value.split("|");
+      const day = getSelectedDay();
+      const dayPart = day ? `đi ${day.rel_label} (${day.full_date}) ` : "đi ";
       const groupParts = [`${guestState.adults} người lớn`];
       if (guestState.seniors.length === 1) {
         groupParts.push(`1 người cao tuổi ${guestState.seniors[0]} tuổi`);
@@ -1612,7 +1902,7 @@
         const chText = guestState.children.map((ch) => `bé ${ch.age} tuổi cao ${ch.height}cm`).join(" và ");
         groupParts.push(chText);
       }
-      inputEl.value = `Gia đình ${groupParts.join(", ")}, đi từ ${win}, ngân sách ${budget.toLocaleString("vi-VN")}đ${weather || ""}.`;
+      inputEl.value = `Gia đình ${groupParts.join(", ")}, ${dayPart}từ ${win}, ngân sách ${budget.toLocaleString("vi-VN")}đ${weather || ""}.`;
       charCount.textContent = `${inputEl.value.length} / 2000`;
       guestPopover.classList.add("hidden");
       guestTrigger.setAttribute("aria-expanded", "false");
@@ -1660,38 +1950,33 @@
     document.getElementById("popApplyBtn").addEventListener("click", applyBuilderToPrompt);
     updateGuestUI();
 
-    inputEl.addEventListener("input", () => {
-      charCount.textContent = `${inputEl.value.length} / 2000`;
-    });
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      submitRequest();
-    });
-
+    inputEl.addEventListener("input", () => { charCount.textContent = `${inputEl.value.length} / 2000`; });
+    form.addEventListener("submit", (e) => { e.preventDefault(); submitRequest(); });
     inputEl.addEventListener("keydown", (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-        e.preventDefault();
-        submitRequest();
-      }
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); submitRequest(); }
     });
-
     clearBtn.addEventListener("click", () => {
       inputEl.value = "";
       charCount.textContent = "0 / 2000";
-      showExploreMode();
+      showEmptyResultState();
+      switchTab("explore");
       inputEl.focus();
     });
-
     document.getElementById("backExploreBtn").addEventListener("click", () => {
-      showExploreMode();
-      exploreSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      switchTab("explore");
+      document.getElementById("mainTabs").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    document.getElementById("goDockBtn").addEventListener("click", () => {
+      document.getElementById("conciergeDock").scrollIntoView({ behavior: "smooth", block: "start" });
+      inputEl.focus();
     });
 
     async function doCopy(triggerBtnLabel) {
       if (!currentData || !currentData.output) return;
+      const day = getSelectedDay();
+      const dayHeader = day ? `Ngày dự kiến: ${day.rel_label} (${day.full_date})\n` : "";
       try {
-        await navigator.clipboard.writeText(currentData.output);
+        await navigator.clipboard.writeText(dayHeader + currentData.output);
         if (triggerBtnLabel) {
           const old = triggerBtnLabel.textContent;
           triggerBtnLabel.textContent = "Đã sao chép!";
@@ -1701,7 +1986,6 @@
         if (triggerBtnLabel) triggerBtnLabel.textContent = "Chặn clipboard";
       }
     }
-
     copyBtn.addEventListener("click", () => doCopy(copyBtnText));
     sideCopyBtn.addEventListener("click", () => doCopy(sideCopyBtn));
     printBtn.addEventListener("click", () => window.print());
@@ -1718,8 +2002,11 @@
     }
 
     renderExploreGrid();
-    showExploreMode();
+    renderShowsGrid();
+    showEmptyResultState();
+    switchTab("explore");
     checkHealth();
+    loadWeather7d();
   </script>
 </body>
 </html>

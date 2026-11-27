@@ -228,6 +228,11 @@ class TestTrackC1VinWonders(unittest.TestCase):
         parsed_safe = request_parser.parse_request("ngân sách 3 triệu 2 người lớn, 1 bé cao 115cm")
         self.assertEqual(parsed_safe["ngan_sach_vnd"], 3_000_000)
 
+        parsed_with_date = request_parser.parse_request("Gia đình 2 người lớn, 1 bé cao 115cm đi ngày 29/11/2026 từ 09:00 đến 18:00")
+        self.assertIsNone(parsed_with_date["ngan_sach_vnd"])
+        parsed_dot_date = request_parser.parse_request("Đi ngày 28.11.2026, 2 người lớn, 1 bé cao 115cm, ngân sách 3.500.000đ")
+        self.assertEqual(parsed_dot_date["ngan_sach_vnd"], 3_500_000)
+
 
 if __name__ == "__main__":
     unittest.main()

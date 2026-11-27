@@ -172,6 +172,10 @@ class PlanRequestHandler(BaseHTTPRequestHandler):
                 return
             self._send_bytes(200, mime, target.read_bytes(), cache="public, max-age=3600")
             return
+        if path == "/api/weather-7d":
+            import weather_forecast
+            self._send_json(200, weather_forecast.get_7day_forecast())
+            return
         if path == "/api/health":
             self._send_json(200, {"ok": True, "app": "FourAE Track C1", "park": "VinWonders Nha Trang"})
             return
