@@ -178,7 +178,7 @@ def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
     return {
         "location": "Đảo Hòn Tre, Nha Trang",
         "source": "open-meteo",
-        "source_label": "Dự báo Open-Meteo · Đảo Hòn Tre, Nha Trang",
+        "source_label": "Dự báo Open-Meteo (Đảo Hòn Tre, Nha Trang)",
         "days": days,
     }
 
