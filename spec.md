@@ -154,6 +154,8 @@ flowchart TD
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
 | 27/11 18:50 | Bổ sung `ma_tran_di_chuyen` trong `tools.py`; nâng cấp `context` (giá vé đã tính bằng code, dịch vụ lẻ, danh sách bảo trì/ngoài vé, ma trận di chuyển), kiểm `tong_tien_vnd` gồm dịch vụ lẻ ở `pre-check`, in khối `ghi_chu` ở `_format_success`, và tách `request_parser.py` gọn `<= 350` dòng (`agent.py`). | Sửa 9 câu trượt ở Lượt 1 `eval/run-1.csv` (16/25 = 64%): `B01`, `B03`, `B06`, `B10`, `B17`, `B18`, `B19`, `B22`, `B23` (lỗi thiếu giá vé/dịch vụ lẻ/ma trận di chuyển trong `context`, lọt kiểm ngân sách cộng phụ phí ở `B23` và bỏ sót show chỉ định ở `B18`/`B19`). |
+| 27/11 19:30 | Nâng cấp `codebase/app.py` (322 dòng <= 350 dòng, phục vụ Web UI + ảnh tĩnh `/assets/*`, giữ `--cli`, không sửa `agent.py`/`tools.py`/`run.py`), dựng giao diện thương mại `codebase/web_ui.html` (Hero + thanh cấu hình nổi + lưới 6 phân khu + Timeline có ảnh + Bản đồ đảo Hòn Tre `codebase/assets/*.jpg` + phiếu chi phí) và `tests/test_web_app.py`. | Phục vụ demo live CP4, quay video dự phòng và cho người dùng ngoài nhóm thử nghiệm trực quan ở `validation/log.md` (giữ nguyên toàn bộ lõi & kết quả eval 23/25). |
+| 27/11 23:15 | Hoàn thiện câu từ thương mại cho `codebase/web_ui.html` (bộ chọn đoàn khách có tuổi/chiều cao từng bé & người cao tuổi, bỏ dấu vết từ demo/dev) và gắn link video demo dự phòng CP4 (`CP4-FourAE-L3A-C1-Demo-Du-Phong.mp4`) vào `README.md`. | Đáp ứng hạng mục 7 trước mốc nộp CP4 14:30 Thứ Bảy 28/11, đồng thời sẵn sàng cho khách/giám khảo thử nghiệm trực tiếp. |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

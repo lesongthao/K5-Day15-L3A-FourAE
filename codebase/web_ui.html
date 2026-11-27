@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VinWonders Nha Trang · Lập Lịch Trình Gia Đình FourAE</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='10' fill='%230e4d5c'/%3E%3Ccircle cx='18' cy='15' r='7.5' stroke='%23f6d28b' stroke-width='1.8' fill='none'/%3E%3Ccircle cx='18' cy='15' r='2.5' fill='%23f6d28b'/%3E%3Cpath d='M6 25c3-2 6-2 9 0s6 2 9 0 6-2 6-2' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --surface-soft: #f5efe6;
+      --surface-tint: #eef5f6;
+      --border: #e6ddd0;
+      --border-strong: #d5c8b6;
+      --ink: #1b2428;
+      --muted: #526067;
+      --primary: #0e4d5c;
+      --primary-deep: #093844;
+      --primary-soft: #e6f2f4;
+      --accent: #d96b27;
+      --accent-hover: #b85518;
+      --gold: #c6923a;
+      --gold-light: #f6d28b;
+      --emerald: #0b6e4f;
+      --emerald-bg: #eaf7f2;
+      --emerald-border: #8dd3ba;
+      --amber: #9a5410;
+      --amber-bg: #fef7e8;
+      --amber-border: #f0cb82;
+      --rose: #a61b3a;
+      --rose-bg: #fdf1f4;
+      --rose-border: #f2b4c2;
+      --radius: 16px;
+      --shadow-sm: 0 2px 6px rgba(27, 36, 40, 0.05);
+      --shadow-md: 0 12px 30px rgba(27, 36, 40, 0.08);
+      --shadow-lg: 0 24px 52px rgba(14, 42, 50, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      background-color: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='80' viewBox='0 0 120 80'%3E%3Cpath d='M0 40c15-10 30-10 45 0s30 10 45 0 30-10 30-10M0 80c15-10 30-10 45 0s30 10 45 0 30-10 30-10M0 0c15 10 30 10 45 0s30-10 45 0 30 10 30 10' fill='none' stroke='%230e4d5c' stroke-opacity='0.048' stroke-width='1.15'/%3E%3Cpath d='M60 16l4 4-4 4-4-4zM0 56l4 4-4 4-4-4zM120 56l4 4-4 4-4-4z' fill='none' stroke='%23c6923a' stroke-opacity='0.09' stroke-width='1'/%3E%3Ccircle cx='30' cy='20' r='1.3' fill='%23c6923a' fill-opacity='0.11'/%3E%3Ccircle cx='90' cy='60' r='1.3' fill='%230e4d5c' fill-opacity='0.08'/%3E%3C/svg%3E");
+      background-size: 120px 80px;
+    }
+
+    .serif { font-family: "Playfair Display", Georgia, "Times New Roman", serif; }
+    .nums { font-variant-numeric: tabular-nums; }
+    svg.ico {
+      width: 17px; height: 17px; stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0;
+    }
+
+    button {
+      font-family: inherit; cursor: pointer; border-radius: 10px;
+      transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+    }
+    button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible, [tabindex="0"]:focus-visible {
+      outline: 3px solid var(--accent); outline-offset: 2px;
+    }
+
+    /* Editorial Hospitality Header */
+    .topbar {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(250, 247, 242, 0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-inner {
+      max-width: 1280px; margin: 0 auto; padding: 12px 24px;
+      display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 13px; text-decoration: none; color: inherit; }
+    .crest {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: var(--primary);
+      border: 1px solid rgba(198, 146, 58, 0.45);
+      display: grid; place-items: center;
+      box-shadow: 0 4px 12px rgba(14, 77, 92, 0.20);
+      flex-shrink: 0;
+    }
+    .brand-title {
+      margin: 0; font-size: 1.18rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep);
+      line-height: 1.15;
+    }
+    .brand-title em { font-style: italic; color: var(--accent); font-weight: 600; }
+    .brand-sub {
+      margin: 2px 0 0; font-size: 0.77rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em;
+    }
+    .top-nav { display: flex; align-items: center; gap: 20px; }
+    @media (max-width: 900px) { .top-nav { display: none; } }
+    .top-nav a {
+      font-size: 0.86rem; font-weight: 600; color: var(--muted); text-decoration: none;
+      padding: 4px 2px; border-bottom: 2px solid transparent;
+      transition: color 0.16s ease, border-color 0.16s ease;
+    }
+    .top-nav a:hover { color: var(--primary); border-bottom-color: var(--gold); }
+
+    .top-actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+    .status-inline {
+      display: inline-flex; align-items: center; gap: 7px; padding-right: 6px;
+      font-size: 0.82rem; font-weight: 600; color: var(--muted);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); }
+    .dot.busy { background: var(--amber); }
+    .dot.err { background: var(--rose); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px;
+      font-size: 0.83rem; font-weight: 600; background: var(--surface);
+      border: 1px solid var(--border-strong); color: var(--ink);
+    }
+    .btn-ghost:hover:not(:disabled) { background: var(--surface-soft); border-color: var(--primary); color: var(--primary-deep); }
+    .btn-ghost:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* Asymmetric Editorial Resort Hero */
+    .hero {
+      position: relative; min-height: 418px; overflow: hidden;
+      display: flex; align-items: flex-end;
+      background: #0a2d36;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 42%;
+    }
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(96deg, rgba(9, 34, 42, 0.88) 0%, rgba(14, 56, 67, 0.62) 48%, rgba(14, 77, 92, 0.12) 100%),
+        linear-gradient(180deg, rgba(9, 34, 42, 0.14) 0%, rgba(9, 34, 42, 0.56) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; max-width: 1280px; width: 100%; margin: 0 auto;
+      padding: 48px 24px 96px; color: #ffffff;
+    }
+    .hero-location {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 12px;
+    }
+    .hero-location::before {
+      content: ""; width: 28px; height: 1.5px; background: var(--gold-light);
+    }
+    .hero h2 {
+      margin: 0; max-width: 680px;
+      font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+      font-weight: 700; line-height: 1.15; letter-spacing: -0.015em;
+    }
+    .hero h2 em { font-style: italic; color: var(--gold-light); font-weight: 600; }
+    .hero-sub {
+      margin: 13px 0 22px; max-width: 580px; font-size: 0.96rem;
+      color: rgba(250, 247, 242, 0.90); font-weight: 400;
+    }
+    .hero-metrics {
+      display: inline-flex; flex-wrap: wrap; align-items: center; gap: 18px;
+      padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.24);
+      font-size: 0.85rem; color: rgba(250, 247, 242, 0.92);
+    }
+    .hero-metric { display: inline-flex; align-items: baseline; gap: 6px; }
+    .hero-metric strong { font-size: 1.05rem; font-weight: 700; color: #ffffff; }
+    .hero-sep { width: 1px; height: 14px; background: rgba(255, 255, 255, 0.28); }
+    @media (max-width: 560px) { .hero-sep { display: none; } }
+
+    /* Seamless Floating Concierge Bar */
+    .shell { max-width: 1280px; margin: 0 auto; padding: 0 24px 54px; }
+    .concierge-dock {
+      position: relative; z-index: 12; margin-top: -66px; margin-bottom: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      border-radius: 20px; padding: 18px 22px 18px;
+      box-shadow: var(--shadow-lg);
+    }
+    .booking-strip {
+      display: grid; grid-template-columns: 1.55fr 1fr 1.35fr auto;
+      border: 1px solid var(--border); border-radius: 13px; overflow: visible;
+      background: var(--surface); margin-bottom: 14px;
+    }
+    @media (max-width: 960px) {
+      .booking-strip { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .booking-strip { grid-template-columns: 1fr; }
+    }
+    .booking-cell {
+      position: relative; padding: 8px 13px; border-right: 1px solid var(--border);
+      transition: background-color 0.15s ease;
+    }
+    .booking-cell:hover, .booking-cell:focus-within { background: var(--surface-soft); }
+    @media (max-width: 960px) {
+      .booking-cell { border-bottom: 1px solid var(--border); }
+    }
+    .booking-cell label {
+      display: block; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.03em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+    }
+    .booking-cell input, .booking-cell select {
+      width: 100%; border: none; background: transparent; padding: 2px 0;
+      color: var(--ink); font-family: inherit; font-size: 0.9rem; font-weight: 600;
+    }
+    .guest-trigger {
+      width: 100%; text-align: left; border: none; background: transparent; padding: 2px 0;
+      color: var(--ink); font-size: 0.9rem; font-weight: 600;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .guest-popover {
+      position: absolute; left: 0; top: calc(100% + 10px); z-index: 60;
+      width: min(460px, calc(100vw - 44px));
+      background: var(--surface); border: 1px solid var(--border-strong);
+      border-top: 3px solid var(--primary); border-radius: 16px;
+      padding: 16px; box-shadow: var(--shadow-lg);
+    }
+    .pop-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 10px;
+    }
+    .pop-head strong { font-size: 0.94rem; color: var(--primary-deep); }
+    .pop-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 8px 0;
+    }
+    .pop-title { font-size: 0.89rem; font-weight: 700; color: var(--ink); }
+    .pop-rule { font-size: 0.77rem; color: var(--muted); margin-top: 1px; }
+    .stepper { display: inline-flex; align-items: center; gap: 9px; flex-shrink: 0; }
+    .step-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-strong);
+      background: var(--surface); color: var(--ink); font-size: 1rem; font-weight: 700;
+      display: grid; place-items: center; padding: 0;
+    }
+    .step-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+    .step-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .step-val { min-width: 22px; text-align: center; font-weight: 700; font-size: 0.92rem; }
+    .sub-list {
+      margin: 4px 0 10px; padding: 9px 11px; border-radius: 11px;
+      background: var(--surface-soft); border: 1px solid var(--border);
+      display: grid; gap: 8px;
+    }
+    .sub-person {
+      display: grid; grid-template-columns: auto 1fr 1fr auto; gap: 7px; align-items: center;
+      font-size: 0.8rem;
+    }
+    @media (max-width: 500px) { .sub-person { grid-template-columns: 1fr 1fr; } }
+    .sub-person label { font-size: 0.72rem; color: var(--muted); text-transform: none; letter-spacing: 0; margin: 0; }
+    .sub-person input {
+      width: 100%; border: 1px solid var(--border-strong); border-radius: 7px;
+      background: var(--surface); padding: 4px 7px; font-size: 0.82rem; font-weight: 600;
+    }
+    .tier-badge {
+      padding: 3px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700;
+      background: var(--primary-soft); color: var(--primary-deep); white-space: nowrap;
+    }
+    .tier-badge.free { background: var(--emerald-bg); color: var(--emerald); }
+    .tier-badge.adult { background: var(--amber-bg); color: var(--amber); }
+    .pop-foot {
+      margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+    }
+    .pop-est { font-size: 0.82rem; color: var(--muted); }
+    .pop-est strong { color: var(--primary-deep); font-size: 0.94rem; }
+    .booking-apply-cell {
+      display: flex; align-items: center; justify-content: center; padding: 8px 12px;
+      background: var(--primary-soft); border-radius: 0 12px 12px 0;
+    }
+    .btn-apply-cfg {
+      border: none; background: transparent; color: var(--primary-deep);
+      font-size: 0.84rem; font-weight: 700; padding: 8px 10px; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-apply-cfg:hover { color: var(--accent); }
+
+    .prompt-row {
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: stretch;
+    }
+    @media (max-width: 740px) { .prompt-row { grid-template-columns: 1fr; } }
+    textarea {
+      width: 100%; min-height: 78px; padding: 12px 15px;
+      border: 1.5px solid var(--border-strong); border-radius: 13px;
+      font-family: inherit; font-size: 0.94rem; line-height: 1.5;
+      color: var(--ink); background: var(--bg); resize: vertical;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+    textarea:focus { background: var(--surface); border-color: var(--primary); }
+    .char-count {
+      display: block; text-align: right; margin-top: 4px;
+      font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    }
+    .cta-stack { display: flex; gap: 8px; align-items: flex-start; }
+    .btn-cta {
+      min-width: 186px; height: 54px; padding: 0 24px; border: none;
+      background: var(--accent); color: #ffffff;
+      font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 8px 20px rgba(217, 107, 39, 0.28);
+    }
+    .btn-cta:hover:not(:disabled) { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 10px 24px rgba(184, 85, 24, 0.34); }
+    .btn-cta:disabled { opacity: 0.65; cursor: wait; transform: none; }
+    .btn-clear { height: 54px; padding: 0 15px; }
+
+    .preset-strip {
+      display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px;
+      padding-top: 12px; border-top: 1px dashed var(--border);
+    }
+    .preset-caption { font-size: 0.81rem; font-weight: 600; color: var(--muted); margin-right: 4px; }
+    .preset-pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px;
+      border-radius: 999px; background: var(--surface); border: 1px solid var(--border-strong);
+      color: var(--ink); font-size: 0.81rem; font-weight: 600;
+    }
+    .preset-pill:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep); }
+    .preset-dot-safe { width: 7px; height: 7px; border-radius: 50%; background: var(--rose); }
+
+    /* Explore 6 Park Zones (preserved structure, harmonized palette) */
+    .explore-head {
+      display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+      gap: 10px; margin-bottom: 16px;
+    }
+    .explore-head h3 { margin: 0; font-size: 1.42rem; font-weight: 700; letter-spacing: -0.01em; color: var(--primary-deep); }
+    .explore-head p { margin: 0; font-size: 0.88rem; color: var(--muted); }
+    .zones-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    @media (max-width: 960px) { .zones-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) { .zones-grid { grid-template-columns: 1fr; } }
+
+    .zone-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .zone-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+    .zone-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--surface-soft); }
+    .zone-media img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.35s ease;
+    }
+    .zone-card:hover .zone-media img { transform: scale(1.04); }
+    .zone-walk-badge {
+      position: absolute; left: 12px; top: 12px; padding: 4px 10px; border-radius: 999px;
+      background: rgba(9, 56, 68, 0.84); color: #ffffff;
+      font-size: 0.76rem; font-weight: 600; backdrop-filter: blur(4px);
+    }
+    .zone-body { padding: 15px 16px 16px; flex: 1; display: flex; flex-direction: column; }
+    .zone-body h4 { margin: 0 0 5px; font-size: 1.06rem; font-weight: 700; color: var(--primary-deep); }
+    .zone-body p { margin: 0 0 13px; font-size: 0.86rem; color: var(--muted); flex: 1; }
+    .zone-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .zone-tag {
+      font-size: 0.77rem; font-weight: 600; color: var(--primary);
+      background: var(--primary-soft); padding: 3px 10px; border-radius: 999px;
+    }
+
+    /* Results Split-Screen Workspace */
+    .hidden { display: none !important; }
+    .workspace {
+      display: grid; grid-template-columns: minmax(0, 1.32fr) minmax(350px, 0.88fr);
+      gap: 22px; align-items: start;
+    }
+    @media (max-width: 980px) { .workspace { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    }
+    .card-pad { padding: 19px 21px; }
+    .right-sticky { display: grid; gap: 16px; position: sticky; top: 82px; }
+    @media (max-width: 980px) { .right-sticky { position: static; } }
+
+    .sec-head {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 8px; margin-bottom: 14px;
+    }
+    .sec-title { margin: 0; font-size: 1.12rem; font-weight: 700; color: var(--primary-deep); display: inline-flex; align-items: center; gap: 8px; }
+    .sec-sub { font-size: 0.84rem; color: var(--muted); font-weight: 500; }
+
+    .banner {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;
+      padding: 12px 15px; border-radius: 12px; border: 1px solid; font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .banner.ok { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
+    .banner.warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+    .banner.danger { background: var(--rose-bg); border-color: var(--rose-border); color: var(--rose); }
+    .banner.info { background: var(--primary-soft); border-color: #9ec8d1; color: var(--primary-deep); }
+
+    /* Vertical Wanderlog Timeline */
+    .timeline-wrap { position: relative; padding-left: 28px; display: grid; gap: 0; }
+    .timeline-wrap::before {
+      content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px;
+      width: 2px; background: var(--border-strong);
+    }
+    .gate-start {
+      position: relative; display: flex; align-items: center; gap: 10px;
+      padding: 9px 13px; border-radius: 11px; background: var(--surface-soft);
+      border: 1px solid var(--border); font-size: 0.86rem; font-weight: 600;
+    }
+    .gate-dot {
+      position: absolute; left: -27px; width: 20px; height: 20px; border-radius: 50%;
+      background: var(--primary-deep); color: #ffffff; font-size: 0.72rem; font-weight: 700;
+      display: grid; place-items: center; border: 2px solid var(--surface);
+    }
+    .leg-connector { padding: 8px 0 8px 6px; display: flex; align-items: center; }
+    .leg-pill {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px;
+      border-radius: 999px; background: var(--surface-soft); border: 1px solid var(--border);
+      font-size: 0.8rem; font-weight: 600; color: var(--muted);
+    }
+    .leg-pill.buffer { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
+
+    .stop-card {
+      position: relative; display: grid; grid-template-columns: 118px 1fr; gap: 14px;
+      padding: 13px; border-radius: 14px;
+      border: 1px solid var(--border); border-left: 4px solid var(--zone-color, var(--primary));
+      background: var(--surface); box-shadow: var(--shadow-sm); cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+    }
+    @media (max-width: 560px) { .stop-card { grid-template-columns: 1fr; } }
+    .stop-card:hover, .stop-card.active {
+      transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--primary);
+    }
+    .stop-num {
+      position: absolute; left: -29px; top: 16px; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--zone-color, var(--primary)); color: #ffffff; font-size: 0.8rem; font-weight: 800;
+      display: grid; place-items: center; border: 2px solid var(--surface); box-shadow: var(--shadow-sm);
+    }
+    .stop-thumb {
+      width: 118px; height: 88px; border-radius: 10px; object-fit: cover;
+      background: var(--surface-soft); display: block;
+    }
+    @media (max-width: 560px) { .stop-thumb { width: 100%; height: 150px; } }
+    .stop-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+    .time-chip {
+      display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 8px;
+      background: var(--primary-soft); color: var(--primary-deep); font-weight: 700; font-size: 0.84rem;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px;
+      font-size: 0.76rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface-soft); color: var(--muted);
+    }
+    .tag.indoor { background: var(--primary-soft); border-color: #b7d7de; color: var(--primary-deep); }
+    .tag.outdoor { background: var(--emerald-bg); border-color: var(--emerald-border); color: var(--emerald); }
+    .stop-name { margin: 2px 0 4px; font-size: 0.99rem; font-weight: 700; color: var(--ink); }
+    .stop-reason { margin: 0; font-size: 0.87rem; color: var(--muted); }
+
+    .notes-box {
+      margin-top: 15px; padding: 12px 14px; border-radius: 12px;
+      background: var(--amber-bg); border: 1px solid var(--amber-border); font-size: 0.88rem;
+    }
+    .notes-box ul { margin: 5px 0 0; padding-left: 18px; }
+    .raw-msg {
+      padding: 15px 17px; border-radius: 12px; background: var(--surface-soft);
+      border: 1px solid var(--border); white-space: pre-wrap; font-size: 0.93rem;
+    }
+    .disclaimer-row {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);
+      font-size: 0.82rem; color: var(--muted);
+    }
+
+    /* Interactive Island Map + Cost Receipt + Trace */
+    .map-stage {
+      position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border); background: #c5e8ef;
+    }
+    .map-bg-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .map-overlay-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .zone-node { cursor: pointer; }
+    .zone-info-bar {
+      margin-top: 10px; padding: 10px 12px; border-radius: 10px;
+      background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.84rem;
+    }
+    .map-caption { margin: 8px 0 0; font-size: 0.77rem; color: var(--muted); }
+
+    .receipt-hero {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+      padding-bottom: 12px; border-bottom: 1px solid var(--border); margin-bottom: 11px;
+    }
+    .receipt-total { font-size: 1.75rem; font-weight: 700; color: var(--primary-deep); letter-spacing: -0.02em; }
+    .receipt-badge {
+      padding: 4px 10px; border-radius: 999px; font-size: 0.77rem; font-weight: 700;
+      background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border);
+    }
+    .receipt-rows { display: grid; gap: 8px; font-size: 0.88rem; }
+    .receipt-row { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); }
+    .receipt-row strong { color: var(--ink); font-weight: 600; text-align: right; }
+    .receipt-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+
+    details.trace-box { font-size: 0.84rem; }
+    details.trace-box summary { cursor: pointer; font-weight: 700; color: var(--primary-deep); }
+    .trace-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 10px 0; }
+    .trace-kpi {
+      padding: 7px 6px; border-radius: 9px; background: var(--surface-soft);
+      border: 1px solid var(--border); text-align: center;
+    }
+    .trace-kpi span { display: block; font-size: 0.73rem; color: var(--muted); }
+    .trace-kpi strong { font-size: 0.89rem; }
+    table.trace-tbl { width: 100%; border-collapse: collapse; font-size: 0.79rem; }
+    table.trace-tbl th, table.trace-tbl td {
+      text-align: left; padding: 5px 6px; border-bottom: 1px solid var(--border);
+    }
+
+    @media print {
+      body { background-image: none; background: #ffffff; }
+      .topbar, .hero, .concierge-dock, .explore-section, details.trace-box, .receipt-actions, #backExploreBtn { display: none !important; }
+      .shell { padding: 0; }
+      .workspace { display: block; }
+      .right-sticky { position: static; margin-top: 16px; }
+      .card { box-shadow: none; border-color: #d5c8b6; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#exploreSection">
+        <div class="crest" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="11.5" r="6.5" stroke="#f6d28b" stroke-width="1.65" />
+            <circle cx="14" cy="11.5" r="2.1" fill="#f6d28b" />
+            <path d="M14 5v2.2M14 15.8V18M7.5 11.5h2.2M18.3 11.5h2.2" stroke="#f6d28b" stroke-width="1.3" stroke-linecap="round" />
+            <path d="M4.5 20.5c2.4-1.8 4.8-1.8 7.2 0s4.8 1.8 7.2 0 4.6-1.8 4.6-1.8" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div>
+          <p class="brand-title serif">VinWonders <em>Nha Trang</em></p>
+          <p class="brand-sub">Lịch trình gia đình · Đảo Hòn Tre</p>
+        </div>
+      </a>
+
+      <nav class="top-nav" aria-label="Điều hướng nhanh">
+        <a href="#exploreSection">6 phân khu</a>
+        <a href="#conciergeDock">Lập lịch trình</a>
+      </nav>
+
+      <div class="top-actions">
+        <span class="status-inline" id="statusPill">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Đang kiểm tra...</span>
+        </span>
+        <button type="button" class="btn-ghost" id="copyBtn" disabled>
+          <svg class="ico" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          <span id="copyBtnText">Sao chép lịch</span>
+        </button>
+        <button type="button" class="btn-ghost" id="printBtn" disabled>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>In A4</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img class="hero-bg" src="/assets/hero_vinwonders.jpg" alt="Toàn cảnh VinWonders Nha Trang trên Đảo Hòn Tre nhìn từ vịnh biển" />
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-location">Đảo Hòn Tre · Nha Trang · 09:00 – 20:00</div>
+      <h2 class="serif">Lên lịch một ngày <em>trọn vẹn</em> cho gia đình tại VinWonders</h2>
+      <p class="hero-sub">Ghép sẵn điểm chơi, giờ show, đường đi bộ, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
+      <div class="hero-metrics nums">
+        <span class="hero-metric"><strong>6</strong> phân khu Đảo Hòn Tre</span>
+        <span class="hero-sep" aria-hidden="true"></span>
+        <span class="hero-metric"><strong>100%</strong> theo bảng giá vé niêm yết</span>
+        <span class="hero-sep" aria-hidden="true"></span>
+        <span class="hero-metric"><strong>20 phút</strong> đệm thay đồ công viên nước</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="shell">
+    <section class="concierge-dock" id="conciergeDock" aria-label="Thiết lập chuyến đi gia đình">
+      <div class="booking-strip">
+        <div class="booking-cell" id="guestCell">
+          <label for="guestTrigger">Đoàn khách</label>
+          <button type="button" class="guest-trigger" id="guestTrigger" aria-expanded="false" aria-controls="guestPopover">
+            <span id="guestSummary">2 người lớn · 1 bé</span>
+            <svg class="ico" style="width:15px;height:15px" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="guest-popover hidden" id="guestPopover" role="dialog" aria-label="Chi tiết thành phần đoàn khách">
+            <div class="pop-head">
+              <strong>Thành phần đoàn &amp; giá vé áp dụng</strong>
+              <button type="button" class="btn-ghost" id="closePopoverBtn" style="padding:4px 10px;font-size:0.78rem;">Xong</button>
+            </div>
+            <div class="pop-row">
+              <div>
+                <div class="pop-title">Người lớn</div>
+                <div class="pop-rule">Cao từ 140cm · 1.050.000đ (sau 16h: 700.000đ)</div>
+              </div>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="adults:-1" aria-label="Giảm người lớn">−</button>
+                <span class="step-val nums" id="valAdults">2</span>
+                <button type="button" class="step-btn" data-step="adults:1" aria-label="Tăng người lớn">+</button>
+              </div>
+            </div>
+            <div class="pop-row">
+              <div>
+                <div class="pop-title">Trẻ em</div>
+                <div class="pop-rule">Dưới 100cm miễn phí · 100–139cm giá vé trẻ em</div>
+              </div>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="children:-1" aria-label="Giảm trẻ em">−</button>
+                <span class="step-val nums" id="valChildren">1</span>
+                <button type="button" class="step-btn" data-step="children:1" aria-label="Tăng trẻ em">+</button>
+              </div>
+            </div>
+            <div class="sub-list" id="childrenList"></div>
+            <div class="pop-row">
+              <div>
+                <div class="pop-title">Người cao tuổi</div>
+                <div class="pop-rule">Từ 60 tuổi · 800.000đ (sau 16h: 550.000đ)</div>
+              </div>
+              <div class="stepper">
+                <button type="button" class="step-btn" data-step="seniors:-1" aria-label="Giảm người cao tuổi">−</button>
+                <span class="step-val nums" id="valSeniors">0</span>
+                <button type="button" class="step-btn" data-step="seniors:1" aria-label="Tăng người cao tuổi">+</button>
+              </div>
+            </div>
+            <div class="sub-list hidden" id="seniorsList"></div>
+            <div class="pop-foot" style="flex-wrap:nowrap;">
+              <div class="pop-est">Tạm tính (<span id="estTicketType">Vé tiêu chuẩn</span>): <strong class="nums" id="estGateTotal">2.900.000đ</strong></div>
+              <button type="button" class="btn-ghost" id="popApplyBtn" style="padding:6px 13px;font-size:0.81rem;border-color:var(--primary);color:var(--primary-deep);white-space:nowrap;">Áp dụng</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-cell">
+          <label for="bBudget">Ngân sách dự kiến (VNĐ)</label>
+          <input id="bBudget" type="number" min="500000" step="100000" value="3500000" />
+        </div>
+        <div class="booking-cell">
+          <label for="bWindow">Khung giờ &amp; Thời tiết</label>
+          <select id="bWindow">
+            <option value="09:00 đến 18:00|">09:00–18:00 · Nắng ráo</option>
+            <option value="16:00 đến 20:00|">Sau 16:00–20:00 · Nắng</option>
+            <option value="09:00 đến 18:00|, dự báo mưa chiều 14:00-16:00">09:00–18:00 · Mưa chiều</option>
+            <option value="16:00 đến 20:00|, dự báo mưa tối 18:30-20:00">16:00–20:00 · Mưa tối</option>
+            <option value="09:00 đến 18:00|, dự báo mưa cả ngày">09:00–18:00 · Mưa cả ngày</option>
+          </select>
+        </div>
+        <div class="booking-apply-cell">
+          <button type="button" class="btn-apply-cfg" id="applyBuilderBtn">
+            <svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg>
+            Áp dụng
+          </button>
+        </div>
+      </div>
+
+      <form id="planForm">
+        <div class="prompt-row">
+          <div>
+            <label class="hidden" for="queryInput">Nhập yêu cầu chuyến đi VinWonders Nha Trang</label>
+            <textarea id="queryInput" maxlength="2000" placeholder="Chia sẻ thêm sở thích của gia đình (ví dụ: thích thủy cung, hạn chế đi bộ nhiều, muốn xem Tata Show buổi tối)..."></textarea>
+            <span class="char-count nums" id="charCount">0 / 2000</span>
+          </div>
+          <div class="cta-stack">
+            <button type="submit" class="btn-cta" id="submitBtn">
+              <svg class="ico" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Lập lịch ngay</span>
+            </button>
+            <button type="button" class="btn-ghost btn-clear" id="clearBtn">Xóa</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="preset-strip">
+        <span class="preset-caption">Gợi ý nhanh:</span>
+        <button type="button" class="preset-pill" data-preset="normal">Chiều tối sau 16h · Bánh xe &amp; Tata Show</button>
+        <button type="button" class="preset-pill" data-preset="rain">Đi cùng ông bà · Tránh mưa chiều</button>
+        <button type="button" class="preset-pill" data-preset="fullday">Cả ngày · Thủy cung &amp; Công viên nước</button>
+        <button type="button" class="preset-pill" data-preset="missing">Gợi ý cho nhà có bé 6 tuổi</button>
+      </div>
+    </section>
+
+    <!-- View 1: Explore 6 Park Zones (preserved structure) -->
+    <section class="explore-section" id="exploreSection" aria-label="Khám phá 6 phân khu VinWonders Nha Trang">
+      <div class="explore-head">
+        <h3 class="serif">Khám phá 6 phân khu tại VinWonders Nha Trang</h3>
+        <p>Chọn khu gia đình yêu thích để thêm nhanh vào lịch trình, hoặc chọn gợi ý phía trên.</p>
+      </div>
+      <div class="zones-grid" id="zonesGrid"></div>
+    </section>
+
+    <!-- View 2: Wanderlog Split-Screen Results -->
+    <section class="workspace hidden" id="resultsWorkspace" aria-live="polite" aria-label="Kết quả lịch trình và bản đồ">
+      <div class="card card-pad">
+        <div class="sec-head">
+          <h3 class="sec-title serif">
+            <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            Lịch trình đề xuất trong ngày
+          </h3>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="sec-sub nums" id="routeSummary">Chưa có lộ trình</span>
+            <button type="button" class="btn-ghost" id="backExploreBtn" style="padding:5px 10px;font-size:0.8rem;">Xem 6 phân khu</button>
+          </div>
+        </div>
+        <div id="timelineRoot"></div>
+      </div>
+
+      <aside class="right-sticky" aria-label="Bản đồ đảo Hòn Tre và phiếu chi phí">
+        <section class="card card-pad">
+          <div class="sec-head" style="margin-bottom:10px;">
+            <h3 class="sec-title serif">
+              <svg class="ico" viewBox="0 0 24 24"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>
+              Bản đồ lộ trình Đảo Hòn Tre
+            </h3>
+            <span class="sec-sub">Chọn khu để xem chi tiết</span>
+          </div>
+          <div class="map-stage">
+            <img class="map-bg-img" src="/assets/island_map.jpg" alt="Bản đồ minh họa 6 phân khu khu vui chơi Đảo Hòn Tre" />
+            <svg id="parkMapSvg" class="map-overlay-svg" viewBox="0 0 960 720" role="img" aria-label="Tuyến đường di chuyển giữa các phân khu"></svg>
+          </div>
+          <div class="zone-info-bar" id="zoneInfoBar">
+            Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.
+          </div>
+          <p class="map-caption">Sơ đồ 6 phân khu &amp; thời gian di chuyển ước tính cho gia đình có trẻ nhỏ.</p>
+        </section>
+
+        <section class="card card-pad">
+          <div class="sec-head" style="margin-bottom:10px;">
+            <h3 class="sec-title serif">
+              <svg class="ico" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Chi phí dự kiến
+            </h3>
+            <span class="receipt-badge">Theo bảng giá niêm yết</span>
+          </div>
+          <div id="costRoot"></div>
+          <div class="receipt-actions">
+            <button type="button" class="btn-ghost" id="sideCopyBtn" disabled>Sao chép gửi Zalo</button>
+            <button type="button" class="btn-ghost" id="sidePrintBtn" disabled>In / Lưu PDF</button>
+          </div>
+        </section>
+
+        <section class="card card-pad" style="padding:13px 18px;">
+          <details class="trace-box" id="traceDetails">
+            <summary style="font-size:0.8rem;color:var(--muted);font-weight:600;">Chi tiết xử lý hệ thống</summary>
+            <div id="traceRoot" style="margin-top:8px;color:var(--muted);">Chưa có lượt tra cứu nào.</div>
+          </details>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const ZONES = {
+      GATE: {
+        label: "Ga cáp treo Đảo Hòn Tre", short: "Cổng vào", x: 228, y: 344, color: "#1b2428",
+        img: "/assets/hero_vinwonders.jpg", tag: "Điểm xuất phát",
+        desc: "Cổng cáp treo vượt biển phía đảo, đã gồm trong vé tiêu chuẩn 2 chiều."
+      },
+      WORLD_GARDEN: {
+        label: "The World Garden", short: "World Garden", x: 326, y: 238, color: "#0e4d5c",
+        img: "/assets/zone_world_garden.jpg", tag: "Nhà kính & Bánh xe",
+        desc: "Vườn hoa 5 châu mát mẻ, Bánh xe bầu trời ngắm toàn vịnh Nha Trang (không giới hạn tuổi)."
+      },
+      SEA_WORLD: {
+        label: "Sea World · Thủy cung", short: "Sea World", x: 308, y: 468, color: "#136f82",
+        img: "/assets/zone_sea_world.jpg", tag: "Trong nhà · Tránh mưa",
+        desc: "Đường hầm thủy cung mát mẻ, show Nàng tiên cá & cho cá ăn, phù hợp mọi lứa tuổi và ngày mưa."
+      },
+      TROPICAL_PARADISE: {
+        label: "Tropical Paradise · Công viên nước", short: "Công viên nước", x: 510, y: 422, color: "#0b7a75",
+        img: "/assets/zone_tropical_paradise.jpg", tag: "Mở 10:00–17:30",
+        desc: "Hồ tạo sóng, dòng sông lười cho bé. Lưu ý cộng +20 phút tắm tráng, thay đồ khi rời khu."
+      },
+      KINGS_GARDEN: {
+        label: "King's Garden · Vườn thú", short: "King's Garden", x: 548, y: 236, color: "#0b6e4f",
+        img: "/assets/zone_kings_garden.jpg", tag: "Bé yêu thích",
+        desc: "Hồng hạc, hươu cao cổ, hồ thú thân thiện trẻ nhỏ và show chim buổi chiều."
+      },
+      FESTIVE_HILL: {
+        label: "Festive Hill · Đồi Lễ Hội", short: "Festive Hill", x: 750, y: 222, color: "#c67d22",
+        img: "/assets/zone_festive_hill.jpg", tag: "Quảng trường & Rạp",
+        desc: "Khu vui chơi trên đồi và rạp phim trong nhà, tầm nhìn biển thoáng đẹp."
+      },
+      FAIRY_LAND: {
+        label: "Fairy Land · Lâu đài cổ tích", short: "Fairy Land", x: 768, y: 404, color: "#a61b3a",
+        img: "/assets/zone_fairy_land.jpg", tag: "Tata Show 19:30",
+        desc: "Quảng trường lâu đài cổ tích, khu trò chơi gia đình và sân khấu Tata Show buổi tối."
+      }
+    };
+
+    const TRAVEL_MIN = {
+      GATE:              { GATE: 0, WORLD_GARDEN: 5, KINGS_GARDEN: 12, FAIRY_LAND: 15, SEA_WORLD: 8, FESTIVE_HILL: 15, TROPICAL_PARADISE: 20 },
+      WORLD_GARDEN:      { GATE: 5, WORLD_GARDEN: 0, KINGS_GARDEN: 10, FAIRY_LAND: 12, SEA_WORLD: 6, FESTIVE_HILL: 12, TROPICAL_PARADISE: 18 },
+      KINGS_GARDEN:      { GATE: 12, WORLD_GARDEN: 10, KINGS_GARDEN: 0, FAIRY_LAND: 15, SEA_WORLD: 20, FESTIVE_HILL: 8, TROPICAL_PARADISE: 25 },
+      FAIRY_LAND:        { GATE: 15, WORLD_GARDEN: 12, KINGS_GARDEN: 15, FAIRY_LAND: 0, SEA_WORLD: 15, FESTIVE_HILL: 10, TROPICAL_PARADISE: 15 },
+      SEA_WORLD:         { GATE: 8, WORLD_GARDEN: 6, KINGS_GARDEN: 20, FAIRY_LAND: 15, SEA_WORLD: 0, FESTIVE_HILL: 18, TROPICAL_PARADISE: 12 },
+      FESTIVE_HILL:      { GATE: 15, WORLD_GARDEN: 12, KINGS_GARDEN: 8, FAIRY_LAND: 10, SEA_WORLD: 18, FESTIVE_HILL: 0, TROPICAL_PARADISE: 20 },
+      TROPICAL_PARADISE: { GATE: 20, WORLD_GARDEN: 18, KINGS_GARDEN: 25, FAIRY_LAND: 15, SEA_WORLD: 12, FESTIVE_HILL: 20, TROPICAL_PARADISE: 0 }
+    };
+
+    const PRESETS = {
+      normal: "Gia đình 2 người lớn và 1 bé 7 tuổi cao 118cm, đi buổi chiều tối từ 16:00 đến 20:00, ngân sách 2.500.000đ, muốn đi Bánh xe bầu trời và xem Tata Show.",
+      rain: "Nhà có 2 bố mẹ, ông nội 67 tuổi và 1 bé 5 tuổi cao 108cm đi từ 09:00 đến 18:00, ngân sách 4.000.000đ, dự báo mưa rào buổi chiều 14:00-16:00.",
+      fullday: "Gia đình 2 người lớn và 1 bé 6 tuổi cao 115cm đi từ 09:00 đến 20:00, ngân sách 3.500.000đ, thích Thủy cung, Công viên nước và xem Tata Show buổi tối.",
+      missing: "Gia đình 2 người lớn và 1 bé 6 tuổi muốn đi chơi VinWonders Nha Trang cả ngày, nhờ gợi ý lịch phù hợp."
+    };
+
+    const form = document.getElementById("planForm");
+    const inputEl = document.getElementById("queryInput");
+    const charCount = document.getElementById("charCount");
+    const submitBtn = document.getElementById("submitBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const copyBtn = document.getElementById("copyBtn");
+    const copyBtnText = document.getElementById("copyBtnText");
+    const printBtn = document.getElementById("printBtn");
+    const sideCopyBtn = document.getElementById("sideCopyBtn");
+    const sidePrintBtn = document.getElementById("sidePrintBtn");
+    const exploreSection = document.getElementById("exploreSection");
+    const zonesGrid = document.getElementById("zonesGrid");
+    const resultsWorkspace = document.getElementById("resultsWorkspace");
+    const timelineRoot = document.getElementById("timelineRoot");
+    const routeSummary = document.getElementById("routeSummary");
+    const parkMapSvg = document.getElementById("parkMapSvg");
+    const zoneInfoBar = document.getElementById("zoneInfoBar");
+    const costRoot = document.getElementById("costRoot");
+    const traceRoot = document.getElementById("traceRoot");
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+
+    let currentData = null;
+
+    function esc(v) {
+      return String(v ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function fmtVnd(n) {
+      return Number(n || 0).toLocaleString("vi-VN") + "đ";
+    }
+
+    function toMin(hhmm) {
+      const parts = String(hhmm || "00:00").split(":");
+      return Number(parts[0]) * 60 + Number(parts[1]);
+    }
+
+    function calcLegInfo(prevZone, nextZone) {
+      if (prevZone === nextZone) {
+        return { walk: 5, buffer: 0, total: 5, label: "Cùng phân khu · Di chuyển 5 phút" };
+      }
+      const walk = (TRAVEL_MIN[prevZone] && TRAVEL_MIN[prevZone][nextZone]) || 12;
+      const buffer = (prevZone === "TROPICAL_PARADISE") ? 20 : 0;
+      const total = walk + buffer;
+      const label = buffer > 0
+        ? `Đi bộ ${walk} phút · +${buffer} phút tắm tráng, thay đồ`
+        : `Đi bộ sang khu kế tiếp: khoảng ${walk} phút`;
+      return { walk, buffer, total, label };
+    }
+
+    function setServerState(mode, label) {
+      statusDot.className = "dot" + (mode ? " " + mode : "");
+      statusText.textContent = label;
+    }
+
+    function setActionButtons(canCopy, canPrint) {
+      copyBtn.disabled = !canCopy;
+      sideCopyBtn.disabled = !canCopy;
+      printBtn.disabled = !canPrint;
+      sidePrintBtn.disabled = !canPrint;
+    }
+
+    function renderExploreGrid() {
+      const keys = ["SEA_WORLD", "TROPICAL_PARADISE", "KINGS_GARDEN", "FAIRY_LAND", "WORLD_GARDEN", "FESTIVE_HILL"];
+      zonesGrid.innerHTML = keys.map((k) => {
+        const z = ZONES[k];
+        const walk = TRAVEL_MIN.GATE[k];
+        return `
+          <article class="zone-card">
+            <div class="zone-media">
+              <img src="${esc(z.img)}" alt="Hình ảnh minh họa phân khu ${esc(z.label)} tại VinWonders Nha Trang" />
+              <span class="zone-walk-badge nums">Từ cổng ${walk} phút đi bộ</span>
+            </div>
+            <div class="zone-body">
+              <h4 class="serif">${esc(z.label)}</h4>
+              <p>${esc(z.desc)}</p>
+              <div class="zone-foot">
+                <span class="zone-tag">${esc(z.tag)}</span>
+                <button type="button" class="btn-ghost add-zone-btn" data-zone-name="${esc(z.short)}" style="padding:6px 11px;font-size:0.8rem;">+ Thêm vào lịch</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      zonesGrid.querySelectorAll(".add-zone-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const name = btn.getAttribute("data-zone-name");
+          const base = inputEl.value.trim();
+          if (!base) {
+            inputEl.value = `Gia đình 2 người lớn, 1 bé 6 tuổi cao 115cm, đi từ 09:00 đến 18:00, ngân sách 3.500.000đ, thích khu ${name}.`;
+          } else if (!base.toLowerCase().includes(name.toLowerCase())) {
+            inputEl.value = `${base.replace(/[.]+$/, "")}, thêm khu ${name}.`;
+          }
+          charCount.textContent = `${inputEl.value.length} / 2000`;
+          inputEl.focus();
+          inputEl.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
+    function renderParkMap(items, activeZone) {
+      const stopZones = (items || []).map((it) => it.zone);
+      const zoneStopMap = {};
+      (items || []).forEach((it, idx) => {
+        if (!zoneStopMap[it.zone]) zoneStopMap[it.zone] = [];
+        zoneStopMap[it.zone].push({ num: idx + 1, item: it });
+      });
+
+      const routeNodes = stopZones.length ? ["GATE", ...stopZones] : [];
+      let svg = `
+        <defs>
+          <marker id="routeArrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <polygon points="0 0, 8 4, 0 8" fill="#0e4d5c"></polygon>
+          </marker>
+          <filter id="pinShadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#1b2428" flood-opacity="0.28" />
+          </filter>
+        </defs>
+      `;
+
+      for (let i = 0; i < routeNodes.length - 1; i++) {
+        const a = ZONES[routeNodes[i]], b = ZONES[routeNodes[i + 1]];
+        if (!a || !b || routeNodes[i] === routeNodes[i + 1]) continue;
+        const dx = b.x - a.x, dy = b.y - a.y, dist = Math.hypot(dx, dy) || 1;
+        const x1 = a.x + (dx / dist) * 26, y1 = a.y + (dy / dist) * 26;
+        const x2 = b.x - (dx / dist) * 30, y2 = b.y - (dy / dist) * 30;
+        const mx = (x1 + x2) / 2 - (dy / dist) * 26;
+        const my = (y1 + y2) / 2 + (dx / dist) * 26;
+        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity="0.9"></path>`;
+        svg += `<path d="M${x1.toFixed(1)},${y1.toFixed(1)} Q${mx.toFixed(1)},${my.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}" fill="none" stroke="#0e4d5c" stroke-width="4" stroke-linecap="round" marker-end="url(#routeArrow)"></path>`;
+      }
+
+      Object.entries(ZONES).forEach(([id, z]) => {
+        const stops = zoneStopMap[id] || [];
+        const visited = stops.length > 0 || (routeNodes.length > 0 && id === "GATE");
+        const isActive = activeZone === id;
+        const dimmed = routeNodes.length > 0 && !visited;
+        const r = isActive ? 25 : (visited ? 22 : 17);
+        const fill = visited ? z.color : "#39484f";
+        const badgeText = id === "GATE" ? "C" : (stops.length ? stops.map((s) => s.num).join(",") : "•");
+        const labelW = z.short.length * 7.8 + 18;
+
+        svg += `
+          <g class="zone-node" data-zone="${id}" tabindex="0" role="button" aria-label="Xem thông tin ${esc(z.label)}" opacity="${dimmed ? "0.62" : "1"}">
+            <circle cx="${z.x}" cy="${z.y}" r="${r}" fill="${fill}" stroke="${isActive ? "#f6d28b" : "#ffffff"}" stroke-width="${isActive ? 4.5 : 3.5}" filter="url(#pinShadow)"></circle>
+            <text x="${z.x}" y="${z.y + 5}" text-anchor="middle" fill="#ffffff" font-size="${visited ? "14" : "13"}" font-weight="800">${esc(badgeText)}</text>
+            <rect x="${z.x - labelW / 2}" y="${z.y + r + 7}" width="${labelW}" height="22" rx="11" fill="#ffffff" stroke="${isActive ? z.color : "#d5c8b6"}" stroke-width="1.5" filter="url(#pinShadow)"></rect>
+            <text x="${z.x}" y="${z.y + r + 22}" text-anchor="middle" fill="#1b2428" font-size="11.5" font-weight="700">${esc(z.short)}</text>
+          </g>
+        `;
+      });
+
+      parkMapSvg.innerHTML = svg;
+      const selectZone = (zId) => {
+        const z = ZONES[zId];
+        const fromGate = TRAVEL_MIN.GATE[zId] ?? 0;
+        const itemsHere = (currentData && currentData.parsed && currentData.parsed.items || []).filter((it) => it.zone === zId);
+        const stopTxt = itemsHere.length
+          ? "Chặng trong lịch: " + itemsHere.map((it) => `${it.start}–${it.end} ${it.name}`).join("; ")
+          : z.desc;
+        zoneInfoBar.innerHTML = `<strong>${esc(z.label)}</strong> · Cách cổng <span class="nums">${fromGate} phút</span> đi bộ. ${esc(stopTxt)}`;
+        renderParkMap(currentData && currentData.parsed ? currentData.parsed.items : [], zId);
+      };
+      parkMapSvg.querySelectorAll(".zone-node").forEach((el) => {
+        el.addEventListener("click", () => selectZone(el.getAttribute("data-zone")));
+        el.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectZone(el.getAttribute("data-zone"));
+          }
+        });
+      });
+    }
+
+    const TICKET_NAMES = {
+      STANDARD: "Vé tiêu chuẩn cả ngày",
+      AFTER_16H: "Vé vào cửa sau 16:00",
+      UNLIMITED_2D: "Vé không giới hạn 2 ngày",
+      UNLIMITED_3D: "Vé không giới hạn 3 ngày"
+    };
+
+    function renderCostCard(parsed) {
+      const cost = parsed && parsed.cost ? parsed.cost : null;
+      if (!cost) {
+        costRoot.innerHTML = `
+          <div class="receipt-hero">
+            <div><div class="sec-sub">Tổng chi phí dự kiến</div><div class="receipt-total nums">—</div></div>
+          </div>
+          <div class="receipt-rows">
+            <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>Chưa xếp lịch</strong></div>
+            <div class="receipt-row"><span>Vé cổng</span><strong class="nums">—</strong></div>
+            <div class="receipt-row"><span>Dịch vụ lẻ</span><strong class="nums">—</strong></div>
+            <div class="receipt-row"><span>Thời tiết dự kiến</span><strong>—</strong></div>
+          </div>
+        `;
+        return;
+      }
+      const ticketLabel = TICKET_NAMES[cost.ticket_type] || cost.ticket_type || "Vé tiêu chuẩn cả ngày";
+      costRoot.innerHTML = `
+        <div class="receipt-hero">
+          <div>
+            <div class="sec-sub">Tổng chi phí dự kiến</div>
+            <div class="receipt-total nums">${fmtVnd(cost.total_vnd)}</div>
+          </div>
+        </div>
+        <div class="receipt-rows">
+          <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>${esc(ticketLabel)}</strong></div>
+          <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">${fmtVnd(cost.gate_vnd)}</strong></div>
+          <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">${fmtVnd(cost.extra_vnd)}</strong></div>
+          <div class="receipt-row"><span>Thời tiết dự kiến</span><strong>${esc(parsed.weather || "Nắng ráo")}</strong></div>
+        </div>
+      `;
+    }
+
+    function renderTrace(trace) {
+      if (!trace) {
+        traceRoot.innerHTML = "Chưa có lượt gọi nào.";
+        return;
+      }
+      const models = (trace.models && trace.models.length) ? trace.models.join(", ") : "không gọi model";
+      const rows = (trace.events || []).map((ev) => `
+        <tr>
+          <td>${esc(ev.kind)}</td>
+          <td>${esc(ev.name || ev.text || "—")}</td>
+          <td class="nums">${esc(ev.t)}s</td>
+          <td class="nums">${ev.latency_s != null ? esc(ev.latency_s) + "s" : "—"}</td>
+        </tr>
+      `).join("");
+      traceRoot.innerHTML = `
+        <div class="sec-sub">Model: <strong>${esc(models)}</strong></div>
+        <div class="trace-kpis nums">
+          <div class="trace-kpi"><span>Gọi model</span><strong>${esc(trace.model_calls)}</strong></div>
+          <div class="trace-kpi"><span>Gọi tool</span><strong>${esc(trace.tool_calls)}</strong></div>
+          <div class="trace-kpi"><span>Token vào/ra</span><strong>${esc(trace.tokens_in)}/${esc(trace.tokens_out)}</strong></div>
+          <div class="trace-kpi"><span>Thời gian</span><strong>${esc(trace.elapsed_s)}s</strong></div>
+        </div>
+        <table class="trace-tbl">
+          <thead><tr><th>Loại</th><th>Công cụ / Ghi chú</th><th>Mốc</th><th>Độ trễ</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function showExploreMode() {
+      currentData = null;
+      setActionButtons(false, false);
+      exploreSection.classList.remove("hidden");
+      resultsWorkspace.classList.add("hidden");
+    }
+
+    function showWorkspaceMode() {
+      exploreSection.classList.add("hidden");
+      resultsWorkspace.classList.remove("hidden");
+    }
+
+    function renderLoading() {
+      showWorkspaceMode();
+      setActionButtons(false, false);
+      routeSummary.textContent = "Đang sắp xếp...";
+      zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ hoặc từng điểm dừng để xem thời gian đi bộ.";
+      renderParkMap([], null);
+      renderCostCard(null);
+      renderTrace(null);
+      timelineRoot.innerHTML = `
+        <div class="banner info">
+          <span>Đang đối chiếu giờ mở cửa, giới hạn chiều cao &amp; chọn lộ trình phù hợp cho gia đình...</span>
+        </div>
+      `;
+    }
+
+    function renderError(msg, canRetry) {
+      showWorkspaceMode();
+      currentData = null;
+      setActionButtons(false, false);
+      routeSummary.textContent = "Chưa hoàn tất";
+      timelineRoot.innerHTML = `
+        <div class="banner danger"><span>Không thể hoàn tất yêu cầu: ${esc(msg)}</span></div>
+        <div class="raw-msg">Vui lòng thử lại sau ít giây hoặc kiểm tra kết nối dịch vụ tư vấn.</div>
+        ${canRetry ? '<div style="margin-top:12px;"><button type="button" class="btn-cta" id="retryBtn" style="height:44px;">Thử lại</button></div>' : ""}
+      `;
+      const retryBtn = document.getElementById("retryBtn");
+      if (retryBtn) retryBtn.addEventListener("click", () => submitRequest());
+    }
+
+    function renderResult(data) {
+      showWorkspaceMode();
+      currentData = data;
+      const p = data.parsed || {};
+      renderTrace(data.trace);
+      renderCostCard(p);
+
+      if (p.kind === "schedule") {
+        setActionButtons(true, true);
+        const items = p.items || [];
+        routeSummary.textContent = `${items.length} điểm dừng · ${(p.cost && fmtVnd(p.cost.total_vnd)) || ""}`;
+        renderParkMap(items, null);
+
+        const bannerCls = p.is_mock ? "warn" : "ok";
+        const bannerTitle = p.is_mock
+          ? "Lịch trình tham khảo nhanh (chế độ dự phòng)"
+          : "Lịch trình phù hợp · Đã đối chiếu giờ mở cửa, chiều cao & chi phí";
+
+        let prevZone = "GATE";
+        let stopsHtml = `
+          <div class="gate-start">
+            <span class="gate-dot">C</span>
+            <span>Xuất phát · Ga cáp treo Đảo Hòn Tre (đã gồm cáp treo 2 chiều theo vé tiêu chuẩn)</span>
+          </div>
+        `;
+
+        items.forEach((it, idx) => {
+          const leg = calcLegInfo(prevZone, it.zone);
+          const dur = Math.max(0, toMin(it.end) - toMin(it.start));
+          const zMeta = ZONES[it.zone] || { label: it.zone, color: "#0e4d5c", img: "/assets/hero_vinwonders.jpg" };
+          const isIndoor = String(it.env || "").toLowerCase().includes("trong nhà");
+          const cleanName = String(it.name || "").replace(/\s*\(mẫu\)\s*/gi, "").trim();
+
+          stopsHtml += `
+            <div class="leg-connector nums">
+              <span class="leg-pill ${leg.buffer > 0 ? "buffer" : ""}">
+                <svg class="ico" style="width:13px;height:13px" viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                ${esc(leg.label)}
+              </span>
+            </div>
+            <article class="stop-card" data-zone="${esc(it.zone)}" style="--zone-color:${esc(zMeta.color)}">
+              <span class="stop-num nums">${idx + 1}</span>
+              <img class="stop-thumb" src="${esc(zMeta.img)}" alt="Phân khu ${esc(zMeta.label)}" />
+              <div>
+                <div class="stop-top">
+                  <span class="time-chip nums">
+                    <svg class="ico" style="width:14px;height:14px" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                    ${esc(it.start)}–${esc(it.end)} (${dur} phút)
+                  </span>
+                  <div style="display:flex;gap:5px;flex-wrap:wrap;">
+                    <span class="tag">${esc(zMeta.short || zMeta.label)}</span>
+                    <span class="tag ${isIndoor ? "indoor" : "outdoor"}">${esc(it.env)}</span>
+                  </div>
+                </div>
+                <h4 class="stop-name">${esc(cleanName)}</h4>
+                <p class="stop-reason">${esc(it.reason)}</p>
+              </div>
+            </article>
+          `;
+          prevZone = it.zone;
+        });
+
+        const notesHtml = (p.notes && p.notes.length)
+          ? `<div class="notes-box"><strong>Lưu ý dành cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>`
+          : "";
+
+        timelineRoot.innerHTML = `
+          <div class="banner ${bannerCls}">
+            <span style="display:inline-flex;align-items:center;gap:8px;">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              ${bannerTitle}
+            </span>
+          </div>
+          <div class="timeline-wrap">${stopsHtml}</div>
+          ${notesHtml}
+          <div class="disclaimer-row">
+            <span>Lịch trình mang tính gợi ý để gia đình tham khảo, điều chỉnh và chủ động đặt vé trên kênh chính thức.</span>
+          </div>
+        `;
+
+        timelineRoot.querySelectorAll(".stop-card").forEach((card) => {
+          const zId = card.getAttribute("data-zone");
+          card.addEventListener("mouseenter", () => renderParkMap(items, zId));
+          card.addEventListener("click", () => {
+            timelineRoot.querySelectorAll(".stop-card").forEach((c) => c.classList.remove("active"));
+            card.classList.add("active");
+            renderParkMap(items, zId);
+            const z = ZONES[zId] || { label: zId };
+            zoneInfoBar.innerHTML = `Đang xem phân khu <strong>${esc(z.label)}</strong> từ lịch trình.`;
+          });
+        });
+        return;
+      }
+
+      setActionButtons(true, false);
+      renderParkMap([], null);
+      zoneInfoBar.textContent = "Chạm vào từng phân khu trên bản đồ để xem thời gian di chuyển từ cổng.";
+      routeSummary.textContent = p.kind === "blocked" ? "Không hỗ trợ yêu cầu" : "Cần thêm thông tin";
+      const metaMap = {
+        blocked: { cls: "danger", title: "Không thể đáp ứng yêu cầu vượt quy định an toàn hoặc ngoài phạm vi hỗ trợ" },
+        ask_more: { cls: "warn", title: "Cần thêm thông tin để tính đúng hạng vé & gợi ý trò chơi phù hợp" },
+        impossible: { cls: "warn", title: "Chưa thể xếp lịch khớp toàn bộ yêu cầu hiện tại" },
+        other: { cls: "warn", title: "Thông tin phản hồi" }
+      };
+      const meta = metaMap[p.kind] || metaMap.other;
+      timelineRoot.innerHTML = `
+        <div class="banner ${meta.cls}"><span>${meta.title}</span></div>
+        <div class="raw-msg">${esc(data.output || "")}</div>
+      `;
+    }
+
+    async function submitRequest() {
+      const text = inputEl.value.trim();
+      if (!text) {
+        renderError("Vui lòng nhập thông tin gia đình trước khi bấm Lập lịch ngay.", false);
+        inputEl.focus();
+        return;
+      }
+      submitBtn.disabled = true;
+      setServerState("busy", "Đang lập lịch...");
+      renderLoading();
+      resultsWorkspace.scrollIntoView({ behavior: "smooth", block: "start" });
+      try {
+        const res = await fetch("/api/plan", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text })
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setServerState("err", "Có lỗi xử lý");
+          renderError(data.error || "Máy chủ trả về lỗi không xác định.", true);
+          return;
+        }
+        setServerState("", "Sẵn sàng");
+        renderResult(data);
+      } catch {
+        setServerState("err", "Mất kết nối máy chủ");
+        renderError("Không kết nối được tới máy chủ cục bộ 127.0.0.1.", true);
+      } finally {
+        submitBtn.disabled = false;
+      }
+    }
+
+    document.querySelectorAll(".preset-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        inputEl.value = PRESETS[btn.dataset.preset] || "";
+        charCount.textContent = `${inputEl.value.length} / 2000`;
+        inputEl.focus();
+      });
+    });
+
+    const guestCell = document.getElementById("guestCell");
+    const guestTrigger = document.getElementById("guestTrigger");
+    const guestPopover = document.getElementById("guestPopover");
+    const guestSummary = document.getElementById("guestSummary");
+    const valAdults = document.getElementById("valAdults");
+    const valChildren = document.getElementById("valChildren");
+    const valSeniors = document.getElementById("valSeniors");
+    const childrenList = document.getElementById("childrenList");
+    const seniorsList = document.getElementById("seniorsList");
+    const estTicketType = document.getElementById("estTicketType");
+    const estGateTotal = document.getElementById("estGateTotal");
+
+    const guestState = {
+      adults: 2,
+      children: [{ age: 6, height: 115 }],
+      seniors: []
+    };
+
+    function getChildTier(heightCm) {
+      const h = Number(heightCm || 115);
+      if (h < 100) return { id: "INFANT", label: "Miễn phí (<100cm)", cls: "free" };
+      if (h < 140) return { id: "CHILD", label: "Vé trẻ em (100–<140cm)", cls: "" };
+      return { id: "ADULT", label: "Vé người lớn (≥140cm)", cls: "adult" };
+    }
+
+    function updateGuestUI() {
+      valAdults.textContent = String(guestState.adults);
+      valChildren.textContent = String(guestState.children.length);
+      valSeniors.textContent = String(guestState.seniors.length);
+
+      const parts = [`${guestState.adults} người lớn`];
+      parts.push(guestState.children.length ? `${guestState.children.length} bé` : "Không có bé");
+      if (guestState.seniors.length) parts.push(`${guestState.seniors.length} người cao tuổi`);
+      guestSummary.textContent = parts.join(" · ");
+
+      document.querySelector('[data-step="adults:-1"]').disabled = guestState.adults <= 1;
+      document.querySelector('[data-step="adults:1"]').disabled = guestState.adults >= 10;
+      document.querySelector('[data-step="children:-1"]').disabled = guestState.children.length <= 0;
+      document.querySelector('[data-step="children:1"]').disabled = guestState.children.length >= 6;
+      document.querySelector('[data-step="seniors:-1"]').disabled = guestState.seniors.length <= 0;
+      document.querySelector('[data-step="seniors:1"]').disabled = guestState.seniors.length >= 6;
+
+      if (guestState.children.length === 0) {
+        childrenList.classList.add("hidden");
+        childrenList.innerHTML = "";
+      } else {
+        childrenList.classList.remove("hidden");
+        childrenList.innerHTML = guestState.children.map((ch, idx) => {
+          const tier = getChildTier(ch.height);
+          return `
+            <div class="sub-person">
+              <strong>Bé ${idx + 1}</strong>
+              <div><label for="chAge${idx}">Tuổi (1–15)</label><input id="chAge${idx}" class="ch-age-in" data-idx="${idx}" type="number" min="1" max="15" value="${ch.age}" /></div>
+              <div><label for="chH${idx}">Cao (cm)</label><input id="chH${idx}" class="ch-h-in" data-idx="${idx}" type="number" min="70" max="165" value="${ch.height}" /></div>
+              <span class="tier-badge ${tier.cls}">${tier.label}</span>
+            </div>
+          `;
+        }).join("");
+        childrenList.querySelectorAll(".ch-age-in").forEach((el) => {
+          el.addEventListener("input", () => {
+            const idx = Number(el.dataset.idx);
+            guestState.children[idx].age = Math.min(15, Math.max(1, Number(el.value || 6)));
+          });
+        });
+        childrenList.querySelectorAll(".ch-h-in").forEach((el) => {
+          el.addEventListener("input", () => {
+            const idx = Number(el.dataset.idx);
+            guestState.children[idx].height = Math.min(165, Math.max(70, Number(el.value || 115)));
+            const badge = el.closest(".sub-person").querySelector(".tier-badge");
+            const tier = getChildTier(guestState.children[idx].height);
+            badge.className = `tier-badge ${tier.cls}`;
+            badge.textContent = tier.label;
+            refreshEstimate();
+          });
+        });
+      }
+
+      if (guestState.seniors.length === 0) {
+        seniorsList.classList.add("hidden");
+        seniorsList.innerHTML = "";
+      } else {
+        seniorsList.classList.remove("hidden");
+        seniorsList.innerHTML = guestState.seniors.map((age, idx) => `
+          <div class="sub-person">
+            <strong>Khách ${idx + 1}</strong>
+            <div><label for="srAge${idx}">Tuổi (≥60)</label><input id="srAge${idx}" class="sr-age-in" data-idx="${idx}" type="number" min="60" max="95" value="${age}" /></div>
+            <span class="tier-badge" style="grid-column:span 2;">Giá người cao tuổi (60+)</span>
+          </div>
+        `).join("");
+        seniorsList.querySelectorAll(".sr-age-in").forEach((el) => {
+          el.addEventListener("input", () => {
+            const idx = Number(el.dataset.idx);
+            guestState.seniors[idx] = Math.min(95, Math.max(60, Number(el.value || 65)));
+          });
+        });
+      }
+      refreshEstimate();
+    }
+
+    function refreshEstimate() {
+      const [win] = document.getElementById("bWindow").value.split("|");
+      const isAfter16 = win.startsWith("16:00");
+      const prices = isAfter16
+        ? { ADULT: 700000, CHILD: 550000, SENIOR: 550000, INFANT: 0 }
+        : { ADULT: 1050000, CHILD: 800000, SENIOR: 800000, INFANT: 0 };
+      let total = guestState.adults * prices.ADULT + guestState.seniors.length * prices.SENIOR;
+      guestState.children.forEach((ch) => { total += prices[getChildTier(ch.height).id]; });
+      estTicketType.textContent = isAfter16 ? "Vé sau 16:00" : "Vé tiêu chuẩn";
+      estGateTotal.textContent = fmtVnd(total);
+    }
+
+    function applyBuilderToPrompt() {
+      const budget = Math.max(500000, Number(document.getElementById("bBudget").value || 3500000));
+      const [win, weather] = document.getElementById("bWindow").value.split("|");
+      const groupParts = [`${guestState.adults} người lớn`];
+      if (guestState.seniors.length === 1) {
+        groupParts.push(`1 người cao tuổi ${guestState.seniors[0]} tuổi`);
+      } else if (guestState.seniors.length > 1) {
+        const srDetail = guestState.seniors.map((a) => `người cao tuổi ${a} tuổi`).join(", ");
+        groupParts.push(`${guestState.seniors.length} người cao tuổi (${srDetail})`);
+      }
+      if (guestState.children.length > 0) {
+        const chText = guestState.children.map((ch) => `bé ${ch.age} tuổi cao ${ch.height}cm`).join(" và ");
+        groupParts.push(chText);
+      }
+      inputEl.value = `Gia đình ${groupParts.join(", ")}, đi từ ${win}, ngân sách ${budget.toLocaleString("vi-VN")}đ${weather || ""}.`;
+      charCount.textContent = `${inputEl.value.length} / 2000`;
+      guestPopover.classList.add("hidden");
+      guestTrigger.setAttribute("aria-expanded", "false");
+      inputEl.focus();
+    }
+
+    guestTrigger.addEventListener("click", () => {
+      const open = guestPopover.classList.toggle("hidden") === false;
+      guestTrigger.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    document.getElementById("closePopoverBtn").addEventListener("click", () => {
+      guestPopover.classList.add("hidden");
+      guestTrigger.setAttribute("aria-expanded", "false");
+    });
+    document.addEventListener("click", (e) => {
+      if (!guestCell.contains(e.target)) {
+        guestPopover.classList.add("hidden");
+        guestTrigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !guestPopover.classList.contains("hidden")) {
+        guestPopover.classList.add("hidden");
+        guestTrigger.setAttribute("aria-expanded", "false");
+      }
+    });
+    document.querySelectorAll("[data-step]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const [field, deltaRaw] = btn.dataset.step.split(":");
+        const delta = Number(deltaRaw);
+        if (field === "adults") guestState.adults = Math.min(10, Math.max(1, guestState.adults + delta));
+        if (field === "children") {
+          if (delta > 0 && guestState.children.length < 6) guestState.children.push({ age: 6, height: 115 });
+          if (delta < 0 && guestState.children.length > 0) guestState.children.pop();
+        }
+        if (field === "seniors") {
+          if (delta > 0 && guestState.seniors.length < 6) guestState.seniors.push(65);
+          if (delta < 0 && guestState.seniors.length > 0) guestState.seniors.pop();
+        }
+        updateGuestUI();
+      });
+    });
+    document.getElementById("bWindow").addEventListener("change", refreshEstimate);
+    document.getElementById("applyBuilderBtn").addEventListener("click", applyBuilderToPrompt);
+    document.getElementById("popApplyBtn").addEventListener("click", applyBuilderToPrompt);
+    updateGuestUI();
+
+    inputEl.addEventListener("input", () => {
+      charCount.textContent = `${inputEl.value.length} / 2000`;
+    });
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitRequest();
+    });
+
+    inputEl.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+        e.preventDefault();
+        submitRequest();
+      }
+    });
+
+    clearBtn.addEventListener("click", () => {
+      inputEl.value = "";
+      charCount.textContent = "0 / 2000";
+      showExploreMode();
+      inputEl.focus();
+    });
+
+    document.getElementById("backExploreBtn").addEventListener("click", () => {
+      showExploreMode();
+      exploreSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    async function doCopy(triggerBtnLabel) {
+      if (!currentData || !currentData.output) return;
+      try {
+        await navigator.clipboard.writeText(currentData.output);
+        if (triggerBtnLabel) {
+          const old = triggerBtnLabel.textContent;
+          triggerBtnLabel.textContent = "Đã sao chép!";
+          setTimeout(() => { triggerBtnLabel.textContent = old; }, 1800);
+        }
+      } catch {
+        if (triggerBtnLabel) triggerBtnLabel.textContent = "Chặn clipboard";
+      }
+    }
+
+    copyBtn.addEventListener("click", () => doCopy(copyBtnText));
+    sideCopyBtn.addEventListener("click", () => doCopy(sideCopyBtn));
+    printBtn.addEventListener("click", () => window.print());
+    sidePrintBtn.addEventListener("click", () => window.print());
+
+    async function checkHealth() {
+      try {
+        const res = await fetch("/api/health");
+        if (res.ok) setServerState("", "Sẵn sàng");
+        else setServerState("err", "Lỗi máy chủ");
+      } catch {
+        setServerState("err", "Mất kết nối");
+      }
+    }
+
+    renderExploreGrid();
+    showExploreMode();
+    checkHealth();
+  </script>
+</body>
+</html>

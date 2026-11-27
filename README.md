@@ -123,5 +123,5 @@ Nhóm dùng Coding Agent (Antigravity / Codex / Claude Code) để dựng khung 
 | 4 | Bản chạy thử làm trọn lát cắt | `codebase/` · lệnh ở mục "Lệnh" |
 | 5 | Định nghĩa "tốt" + bộ câu thử | `data/DATA_CARD.md` · `eval/` |
 | 6 | Mô phỏng chi phí khi dùng thật | `cost/` |
-| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: ____ |
+| 7 | Slide + demo + video dự phòng | `demo-slides.pdf` ở thư mục gốc · link video: [CP4-FourAE-L3A-C1-Demo-Du-Phong.mp4](https://drive.google.com/file/d/1FqTLo2_fclHBul4JAZ9gRIrUnrYxEX6C/view?usp=sharing) |
 | + | *Bonus:* người dùng thử | `validation/log.md` |
