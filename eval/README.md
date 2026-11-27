@@ -5,7 +5,9 @@
 
 ## 1. Dataset → xử lý
 
-Dataset nào, xử lý gì: tóm 2–3 dòng từ `data/DATA_CARD.md`.
+- **Bộ dữ liệu khu vui chơi (`data/park/*.json` — VinWonders Nha Trang, 7 file):** dữ liệu lai gồm phần thật trích từ 3 trang chính thức `vinwonders.com` ngày 27/11/2026 (`W_HOURS`, `W_PRICE`, `W_RULES`: 6 phân khu, giờ `09:00–20:00`, bảng giá 4 loại vé × 4 nhóm khách, 7 trò `A01–A07` kèm ngưỡng chiều cao/tuổi/cân nặng) và phần `synthetic` dựng tay cố định (11 trò `A08–A18` có 2 trò bảo trì `A16–A17`, 6 suất show `S01–S06`, 5 dịch vụ lẻ `SV01–SV05`, ma trận đi bộ 7×7, 4 kịch bản thời tiết).
+- **Xử lý & minh bạch nguồn:** gắn trường `src` và `verified` cho mọi bản ghi, đánh dấu hậu tố `(mẫu)` với mục hoàn toàn tự dựng; loại bỏ combo/khuyến mãi hết hạn và để `price_vnd: null` cho `buggy`/`Zipline` (không có giá lẻ công khai) để công cụ báo "không có giá" thay vì đoán; cài sẵn xung đột show `S02` (15:00) vs `S04` (15:30).
+- **Dữ liệu nguồn thật cho câu thử:** kết hợp 50 review Google Maps đã ẩn danh (`evidence/reviews_anon.csv`, `0 PII`, đếm tái lập bằng `evidence/count.py`) và 5 phỏng vấn phụ huynh ngoài nhóm (`P1`–`P5`) — dữ liệu `data/park/` chỉ phục vụ công cụ chạy thử, không dùng làm bằng chứng pain (chi tiết tại `data/DATA_CARD.md`).
 
 ## 2. Bộ câu thử dựng ra sao
 
