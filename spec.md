@@ -127,10 +127,10 @@ flowchart TD
 - Kết quả: lượt 1 16/25 (64%) · lượt 2 23/25 (92%) — run ID: `run-1@20261127-182508` / `run-2@20261127-185059` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
-- Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
-- Chi phí / task thành công: __ (model __) · __ (model __)
-- Chi phí / tháng ở quy mô thật: thấp __ · cơ sở __ · cao __ → chi tiết `cost/cost-estimate.md`
-- So với impact / người / tháng (§2): đáng làm không, vì sao:
+- Persona + giá: `cost/personas.yaml` (3 persona theo §2: 50% / 35% / 15%; giá 3 model OpenAI, xem 27/11/2026) · lượt mô phỏng: `cost/simulate-2.csv` (**50 phiên**, seed 42, 0 phiên lỗi, run ID `simulate-2@20261127-215027`). Lượt `simulate-1` hỏng 43/50 phiên do proxy sập — không dùng, giữ nguyên file.
+- Chi phí / task thành công (tỉ lệ đạt `run-2` 23/25 = 92%, cùng model): **$0.0046 ≈ 120 đ** (model `gpt-5.6-luna`, đang dùng) · $0.0021 (model `gpt-6-luna`) · $0.0463 (model `gpt-5.6-terra`). Token đo trên `cx/gpt-5.6-luna`, tính giá từng model.
+- Chi phí / tháng ở quy mô thật (`gpt-5.6-luna`): thấp **$9.25** (1.124 gia đình) · cơ sở **$46.25** (5.620) · cao **$82.30** (10.000) → chi tiết `cost/cost-estimate.md`. Proxy cộng ~2.500 token vào mỗi lần gọi (~74% token vào); gọi API gốc thì chi phí giảm ~26%.
+- So với impact / người / tháng (§2): **Go (về chi phí)** — chi phí ~$0.0082 ≈ 213 đ / người / tháng *(tỉ giá 26.000 đ/USD, tự ước tính)* chỉ bằng ~0,1–0,2% impact 100.000–200.000 đ / người / tháng; kể cả model đắt nhất `gpt-5.6-terra` (~2.140 đ) vẫn < 3%. Rủi ro chính là độ đúng (2/25 câu `kho` còn trượt) và giữ data khu vui chơi cập nhật, không phải tiền model.
 
 ## §9. Rủi ro & an toàn
 - Dữ liệu: Không thu thập tên, số điện thoại, số thẻ, OTP, CCCD của người dùng; toàn bộ bằng chứng review/phỏng vấn được ẩn danh (chỉ ghi vai `P1`–`P5`); không đưa thông tin cá nhân vào prompt gửi model gói miễn phí.
