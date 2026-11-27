@@ -130,13 +130,13 @@ class TestWebAppUI(unittest.TestCase):
         self.assertEqual(ctx.exception.code, 404)
 
     def test_06_weather_7d_endpoint_and_tabs_markup(self) -> None:
-        """GET /api/weather-7d trả 7 ngày hợp lệ (chế độ ngoại tuyến) và HTML có đủ 4 tab."""
+        """GET /api/weather-7d trả 8 ngày hợp lệ (chế độ ngoại tuyến) và HTML có đủ 4 tab."""
         with patch.dict(os.environ, {"FOURAE_OFFLINE_WEATHER": "1"}):
             with urlrequest.urlopen(f"{self.base_url}/api/weather-7d", timeout=5) as resp:
                 self.assertEqual(resp.status, 200)
                 data = json.loads(resp.read().decode("utf-8"))
         self.assertEqual(data["source"], "offline_sample")
-        self.assertEqual(len(data["days"]), 7)
+        self.assertEqual(len(data["days"]), 8)
         for day in data["days"]:
             for key in ("date", "rel_label", "temp_min", "temp_max", "scenario_id", "weather_label"):
                 self.assertIn(key, day)

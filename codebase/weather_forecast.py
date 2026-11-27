@@ -1,4 +1,4 @@
-"""Dự báo thời tiết 7 ngày cho Đảo Hòn Tre (VinWonders Nha Trang) dùng thư viện chuẩn."""
+"""Dự báo thời tiết 8 ngày cho Đảo Hòn Tre (VinWonders Nha Trang) dùng thư viện chuẩn."""
 from __future__ import annotations
 
 import json
@@ -71,6 +71,8 @@ def _day_labels(day_obj: date, idx: int) -> tuple[str, str]:
         return "Ngày mai", wd
     if idx == 2:
         return "Ngày kia", wd
+    if idx == 7:
+        return f"{_WEEKDAY_SHORT[day_obj.weekday()]} sau", f"{wd} tuần sau"
     return _WEEKDAY_SHORT[day_obj.weekday()], wd
 
 
@@ -91,12 +93,12 @@ def _build_day_record(
 
 
 def _build_offline_forecast(today: date | None = None) -> dict[str, Any]:
-    """Tạo dự báo 7 ngày tham khảo đủ sắc thái nắng/mưa theo khung giờ khi chạy offline."""
+    """Tạo dự báo 8 ngày tham khảo đủ sắc thái nắng/mưa theo khung giờ khi chạy offline."""
     base = today or datetime.now(_VN_TZ).date()
     pattern = [
-        ("SUNNY", 25, 31, 15), ("SUNNY", 25, 32, 20), ("MORNING_RAIN", 24, 30, 60),
-        ("AFTERNOON_RAIN", 24, 30, 65), ("EVENING_RAIN", 24, 30, 60), ("SUNNY", 25, 31, 15),
-        ("ALL_DAY_RAIN", 23, 28, 85),
+        ("MORNING_RAIN", 24, 29, 65), ("SUNNY", 25, 31, 20), ("MORNING_RAIN", 24, 30, 60),
+        ("AFTERNOON_RAIN", 24, 30, 68), ("EVENING_RAIN", 24, 30, 62), ("ALL_DAY_RAIN", 23, 28, 88),
+        ("AFTERNOON_RAIN", 24, 30, 65), ("SUNNY", 25, 31, 20),
     ]
     days = [_build_day_record(base + timedelta(days=i), i, mn, mx, p, sc) for i, (sc, mn, mx, p) in enumerate(pattern)]
     return {"location": "Đảo Hòn Tre, Nha Trang", "source": "offline_sample", "source_label": "Dự báo tham khảo (chế độ ngoại tuyến)", "days": days}
@@ -124,11 +126,11 @@ def _classify_day_scenario(
     park_mm = m_mm + a_mm + e_mm
     park_prob = max(m_prob, a_prob, e_prob)
 
-    if park_mm >= 10.0 and m_mm >= 2.5 and a_mm >= 1.5:
+    if park_mm >= 10.5 and m_mm >= 2.5 and a_mm >= 1.5:
         return "ALL_DAY_RAIN", park_prob
     if e_mm >= 2.5 and e_mm >= a_mm:
         return "EVENING_RAIN", park_prob
-    if (park_mm < 2.5 and max(m_mm, a_mm, e_mm) < 1.5) or (a_mm < 0.5 and e_mm < 0.5 and m_mm < 4.0):
+    if (park_mm < 2.5 and max(m_mm, a_mm, e_mm) < 1.5) or (a_mm < 0.5 and e_mm < 0.5 and m_mm < 3.5):
         return "SUNNY", min(park_prob, 35) if park_mm < 2.5 else park_prob
     if m_mm >= 2.5 and a_mm < 1.0:
         return "MORNING_RAIN", park_prob
@@ -136,12 +138,12 @@ def _classify_day_scenario(
 
 
 def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
-    """Gọi Open-Meteo lấy dự báo 7 ngày theo giờ & ngày tại tọa độ Đảo Hòn Tre."""
+    """Gọi Open-Meteo lấy dự báo 8 ngày theo giờ & ngày tại tọa độ Đảo Hòn Tre."""
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={_LAT}&longitude={_LON}"
         "&daily=temperature_2m_min,temperature_2m_max"
         "&hourly=precipitation_probability,precipitation,weather_code"
-        "&timezone=Asia%2FHo_Chi_Minh&forecast_days=7"
+        "&timezone=Asia%2FHo_Chi_Minh&forecast_days=8"
     )
     req = urllib.request.Request(url, headers={"User-Agent": "FourAE-VinWonders-Planner/1.0"})
     with urllib.request.urlopen(req, timeout=timeout_s) as resp:
@@ -166,15 +168,15 @@ def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
     t_mins = daily.get("temperature_2m_min") or []
     t_maxs = daily.get("temperature_2m_max") or []
 
-    for idx, d_str in enumerate(dates[:7]):
+    for idx, d_str in enumerate(dates[:8]):
         day_obj = date.fromisoformat(str(d_str))
         t_min = round(float(t_mins[idx])) if idx < len(t_mins) and t_mins[idx] is not None else 25
         t_max = round(float(t_maxs[idx])) if idx < len(t_maxs) and t_maxs[idx] is not None else 31
         sc_id, prob = _classify_day_scenario(str(d_str), hourly_by_day)
         days.append(_build_day_record(day_obj, idx, t_min, t_max, prob, sc_id))
 
-    if len(days) < 7:
-        raise ValueError("Open-Meteo trả về thiếu dữ liệu 7 ngày.")
+    if len(days) < 8:
+        raise ValueError("Open-Meteo trả về thiếu dữ liệu 8 ngày.")
     return {
         "location": "Đảo Hòn Tre, Nha Trang",
         "source": "open-meteo",
@@ -184,7 +186,7 @@ def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
 
 
 def get_7day_forecast(force_offline: bool = False) -> dict[str, Any]:
-    """Trả về dự báo thời tiết 7 ngày tới (dùng cache 30 phút, tự fallback nếu mất mạng)."""
+    """Trả về dự báo thời tiết 8 ngày tới (dùng cache 30 phút, tự fallback nếu mất mạng)."""
     if force_offline or os.environ.get("FOURAE_OFFLINE_WEATHER") == "1":
         return _build_offline_forecast()
     now = time.monotonic()

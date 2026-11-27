@@ -192,10 +192,13 @@
       padding: 3px 9px; border-radius: 999px;
     }
     .date-cards-row {
-      display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px;
+      display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 7px;
       min-width: 0; max-width: 100%;
     }
-    @media (max-width: 960px) {
+    @media (max-width: 1080px) {
+      .date-cards-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
       .date-cards-row {
         grid-template-columns: none;
         grid-auto-flow: column;
@@ -433,10 +436,18 @@
     .zone-hover-hint {
       position: absolute; right: 10px; bottom: 10px; z-index: 2;
       padding: 4px 10px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.32);
-      background: rgba(9, 40, 49, 0.82); color: #ffffff;
+      background: rgba(9, 40, 49, 0.86); color: #ffffff;
       font-size: 0.73rem; font-weight: 600; backdrop-filter: blur(4px);
+      transition: opacity 0.18s ease;
     }
-    @media (hover: hover) and (pointer: fine) {
+    .zone-rides-overlay {
+      position: absolute; inset: 0; z-index: 4; padding: 13px 14px; overflow-y: auto;
+      background: linear-gradient(180deg, rgba(9, 40, 49, 0.94) 0%, rgba(9, 56, 68, 0.97) 100%);
+      color: #ffffff; backdrop-filter: blur(6px);
+      opacity: 0; transform: translateY(6px); pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    @media (min-width: 769px) {
       .zone-card:hover .zone-hover-hint { opacity: 0; pointer-events: none; }
       .zone-card:hover .zone-rides-overlay { opacity: 1; transform: translateY(0); pointer-events: auto; }
     }
@@ -668,7 +679,7 @@
       <nav class="top-nav" aria-label="Điều hướng nhanh">
         <a href="#mainTabs" data-jump-tab="explore" class="active">6 phân khu</a>
         <a href="#mainTabs" data-jump-tab="tickets">Giá vé &amp; Giờ mở</a>
-        <a href="#mainTabs" data-jump-tab="shows">Show &amp; Thời tiết 7 ngày</a>
+        <a href="#mainTabs" data-jump-tab="shows">Show &amp; Thời tiết 8 ngày</a>
         <a href="#conciergeDock">Lập lịch trình</a>
       </nav>
 
@@ -695,11 +706,11 @@
     <div class="hero-content">
       <div class="hero-location">Đảo Hòn Tre, Nha Trang (09:00 – 20:00)</div>
       <h2 class="serif">Lên lịch một ngày <em>trọn vẹn</em> cho gia đình tại VinWonders</h2>
-      <p class="hero-sub">Chọn ngày đi theo dự báo thời tiết 7 ngày, ghép sẵn điểm chơi, giờ show, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
+      <p class="hero-sub">Chọn ngày đi theo dự báo thời tiết 8 ngày, ghép sẵn điểm chơi, giờ show, 20 phút đệm tắm tráng công viên nước và tính chính xác tổng tiền theo chiều cao từng bé.</p>
       <div class="hero-metrics nums">
         <span class="hero-metric"><strong>6</strong> phân khu, 1 vé trọn gói</span>
         <span class="hero-sep" aria-hidden="true"></span>
-        <span class="hero-metric"><strong>7 ngày</strong> chọn lịch &amp; xem thời tiết</span>
+        <span class="hero-metric"><strong>8 ngày</strong> chọn lịch &amp; xem thời tiết</span>
         <span class="hero-sep" aria-hidden="true"></span>
         <span class="hero-metric"><strong>20 phút</strong> đệm thay đồ công viên nước</span>
       </div>
@@ -708,17 +719,17 @@
 
   <main class="shell">
     <section class="concierge-dock" id="conciergeDock" aria-label="Thiết lập chuyến đi gia đình">
-      <!-- 7-Day Date & Weather Picker -->
+      <!-- 8-Day Date & Weather Picker -->
       <div class="date-weather-shell" id="dateWeatherStrip">
         <div class="date-strip-head">
           <span class="date-strip-title">
             <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-            Chọn ngày đi trong 7 ngày tới
+            Chọn ngày đi trong 8 ngày tới
           </span>
           <span class="weather-src-badge" id="weatherSourceBadge">Đang tải dự báo thời tiết...</span>
         </div>
-        <div class="date-cards-row" id="dateCardsRow" role="listbox" aria-label="Chọn ngày đi trong 7 ngày tới"></div>
-        <div class="selected-date-note" id="selectedDateNote">Đang tải lịch 7 ngày tại Đảo Hòn Tre...</div>
+        <div class="date-cards-row" id="dateCardsRow" role="listbox" aria-label="Chọn ngày đi trong 8 ngày tới"></div>
+        <div class="selected-date-note" id="selectedDateNote">Đang tải lịch 8 ngày tại Đảo Hòn Tre...</div>
       </div>
 
       <!-- Guest / Budget / Time Strip -->
@@ -836,7 +847,7 @@
       </button>
       <button type="button" class="tab-btn" id="tabBtnShows" role="tab" aria-selected="false" aria-controls="panelShows" data-tab="shows">
         <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"></path></svg>
-        <span>Lịch show &amp; Thời tiết 7 ngày</span>
+        <span>Lịch show &amp; Thời tiết 8 ngày</span>
       </button>
       <button type="button" class="tab-btn" id="tabBtnResult" role="tab" aria-selected="false" aria-controls="panelResult" data-tab="result">
         <svg class="ico" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"></path></svg>
@@ -933,10 +944,10 @@
       </div>
     </section>
 
-    <!-- Tab 3: Shows & 7-Day Weather Details -->
+    <!-- Tab 3: Shows & 8-Day Weather Details -->
     <section class="tab-panel hidden" id="panelShows" role="tabpanel" aria-labelledby="tabBtnShows">
       <div class="explore-head">
-        <h3 class="serif">Dự báo thời tiết 7 ngày tại Đảo Hòn Tre</h3>
+        <h3 class="serif">Dự báo thời tiết 8 ngày tại Đảo Hòn Tre</h3>
         <p id="weatherTabSub">Chọn sẵn ngày đi phù hợp — hệ thống tự đồng bộ kịch bản nắng/mưa vào lịch trình.</p>
       </div>
       <div class="weather-detail-grid" id="weather7dGrid"></div>
@@ -960,7 +971,7 @@
     <section class="tab-panel hidden" id="panelResult" role="tabpanel" aria-labelledby="tabBtnResult">
       <div class="empty-state" id="resultEmptyState">
         <h3 class="serif">Chưa có lịch trình nào được tạo</h3>
-        <p>Chọn ngày đi ở dải 7 ngày phía trên, chỉnh số người lớn / trẻ em / ngân sách rồi bấm <strong>Lập lịch ngay</strong> — kết quả lịch trình từng giờ, bản đồ Đảo Hòn Tre và bảng tiền sẽ xuất hiện tại đây.</p>
+        <p>Chọn ngày đi ở dải 8 ngày phía trên, chỉnh số người lớn / trẻ em / ngân sách rồi bấm <strong>Lập lịch ngay</strong> — kết quả lịch trình từng giờ, bản đồ Đảo Hòn Tre và bảng tiền sẽ xuất hiện tại đây.</p>
         <button type="button" class="btn-cta" id="goDockBtn" style="height:44px;min-width:190px;">Lên lịch ngay</button>
       </div>
 
@@ -1168,6 +1179,58 @@
     let activeTab = "explore";
     let showFilter = "all";
 
+    const ITEM_CODE_NAMES = {
+      A01: "Zipline",
+      A02: "Alpine Coaster",
+      A03: "Rạp Phim Bay",
+      A04: "Tata River Adventure",
+      A05: "Chuyến phiêu lưu hầm mỏ",
+      A06: "Cú Lật Sấm Sét",
+      A07: "Cụm đường trượt cảm giác mạnh Công viên nước",
+      A08: "Thủy cung Sea World",
+      A09: "Bánh xe bầu trời",
+      A10: "Vườn bướm",
+      A11: "Vườn thú King's Garden",
+      A12: "Đu quay ngựa gỗ",
+      A13: "Nhà bóng trong nhà",
+      A14: "Hồ bơi tạo sóng",
+      A15: "Khu trượt nước trẻ em",
+      A16: "Xe điện đụng",
+      A17: "Tàu lượn mini trẻ em",
+      A18: "Đi dạo khu vườn thế giới",
+      S01: "Tata Show",
+      S02: "Show nàng tiên cá",
+      S03: "Show cho cá ăn",
+      S04: "Show chim muông",
+      S05: "Diễu hành lễ hội",
+      S06: "Kịch rối cho bé",
+      SV01: "Cho thú ăn",
+      SV02: "Xe điện buggy",
+      SV03: "Tủ đồ công viên nước",
+      SV04: "Áo mưa giấy",
+      SV05: "Zipline"
+    };
+
+    const ZONE_CODE_NAMES = {
+      SEA_WORLD: "Sea World (Thủy cung)",
+      TROPICAL_PARADISE: "Tropical Paradise (Công viên nước)",
+      KINGS_GARDEN: "King's Garden (Vườn thú)",
+      FAIRY_LAND: "Fairy Land (Lâu đài cổ tích)",
+      WORLD_GARDEN: "The World Garden",
+      FESTIVE_HILL: "Festive Hill (Đồi Lễ Hội)"
+    };
+
+    function humanizeUiText(v) {
+      let s = String(v ?? "");
+      s = s.replace(/\s*\u00b7\s*/g, ", ");
+      s = s.replace(/\s*\(mẫu\)\s*/gi, " ");
+      s = s.replace(/\[(A\d{2}|S0[1-6]|SV0[1-5])\]\s*/g, "");
+      s = s.replace(/\s*\((?:(?:A\d{2}|S0[1-6]|SV0[1-5])(?:\s*\/\s*(?:A\d{2}|S0[1-6]|SV0[1-5]))*)\)/g, "");
+      s = s.replace(/\b(A\d{2}|S0[1-6]|SV0[1-5])\b/g, (m) => ITEM_CODE_NAMES[m] || m);
+      s = s.replace(/\b(SEA_WORLD|TROPICAL_PARADISE|KINGS_GARDEN|FAIRY_LAND|WORLD_GARDEN|FESTIVE_HILL)\b/g, (m) => ZONE_CODE_NAMES[m] || m);
+      return s.replace(/[ \t]{2,}/g, " ").trim();
+    }
+
     function esc(v) {
       return String(v ?? "")
         .replace(/\s*\u00b7\s*/g, ", ")
@@ -1245,7 +1308,7 @@
     function renderWeatherViews() {
       const days = (forecastData && forecastData.days) || [];
       if (!days.length) return;
-      weatherSourceBadge.textContent = forecastData.source_label || "Dự báo 7 ngày";
+      weatherSourceBadge.textContent = forecastData.source_label || "Dự báo 8 ngày";
       const tabSub = document.getElementById("weatherTabSub");
       if (tabSub) tabSub.textContent = `${forecastData.source_label}. Chọn một ngày để đồng bộ tự động vào lịch trình.`;
 
@@ -1278,11 +1341,12 @@
       weather7dGrid.innerHTML = days.map((d, idx) => {
         const isActive = idx === selectedDayIdx;
         const badgeCls = d.scenario_id === "ALL_DAY_RAIN" ? "heavy" : (d.scenario_id === "SUNNY" ? "" : "rain");
+        const cardTitle = idx <= 2 ? `${d.rel_label} (${d.weekday_vi})` : d.weekday_vi;
         return `
           <article class="wd-card ${isActive ? "active" : ""}">
             <div class="wd-head">
               <div>
-                <div class="wd-title">${esc(d.rel_label)}, ${esc(d.weekday_vi)}</div>
+                <div class="wd-title">${esc(cardTitle)}</div>
                 <div class="wd-sub nums">${esc(d.full_date)}</div>
               </div>
               ${weatherIconSvg(d.icon)}
@@ -1326,15 +1390,16 @@
       } catch {
         const base = new Date();
         const wdNames = ["Chủ nhật", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"];
-        const fallbackDays = Array.from({ length: 7 }, (_, i) => {
+        const fallbackDays = Array.from({ length: 8 }, (_, i) => {
           const dt = new Date(base.getTime() + i * 86400000);
           const dd = String(dt.getDate()).padStart(2, "0");
           const mm = String(dt.getMonth() + 1).padStart(2, "0");
           const yyyy = dt.getFullYear();
           const rel = i === 0 ? "Hôm nay" : (i === 1 ? "Ngày mai" : (i === 2 ? "Ngày kia" : wdNames[dt.getDay()]));
+          const wd = i === 7 ? `${wdNames[dt.getDay()]} tuần sau` : wdNames[dt.getDay()];
           return {
             date: `${yyyy}-${mm}-${dd}`, display_date: `${dd}/${mm}`, full_date: `${dd}/${mm}/${yyyy}`,
-            weekday_vi: wdNames[dt.getDay()], rel_label: rel, temp_min: 25, temp_max: 31, rain_prob: 15,
+            weekday_vi: wd, rel_label: rel, temp_min: 25, temp_max: 31, rain_prob: 15,
             icon: "sun", scenario_id: "SUNNY", weather_label: "Nắng ráo", short_label: "Nắng ráo",
             advice: "Thuận lợi vui chơi cả trong nhà và ngoài trời.", prompt_hint: ""
           };
@@ -1361,7 +1426,7 @@
             <div class="zone-media">
               <img src="${esc(z.img)}" alt="Hình ảnh minh họa phân khu ${esc(z.label)} tại VinWonders Nha Trang" />
               <span class="zone-walk-badge nums">Từ cổng ${walk} phút đi bộ</span>
-              <button type="button" class="zone-hover-hint nums">Di chuột xem ${rides.length} trò ▾</button>
+              <button type="button" class="zone-hover-hint nums">Xem ${rides.length} trò &amp; chiều cao</button>
               <div class="zone-rides-overlay">
                 <div class="overlay-head">
                   <span>${esc(z.short)} (${rides.length} trò chơi)</span>
@@ -1671,7 +1736,7 @@
           const dur = Math.max(0, toMin(it.end) - toMin(it.start));
           const zMeta = ZONES[it.zone] || { label: it.zone, color: "#0e4d5c", img: "/assets/hero_vinwonders.jpg" };
           const isIndoor = String(it.env || "").toLowerCase().includes("trong nhà");
-          const cleanName = String(it.name || "").replace(/\s*\(mẫu\)\s*/gi, "").trim();
+          const cleanName = humanizeUiText(it.name);
 
           stopsHtml += `
             <div class="leg-connector nums">
@@ -1695,7 +1760,7 @@
                   </div>
                 </div>
                 <h4 class="stop-name">${esc(cleanName)}</h4>
-                <p class="stop-reason">${esc(it.reason)}</p>
+                <p class="stop-reason">${esc(humanizeUiText(it.reason))}</p>
               </div>
             </article>
           `;
@@ -1703,7 +1768,7 @@
         });
 
         const notesHtml = (p.notes && p.notes.length)
-          ? `<div class="notes-box"><strong>Lưu ý dành cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(n)}</li>`).join("")}</ul></div>`
+          ? `<div class="notes-box"><strong>Lưu ý dành cho gia đình:</strong><ul>${p.notes.map((n) => `<li>${esc(humanizeUiText(n))}</li>`).join("")}</ul></div>`
           : "";
 
         timelineRoot.innerHTML = `
@@ -1749,7 +1814,7 @@
       const meta = metaMap[p.kind] || metaMap.other;
       timelineRoot.innerHTML = `
         <div class="banner ${meta.cls}"><span>${meta.title}</span></div>
-        <div class="raw-msg">${esc(data.output || "")}</div>
+        <div class="raw-msg">${esc(humanizeUiText(data.output || ""))}</div>
       `;
     }
 
@@ -2018,7 +2083,7 @@
       const day = getSelectedDay();
       const dayHeader = day ? `Ngày dự kiến: ${day.rel_label} (${day.full_date})\n` : "";
       try {
-        const cleanOut = String(currentData.output).replace(/\s*\u00b7\s*/g, ", ");
+        const cleanOut = humanizeUiText(currentData.output);
         await navigator.clipboard.writeText(dayHeader + cleanOut);
         if (triggerBtnLabel) {
           const old = triggerBtnLabel.textContent;
