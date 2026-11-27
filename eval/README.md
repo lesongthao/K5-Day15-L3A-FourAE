@@ -38,10 +38,12 @@
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
 | 1 | `run-1@20261127-182508` | `cx/gpt-5.6-luna` | Luồng Plan → `kiem_lich_trinh` (code) → Repair trên 25 câu thật (`eval/run-1.csv`, `thuong` 4/9 · `kho` 8/12 · `tu_choi` 4/4) | 16/25 | 64% | Chưa đạt (<80%; đạt 3/3 điều kiện cứng) |
-| 2 | | | | __/__ | | |
+| 2 | `run-2@20261127-185059` | `cx/gpt-5.6-luna` | Nâng cấp `_build_context` (truyền `chi_phi_code_da_tinh`, `di_chuyen_va_dem`, `diem_bao_tri_va_ngoai_ve`), pre-check `tong_tien_vnd`, tách `request_parser.py` & siết prompt (`eval/run-2.csv`, `thuong` 9/9 · `kho` 10/12 · `tu_choi` 4/4) | 23/25 | 92% | Đạt chuẩn (≥80%; 0 vi phạm cứng; 4/4 tu_choi) |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
 
 ## 6. Lỗi chính
 
-Tóm 2–3 dòng từ `eval/report.md`: nhóm lỗi lớn nhất · đã sửa gì · còn lại gì.
+- **Nhóm lỗi lớn nhất Lượt 1:** Thiếu `chi_phi_code_da_tinh` và ma trận `di_chuyen_va_dem` trong `context` cùng pre-check bỏ sót phụ thu (`B01, B03, B06, B10, B17, B22, B23`) và model bỏ sót điểm/show khách yêu cầu (`B18, B19`).
+- **Đã sửa cho Lượt 2:** Truyền đủ chi phí code, ma trận di chuyển + đệm 20p CVN, danh sách điểm bảo trì/không giá lẻ vào `context`, sửa pre-check so `tong_tien_vnd` và siết prompt giữ mục khách yêu cầu → tỷ lệ đạt tăng **64% → 92%** (`0` câu tệ đi, tổng token giảm **28.7%**).
+- **Còn lại (2 câu trượt Lượt 2):** `B06` (`request_parser.py` mới lấy 1 trẻ từ `"2 bé 8 tuổi cao 125cm"`, cần nhân bản theo số lượng bé khi dùng chung chiều cao) và `B22` (model trả `khong_xep_duoc=true` khi `S01` bị huỷ do `EVENING_RAIN` thay vì xếp phương án trong nhà). Chi tiết tại `eval/report.md`.
