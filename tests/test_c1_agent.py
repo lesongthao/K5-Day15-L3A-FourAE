@@ -12,6 +12,7 @@ if CODEBASE not in sys.path:
     sys.path.insert(0, CODEBASE)
 
 import agent  # noqa: E402
+import request_parser  # noqa: E402
 import tools  # noqa: E402
 import tracing  # noqa: E402
 
@@ -181,6 +182,51 @@ class TestTrackC1VinWonders(unittest.TestCase):
         self.assertIn("Không thể xếp lịch", res["output"])
         self.assertIn("3,000,000đ", res["output"])
         self.assertIn("80,000đ", res["output"])
+
+    def test_14_natural_vietnamese_budget_time_and_family_parsing(self) -> None:
+        """Nhận diện '4 triệu 5', 'dưới 1 mét', '1 mẹ', 'ông ngoại ngoại 61 tuổi', '16 giờ đến 20 giờ'."""
+        parsed_di = request_parser.parse_request(
+            "2 người lớn, 1 bé cao  dưới 1 mét, 1 bé cao 1m4, đi cùng với bà ngoại 59 tuổi, buổi chiều từ 14 giờ, ngân sách 4 triệu 5"
+        )
+        self.assertEqual(parsed_di["ngan_sach_vnd"], 4_500_000)
+        self.assertEqual(parsed_di["adults"], 2)
+        self.assertEqual(sorted(parsed_di["child_heights"]), [95, 140])
+        self.assertEqual(parsed_di["gio_bat_dau"], "14:00")
+        self.assertEqual(parsed_di["loai_ve"], "STANDARD")
+        check_di = tools.kiem_lich_trinh(
+            lich=[{"id": "A08", "start": "14:15", "end": "15:15"}],
+            ngan_sach_vnd=parsed_di["ngan_sach_vnd"],
+            nhom_khach=parsed_di["nhom_khach"],
+            loai_ve=parsed_di["loai_ve"],
+            gio_bat_dau=parsed_di["gio_bat_dau"],
+            gio_ket_thuc=parsed_di["gio_ket_thuc"],
+        )
+        self.assertTrue(check_di["hop_le"])
+        self.assertEqual(check_di["tong_tien_vnd"], 4_200_000)
+
+        parsed_me = request_parser.parse_request(
+            "1 mẹ, 1 bé cao 1m39, đi cùng với ông ngoại ngoại 61 tuổi, buổi chiều từ 16 giờ đến 20 giờ, ngân sách 3 triệu 5, chơi 3 đến 4 trò chơi"
+        )
+        self.assertEqual(parsed_me["ngan_sach_vnd"], 3_500_000)
+        self.assertEqual(parsed_me["adults"], 1)
+        self.assertEqual(parsed_me["child_heights"], [139])
+        self.assertEqual(parsed_me["gio_bat_dau"], "16:00")
+        self.assertEqual(parsed_me["gio_ket_thuc"], "20:00")
+        self.assertEqual(parsed_me["loai_ve"], "AFTER_16H")
+        self.assertIn(61, [m["tuoi"] for m in parsed_me["nhom_khach"]])
+        check_me = tools.kiem_lich_trinh(
+            lich=[{"id": "A08", "start": "16:15", "end": "17:15"}],
+            ngan_sach_vnd=parsed_me["ngan_sach_vnd"],
+            nhom_khach=parsed_me["nhom_khach"],
+            loai_ve=parsed_me["loai_ve"],
+            gio_bat_dau=parsed_me["gio_bat_dau"],
+            gio_ket_thuc=parsed_me["gio_ket_thuc"],
+        )
+        self.assertTrue(check_me["hop_le"])
+        self.assertEqual(check_me["tong_tien_vnd"], 1_800_000)
+
+        parsed_safe = request_parser.parse_request("ngân sách 3 triệu 2 người lớn, 1 bé cao 115cm")
+        self.assertEqual(parsed_safe["ngan_sach_vnd"], 3_000_000)
 
 
 if __name__ == "__main__":

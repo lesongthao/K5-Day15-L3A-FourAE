@@ -37,6 +37,18 @@ def check_safety(text: str) -> str | None:
 def extract_budget(text: str) -> int | None:
     """Trích xuất ngân sách tối đa (VNĐ) từ câu tiếng Việt tự nhiên."""
     norm = text.lower().replace(",", ".")
+    m_half = re.search(r"(?<![\.,\d])(\d+)\s*(?:tr|triệu|trieu)\s*rưỡi\b", norm)
+    if m_half:
+        return int(m_half.group(1)) * 1_000_000 + 500_000
+    m_tr_k = re.search(r"(?<![\.,\d])(\d+)\s*(?:tr|triệu|trieu)\s*(\d{3})(?:\s*(?:k|nghìn|nghin|ngàn|ngan))?\b", norm)
+    if m_tr_k:
+        return int(m_tr_k.group(1)) * 1_000_000 + int(m_tr_k.group(2)) * 1_000
+    m_tr_short = re.search(
+        r"(?<![\.,\d])(\d+)\s*(?:tr|triệu|trieu)\s+(\d{1,2})\b(?!\s*(?:người|nguoi|bé|trẻ|con|giờ|gio|h\b|tuổi|trò|khu|show|vé|tiếng|phút|cm|m\b|m\d))",
+        norm,
+    )
+    if m_tr_short:
+        return int(m_tr_short.group(1)) * 1_000_000 + int(m_tr_short.group(2).ljust(2, "0")) * 10_000
     m_tr = re.search(r"(\d+(?:\.\d+)?)\s*(?:tr|triệu|trieu)", norm)
     if m_tr:
         return int(float(m_tr.group(1)) * 1_000_000)
@@ -51,22 +63,34 @@ def extract_budget(text: str) -> int | None:
 
 
 def extract_heights(text: str) -> list[int]:
-    """Trích xuất chiều cao (cm) từ các dạng '115cm', '1m15', '1m2'."""
+    """Trích xuất chiều cao (cm) từ các dạng '115cm', '1m15', '1 mét 2', 'dưới 1 mét'."""
     low = text.lower()
     heights = [int(h) for h in re.findall(r"(\d{2,3})\s*cm", low)]
     for m in re.finditer(r"\b(\d)m(\d{1,2})\b", low):
         heights.append(int(m.group(1)) * 100 + int(m.group(2).ljust(2, "0")))
+    for m in re.finditer(r"\b(\d)\s*(?:mét|met)\s*(\d{1,2})\b", low):
+        heights.append(int(m.group(1)) * 100 + int(m.group(2).ljust(2, "0")))
+    under_1m = re.findall(r"(?:dưới|<)\s*1\s*(?:mét|met|m(?![\d]))", low)
+    heights.extend([95] * len(under_1m))
     return heights
 
 
 def parse_request(text: str) -> dict[str, Any]:
     """Trích xuất thành phần đoàn khách, khung giờ, loại vé, thời tiết và dịch vụ lẻ."""
     low = text.lower()
-    m_adults = re.search(r"(\d+)\s*(?:người lớn|nguoi lon|bố mẹ|ba mẹ|phụ huynh)", low)
-    adults = int(m_adults.group(1)) if m_adults else (2 if ("gia đình" in low or "vợ chồng" in low) else None)
+    primary_adults = re.findall(r"(\d+)\s*(?:người lớn|nguoi lon|bố mẹ|ba mẹ|phụ huynh|vợ chồng)\b", low)
+    if primary_adults:
+        adults: int | None = sum(int(x) for x in primary_adults)
+    else:
+        solo_adults = re.findall(r"(\d+)\s*(?:bố|ba|cha|mẹ|vợ|chồng)\b", low)
+        if solo_adults:
+            adults = sum(int(x) for x in solo_adults)
+        else:
+            adults = 2 if ("gia đình" in low or "vợ chồng" in low) else None
+
     m_seniors = re.search(r"(\d+)\s*(?:người cao tuổi|ông bà|cụ|người già)", low)
     seniors = int(m_seniors.group(1)) if m_seniors else 0
-    senior_ages = [int(a) for a in re.findall(r"(?:ông|bà|cụ|người cao tuổi)[^\d]{0,12}(\d{2})\s*tuổi", low)]
+    senior_ages = [int(a) for a in re.findall(r"(?:ông|bà|cụ|người cao tuổi)[^\d]{0,24}(\d{2})\s*tuổi", low)]
     if senior_ages and seniors == 0:
         seniors = len(senior_ages)
 
@@ -74,10 +98,17 @@ def parse_request(text: str) -> dict[str, Any]:
     child_ages = [int(a) for a in re.findall(r"(?:bé|trẻ|con)\s*(?:gái|trai)?\s*(\d{1,2})\s*tuổi", low)]
     has_child_mention = bool(child_heights or child_ages or re.search(r"\b(?:bé|trẻ nhỏ|trẻ em|con nhỏ)\b", low))
 
-    m_time = re.search(r"(\d{1,2})[:h](\d{0,2})\s*(?:-|đến|tới)\s*(\d{1,2})[:h](\d{0,2})", low)
+    m_time = re.search(
+        r"(\d{1,2})\s*(?::|h|giờ|gio)\s*(\d{0,2})\s*(?:-|đến|tới)\s*(\d{1,2})\s*(?::|h|giờ|gio)\s*(\d{0,2})",
+        low,
+    )
+    m_start = re.search(r"từ\s*(\d{1,2})\s*(?::|h|giờ|gio)\s*(\d{0,2})", low)
     if m_time:
         start = f"{int(m_time.group(1)):02d}:{int(m_time.group(2) or 0):02d}"
         end = f"{int(m_time.group(3)):02d}:{int(m_time.group(4) or 0):02d}"
+    elif m_start and 9 <= int(m_start.group(1)) <= 19:
+        start = f"{int(m_start.group(1)):02d}:{int(m_start.group(2) or 0):02d}"
+        end = "20:00"
     elif "3 tiếng" in low or "ba tiếng" in low:
         start, end = "14:00", "17:00"
     elif "sau 16" in low or "sau 4h" in low or "buổi tối" in low:

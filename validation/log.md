@@ -6,15 +6,15 @@
 
 | Người thử (vai) | Việc giao (theo kết quả, không theo nút) | Quan sát (làm gì đầu tiên, chỗ do dự, chỗ hiểu sai) | Trích nguyên văn | Mức nghiêm trọng (cao / vừa / thấp) |
 |---|---|---|---|---|
-| | | | | |
-| | | | | |
-| | | | | |
+| Người thân đi du lịch gia đình (2 bé dưới 1m & 1m4, người lớn 59t) | Tự nhập yêu cầu lập lịch buổi chiều từ 14h cho gia đình với ngân sách 4 triệu rưỡi | Gõ thẳng vào ô yêu cầu: *"2 người lớn, 1 bé cao dưới 1 mét, 1 bé cao 1m4, đi cùng với bà ngoại 59 tuổi, buổi chiều từ 14 giờ, ngân sách 4 triệu 5"*. Hệ thống báo không xếp được vì vượt 200k (hiểu nhầm "4 triệu 5" thành `4.000.000đ` trong khi vé cổng đúng là `4.200.000đ`, thực tế dư `300.000đ`); người thử khựng lại hỏi lại người hướng dẫn. | *"Dư tiền mà sao nó lại báo thiếu 200 nghìn?"* | Cao |
+| Phụ huynh trung niên (1 bé 1m39, đi cùng ông ngoại 61t) | Tự lập lịch đi chơi sau 16h đến 20h, chơi 3–4 trò với ngân sách 3 triệu rưỡi | Gõ tự nhiên: *"1 mẹ, 1 bé cao 1m39, đi cùng với ông ngoại ngoại 61 tuổi, buổi chiều từ 16 giờ đến 20 giờ, ngân sách 3 triệu 5, chơi 3 đến 4 trò chơi"*. Hệ thống chặn hỏi lại *"bổ sung số người lớn"* vì không nhận ra cụm *"1 mẹ"*, đồng thời bỏ sót chữ *"giờ"* và *"3 triệu 5"*. | *"Gõ rõ 1 mẹ với 3 triệu 5 rồi mà gửi vẫn không được."* | Cao |
+| Người cao tuổi (≥60 tuổi, chưa từng đi VinWonders Nha Trang) | Mở trang web xem qua thông tin các phân khu trước khi cân nhắc đi cùng con cháu | Nhìn lướt qua 6 thẻ ảnh phân khu rồi khựng lại, không thấy bảng giá vé trọn gói hay từng khu, không rõ vé có chia ca sáng/ca chiều không (chỉ thấy nhắc sau 16h), không thấy giờ mở cửa – đóng cửa; đánh giá thông tin nền còn sơ sài hơn xem review trên TikTok. | *"Xem qua chả biết vé của 6 khu giá bao nhiêu, chỉ thấy để ảnh không thấy để giá; chả biết vé mua có chia thành ca sáng, ca chiều, cả ngày không, chỉ thấy ghi sau 16 giờ; chả biết mở cửa lúc nào, đóng cửa lúc nào. Có để tham khảo cũng được vì chưa đi bao giờ, mà không có cũng chẳng sao, lên TikTok xem người ta review còn thực tế hơn, ở đây thiếu nhiều thông tin quá."* | Cao |
 
-Câu hỏi sau: *"Nếu mai không được dùng nữa, bạn thấy: rất tiếc / hơi tiếc / không sao?"* → __ / __ / __
+Câu hỏi sau: *"Nếu mai không được dùng nữa, bạn thấy: rất tiếc / hơi tiếc / không sao?"* → **0 / 0 / 3** *(0 rất tiếc · 0 hơi tiếc · 3 không sao — lý do: bộ gõ tự nhiên chưa hiểu hết câu đời thường và trang đầu thiếu bảng giá, giờ mở cửa, chi tiết trò chơi)*.
 
 ## Tổng hợp
 
-- Chủ đề lặp nhiều nhất: __
-- Sửa gì trước demo (ghi `spec.md` §10): __
-- Giữ gì và vì sao: __
-- Để dành sau: __
+- Chủ đề lặp nhiều nhất: (1) Người dùng thật viết câu tiếng Việt đời thường khác bộ câu thử (`"4 triệu 5"`, `"1 mẹ"`, `"dưới 1 mét"`, `"16 giờ đến 20 giờ"`); (2) Khách chưa từng đi khu vui chơi cần thấy ngay trên trang chủ bảng giá vé trọn gói 6 khu (không chia ca sáng/chiều), giờ mở–đóng cửa, lịch show và danh sách trò chơi kèm chiều cao chứ không chỉ ảnh minh họa và ô nhập AI.
+- Sửa gì trước demo (ghi `spec.md` §10): (1) Nâng cấp `codebase/request_parser.py` đọc được `"X triệu Y"`, `"X triệu rưỡi"`, `"dưới 1 mét"`, `"1 mẹ/1 bố"`, `"X giờ đến Y giờ"` và khoảng đệm tuổi ông bà dài hơn + thêm `test_14` hồi quy trong `tests/test_c1_agent.py` (**19/19 PASS**); (2) Bổ sung ngay trên `codebase/web_ui.html` khối **Bảng giá vé niêm yết trọn gói 6 phân khu & Giờ mở cửa**, **Lịch 6 show biểu diễn** và danh sách chi tiết **18 trò chơi kèm chiều cao/tuổi/tình trạng bảo trì** trong từng thẻ phân khu.
+- Giữ gì và vì sao: Giữ nguyên công thức tính giá vé và kiểm ràng buộc bằng code (`kiem_lich_trinh` đã tính đúng cả bé `1m4` và người `59 tuổi` cùng hạng vé người lớn `1.050.000đ`), bản đồ lộ trình Hòn Tre và nút sao chép gửi Zalo / In PDF.
+- Để dành sau: Bổ sung ảnh/clip thực tế từng trò chơi, thông tin ăn uống – nhà hàng trong công viên và trích review thật theo từng khu để khắc phục điểm yếu "kém trực quan hơn xem review TikTok".

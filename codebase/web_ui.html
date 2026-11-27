@@ -355,6 +355,91 @@
       font-size: 0.77rem; font-weight: 600; color: var(--primary);
       background: var(--primary-soft); padding: 3px 10px; border-radius: 999px;
     }
+    .zone-hours-row {
+      display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 8px;
+      font-size: 0.77rem; font-weight: 600;
+    }
+    .zone-included-pill {
+      padding: 2px 8px; border-radius: 999px;
+      background: var(--emerald-bg); color: var(--emerald); border: 1px solid var(--emerald-border);
+    }
+    .zone-time-pill {
+      padding: 2px 8px; border-radius: 999px;
+      background: var(--surface-soft); color: var(--muted); border: 1px solid var(--border);
+    }
+    details.zone-rides {
+      margin: 0 0 12px; padding: 7px 10px; border-radius: 10px;
+      background: var(--surface-soft); border: 1px solid var(--border); font-size: 0.8rem;
+    }
+    details.zone-rides summary {
+      cursor: pointer; font-weight: 700; color: var(--primary-deep); list-style: none;
+      display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    }
+    details.zone-rides summary::-webkit-details-marker { display: none; }
+    .ride-list { margin: 8px 0 2px; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .ride-item {
+      padding-top: 6px; border-top: 1px dashed var(--border);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .ride-name { font-weight: 700; color: var(--ink); font-size: 0.81rem; }
+    .ride-meta { color: var(--muted); font-size: 0.76rem; line-height: 1.4; }
+    .ride-warn { color: var(--rose); font-weight: 700; }
+    .ride-paid { color: var(--amber); font-weight: 700; }
+
+    /* Practical Visitor Guide (Tickets, Hours, Shows) */
+    .guide-shell {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+      padding: 18px 20px; margin-bottom: 20px; min-width: 0;
+    }
+    .guide-banner {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 10px 14px; border-radius: 12px; margin-bottom: 14px;
+      background: var(--primary-soft); border: 1px solid #9ec8d1;
+      color: var(--primary-deep); font-size: 0.89rem; font-weight: 700;
+    }
+    .guide-grid {
+      display: grid; grid-template-columns: 1fr 1.28fr 1fr; gap: 14px; align-items: stretch;
+    }
+    @media (max-width: 980px) { .guide-grid { grid-template-columns: 1fr; } }
+    .guide-box {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 13px; padding: 13px 14px; display: flex; flex-direction: column; gap: 8px;
+      min-width: 0;
+    }
+    .guide-box h4 { margin: 0; font-size: 0.96rem; font-weight: 700; color: var(--primary-deep); }
+    .guide-list { margin: 0; padding-left: 17px; font-size: 0.83rem; color: var(--ink-soft); display: grid; gap: 5px; }
+    .guide-note { margin: 0; font-size: 0.77rem; color: var(--muted); }
+    .tbl-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
+    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; min-width: 310px; }
+    table.price-tbl th, table.price-tbl td {
+      padding: 6px 6px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
+    }
+    table.price-tbl th:first-child, table.price-tbl td:first-child { text-align: left; white-space: normal; }
+    table.price-tbl th { font-size: 0.74rem; color: var(--muted); font-weight: 700; }
+    table.price-tbl td strong { color: var(--primary-deep); }
+
+    .shows-shell {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); box-shadow: var(--shadow-sm);
+      padding: 16px 20px; margin-bottom: 22px;
+    }
+    .shows-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;
+    }
+    @media (max-width: 900px) { .shows-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 580px) { .shows-grid { grid-template-columns: 1fr; } }
+    .show-card {
+      padding: 10px 12px; border-radius: 11px; background: var(--bg);
+      border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px;
+    }
+    .show-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+    .show-time {
+      padding: 2px 8px; border-radius: 7px; font-size: 0.78rem; font-weight: 700;
+      background: var(--primary-soft); color: var(--primary-deep);
+    }
+    .show-name { margin: 0; font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+    .show-meta { margin: 0; font-size: 0.78rem; color: var(--muted); }
 
     /* Results Split-Screen Workspace */
     .hidden { display: none !important; }
@@ -533,6 +618,8 @@
       </a>
 
       <nav class="top-nav" aria-label="Điều hướng nhanh">
+        <a href="#parkGuide">Giá vé &amp; Giờ mở</a>
+        <a href="#showsGuide">Lịch show</a>
         <a href="#exploreSection">6 phân khu</a>
         <a href="#conciergeDock">Lập lịch trình</a>
       </nav>
@@ -675,11 +762,119 @@
       </div>
     </section>
 
-    <!-- View 1: Explore 6 Park Zones (preserved structure) -->
-    <section class="explore-section" id="exploreSection" aria-label="Khám phá 6 phân khu VinWonders Nha Trang">
+    <!-- View 1: Practical Visitor Guide + Explore 6 Park Zones -->
+    <section class="explore-section" id="exploreSection" aria-label="Thông tin giá vé, lịch show và 6 phân khu VinWonders Nha Trang">
+      <section class="guide-shell" id="parkGuide" aria-label="Giờ mở cửa và Bảng giá vé trọn gói 6 phân khu">
+        <div class="guide-banner">
+          <span>1 vé trọn gói đã gồm cáp treo 2 chiều và vui chơi cả 6 phân khu — không bán vé lẻ từng khu, không chia ca sáng / ca chiều.</span>
+          <span class="nums" style="font-size:0.81rem;">Mở cửa 09:00–20:00 · Công viên nước 10:00–17:30</span>
+        </div>
+        <div class="guide-grid">
+          <article class="guide-box">
+            <h4>Giờ mở cửa &amp; Cách tính hạng vé</h4>
+            <ul class="guide-list">
+              <li><strong>Toàn khu:</strong> 09:00–20:00 hằng ngày; riêng Công viên nước <strong>10:00–17:30</strong> (+20 phút tắm tráng, thay đồ khi rời khu).</li>
+              <li><strong>2 khung vào cổng trong ngày:</strong> Vé cả ngày (từ 09:00) và Vé sau 16:00 (ngoài ra có gói 2 ngày / 3 ngày).</li>
+              <li><strong>Hạng vé theo tuổi &amp; chiều cao:</strong> từ 60 tuổi tính vé Người cao tuổi (mang giấy tờ tùy thân); còn lại &lt;1m miễn phí, 1m–&lt;1m4 vé Trẻ em, ≥1m4 vé Người lớn.</li>
+            </ul>
+          </article>
+
+          <article class="guide-box">
+            <h4>Bảng giá vé niêm yết trọn gói (VNĐ)</h4>
+            <div class="tbl-scroll">
+              <table class="price-tbl nums">
+                <thead>
+                  <tr>
+                    <th>Nhóm khách</th>
+                    <th>Cả ngày (09:00)</th>
+                    <th>Sau 16:00</th>
+                    <th>2 ngày</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Người lớn (≥1m4)</td>
+                    <td><strong>1.050.000đ</strong></td>
+                    <td>700.000đ</td>
+                    <td>1.350.000đ</td>
+                  </tr>
+                  <tr>
+                    <td>Trẻ em (1m–&lt;1m4)</td>
+                    <td><strong>800.000đ</strong></td>
+                    <td>550.000đ</td>
+                    <td>1.050.000đ</td>
+                  </tr>
+                  <tr>
+                    <td>Người cao tuổi (≥60t)</td>
+                    <td><strong>800.000đ</strong></td>
+                    <td>550.000đ</td>
+                    <td>1.050.000đ</td>
+                  </tr>
+                  <tr>
+                    <td>Bé dưới 1m</td>
+                    <td><strong>Miễn phí</strong></td>
+                    <td>Miễn phí</td>
+                    <td>Miễn phí</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="guide-note">Đã gồm VAT &amp; cáp treo 2 chiều. Vé không hoàn, không đổi, không trả (gói 3 ngày: 1.600k / 1.050k / 1.200k).</p>
+          </article>
+
+          <article class="guide-box">
+            <h4>Phụ thu ngoài vé &amp; Bảo trì</h4>
+            <ul class="guide-list">
+              <li><strong>Dịch vụ lẻ tham khảo:</strong> Cho thú ăn (50.000đ/phần), Tủ đồ Công viên nước (50.000đ/tủ), Áo mưa giấy (30.000đ/cái).</li>
+              <li><strong>Thu phí riêng tại quầy:</strong> Zipline (≥1m3, ≤110kg) và Xe điện Buggy nội khu chưa có giá lẻ niêm yết sẵn.</li>
+              <li><strong>Đang tạm bảo trì:</strong> Xe điện đụng (Festive Hill) và Tàu lượn mini trẻ em (Fairy Land) — hệ thống tự tránh khi xếp lịch.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="shows-shell" id="showsGuide" aria-label="Lịch 6 show biểu diễn trong ngày">
+        <div class="explore-head" style="margin-bottom:12px;">
+          <h3 class="serif" style="font-size:1.22rem;">Lịch 6 show biểu diễn tham khảo trong ngày</h3>
+          <p>Show ngoài trời tạm huỷ khi trời mưa; show trong nhà vẫn diễn bình thường.</p>
+        </div>
+        <div class="shows-grid">
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">19:30 (30p)</span><span class="tag outdoor">Ngoài trời</span></div>
+            <p class="show-name">Tata Show</p>
+            <p class="show-meta">Festive Hill · Đã gồm trong vé · Huỷ nếu mưa tối</p>
+          </div>
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">11:00 · 15:00 (20p)</span><span class="tag indoor">Trong nhà</span></div>
+            <p class="show-name">Show nàng tiên cá</p>
+            <p class="show-meta">Sea World · Chơi được khi mưa · Hợp mọi lứa tuổi</p>
+          </div>
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">10:00 · 14:00 (15p)</span><span class="tag indoor">Trong nhà</span></div>
+            <p class="show-name">Show cho cá ăn</p>
+            <p class="show-meta">Sea World · Chơi được khi mưa · Hợp trẻ nhỏ &amp; ông bà</p>
+          </div>
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">10:30 · 15:30 (25p)</span><span class="tag outdoor">Ngoài trời</span></div>
+            <p class="show-name">Show chim muông</p>
+            <p class="show-meta">King's Garden · Cách Sea World 20p đi bộ · Huỷ khi mưa</p>
+          </div>
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">16:30 (30p)</span><span class="tag outdoor">Ngoài trời</span></div>
+            <p class="show-name">Diễu hành lễ hội</p>
+            <p class="show-meta">Festive Hill · Không khí gia đình · Huỷ khi mưa</p>
+          </div>
+          <div class="show-card">
+            <div class="show-top"><span class="show-time nums">09:30 · 13:30 · 16:00 (20p)</span><span class="tag indoor">Trong nhà</span></div>
+            <p class="show-name">Kịch rối cho bé</p>
+            <p class="show-meta">Fairy Land · Hợp bé nhỏ, tránh nắng mưa</p>
+          </div>
+        </div>
+      </section>
+
       <div class="explore-head">
         <h3 class="serif">Khám phá 6 phân khu tại VinWonders Nha Trang</h3>
-        <p>Chọn khu gia đình yêu thích để thêm nhanh vào lịch trình, hoặc chọn gợi ý phía trên.</p>
+        <p>Tất cả 6 khu đều nằm trong 1 vé vào cổng · Mở mục "Xem trò chơi" để xem chi tiết chiều cao &amp; giờ mở cửa.</p>
       </div>
       <div class="zones-grid" id="zonesGrid"></div>
     </section>
@@ -753,34 +948,67 @@
       },
       WORLD_GARDEN: {
         label: "The World Garden", short: "World Garden", x: 326, y: 238, color: "#0e4d5c",
-        img: "/assets/zone_world_garden.jpg", tag: "Nhà kính & Bánh xe",
+        img: "/assets/zone_world_garden.jpg", tag: "Nhà kính & Bánh xe", hours: "09:00–20:00",
         desc: "Vườn hoa 5 châu mát mẻ, Bánh xe bầu trời ngắm toàn vịnh Nha Trang (không giới hạn tuổi)."
       },
       SEA_WORLD: {
         label: "Sea World · Thủy cung", short: "Sea World", x: 308, y: 468, color: "#136f82",
-        img: "/assets/zone_sea_world.jpg", tag: "Trong nhà · Tránh mưa",
+        img: "/assets/zone_sea_world.jpg", tag: "Trong nhà · Tránh mưa", hours: "09:00–19:00",
         desc: "Đường hầm thủy cung mát mẻ, show Nàng tiên cá & cho cá ăn, phù hợp mọi lứa tuổi và ngày mưa."
       },
       TROPICAL_PARADISE: {
         label: "Tropical Paradise · Công viên nước", short: "Công viên nước", x: 510, y: 422, color: "#0b7a75",
-        img: "/assets/zone_tropical_paradise.jpg", tag: "Mở 10:00–17:30",
+        img: "/assets/zone_tropical_paradise.jpg", tag: "Mở 10:00–17:30", hours: "10:00–17:30",
         desc: "Hồ tạo sóng, dòng sông lười cho bé. Lưu ý cộng +20 phút tắm tráng, thay đồ khi rời khu."
       },
       KINGS_GARDEN: {
         label: "King's Garden · Vườn thú", short: "King's Garden", x: 548, y: 236, color: "#0b6e4f",
-        img: "/assets/zone_kings_garden.jpg", tag: "Bé yêu thích",
+        img: "/assets/zone_kings_garden.jpg", tag: "Bé yêu thích", hours: "09:00–18:00",
         desc: "Hồng hạc, hươu cao cổ, hồ thú thân thiện trẻ nhỏ và show chim buổi chiều."
       },
       FESTIVE_HILL: {
         label: "Festive Hill · Đồi Lễ Hội", short: "Festive Hill", x: 750, y: 222, color: "#c67d22",
-        img: "/assets/zone_festive_hill.jpg", tag: "Quảng trường & Rạp",
+        img: "/assets/zone_festive_hill.jpg", tag: "Quảng trường & Rạp", hours: "09:00–19:30",
         desc: "Khu vui chơi trên đồi và rạp phim trong nhà, tầm nhìn biển thoáng đẹp."
       },
       FAIRY_LAND: {
         label: "Fairy Land · Lâu đài cổ tích", short: "Fairy Land", x: 768, y: 404, color: "#a61b3a",
-        img: "/assets/zone_fairy_land.jpg", tag: "Tata Show 19:30",
+        img: "/assets/zone_fairy_land.jpg", tag: "Tata Show 19:30", hours: "09:00–19:00",
         desc: "Quảng trường lâu đài cổ tích, khu trò chơi gia đình và sân khấu Tata Show buổi tối."
       }
+    };
+
+    const ZONE_RIDES = {
+      SEA_WORLD: [
+        { name: "Thủy cung Sea World", hours: "09:00–19:00", rule: "Mọi chiều cao & tuổi · Trong nhà (chơi được khi mưa)", state: "" },
+        { name: "Rạp Phim Bay", hours: "10:00–18:00", rule: "Từ 100cm · Trong nhà (chơi được khi mưa)", state: "" }
+      ],
+      TROPICAL_PARADISE: [
+        { name: "Cụm đường trượt cảm giác mạnh CVN", hours: "10:00–17:30", rule: "Từ 130cm · ≤100kg · dưới 50 tuổi · Ngoài trời", state: "" },
+        { name: "Hồ bơi tạo sóng", hours: "10:00–17:30", rule: "Mọi chiều cao (<120cm cần người lớn kèm) · Ngoài trời", state: "" },
+        { name: "Khu trượt nước trẻ em", hours: "10:00–17:30", rule: "Cho bé ≤120cm · Ngoài trời", state: "" }
+      ],
+      KINGS_GARDEN: [
+        { name: "Vườn thú King's Garden", hours: "09:00–17:30", rule: "Mọi chiều cao · Cho thú ăn thu phí riêng (50k tham khảo)", state: "" },
+        { name: "Vườn bướm", hours: "09:00–18:00", rule: "Mọi chiều cao · Trong nhà (chơi được khi mưa)", state: "" }
+      ],
+      FAIRY_LAND: [
+        { name: "Alpine Coaster", hours: "09:00–18:30", rule: "Từ 100cm · Ngoài trời (dừng khi mưa)", state: "" },
+        { name: "Tata River Adventure", hours: "09:30–18:00", rule: "Từ 105cm · Ngoài trời (dừng khi mưa)", state: "" },
+        { name: "Đu quay ngựa gỗ", hours: "09:00–19:00", rule: "Mọi chiều cao (<100cm cần người lớn kèm) · Ngoài trời", state: "" },
+        { name: "Zipline", hours: "09:00–17:00", rule: "Từ 130cm · ≤110kg · Ngoài trời", state: "paid" },
+        { name: "Tàu lượn mini trẻ em", hours: "09:00–18:00", rule: "90–140cm · Ngoài trời", state: "maint" }
+      ],
+      WORLD_GARDEN: [
+        { name: "Bánh xe bầu trời", hours: "09:00–20:00", rule: "Mọi chiều cao & tuổi · Ngoài trời (dừng khi mưa)", state: "" },
+        { name: "Đi dạo khu vườn thế giới", hours: "09:00–20:00", rule: "Mọi chiều cao · Phù hợp ông bà & bé nhỏ", state: "" }
+      ],
+      FESTIVE_HILL: [
+        { name: "Chuyến phiêu lưu hầm mỏ", hours: "09:00–19:30", rule: "Từ 110cm · Ngoài trời (dừng khi mưa)", state: "" },
+        { name: "Cú Lật Sấm Sét", hours: "09:00–18:00", rule: "Từ 120cm · Ngoài trời (dừng khi mưa)", state: "" },
+        { name: "Nhà bóng trong nhà", hours: "09:00–19:00", rule: "Cho bé ≤140cm · Trong nhà (chơi được khi mưa)", state: "" },
+        { name: "Xe điện đụng", hours: "09:00–19:30", rule: "Từ 110cm · Trong nhà", state: "maint" }
+      ]
     };
 
     const TRAVEL_MIN = {
@@ -871,6 +1099,13 @@
       zonesGrid.innerHTML = keys.map((k) => {
         const z = ZONES[k];
         const walk = TRAVEL_MIN.GATE[k];
+        const rides = ZONE_RIDES[k] || [];
+        const ridesHtml = rides.map((r) => {
+          const badge = r.state === "maint"
+            ? ' · <span class="ride-warn">Tạm bảo trì</span>'
+            : (r.state === "paid" ? ' · <span class="ride-paid">Thu phí riêng (ngoài vé)</span>' : "");
+          return `<li class="ride-item"><span class="ride-name">${esc(r.name)} (${esc(r.hours)})</span><span class="ride-meta">${esc(r.rule)}${badge}</span></li>`;
+        }).join("");
         return `
           <article class="zone-card">
             <div class="zone-media">
@@ -879,7 +1114,18 @@
             </div>
             <div class="zone-body">
               <h4 class="serif">${esc(z.label)}</h4>
+              <div class="zone-hours-row">
+                <span class="zone-included-pill">Đã gồm trong vé cổng</span>
+                <span class="zone-time-pill nums">Giờ khu ${esc(z.hours || "09:00–20:00")}</span>
+              </div>
               <p>${esc(z.desc)}</p>
+              <details class="zone-rides">
+                <summary>
+                  <span>Xem trò chơi &amp; chiều cao (${rides.length} điểm)</span>
+                  <span>▾</span>
+                </summary>
+                <ul class="ride-list">${ridesHtml}</ul>
+              </details>
               <div class="zone-foot">
                 <span class="zone-tag">${esc(z.tag)}</span>
                 <button type="button" class="btn-ghost add-zone-btn" data-zone-name="${esc(z.short)}" style="padding:6px 11px;font-size:0.8rem;">+ Thêm vào lịch</button>
