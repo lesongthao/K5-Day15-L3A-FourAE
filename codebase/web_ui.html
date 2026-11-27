@@ -452,7 +452,7 @@
       color: var(--primary-deep); font-size: 0.92rem; font-weight: 700;
     }
     .tbl-scroll { width: 100%; max-width: 100%; overflow-x: auto; }
-    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 520px; }
+    table.price-tbl { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 0; }
     table.price-tbl th, table.price-tbl td {
       padding: 10px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap;
     }
@@ -755,13 +755,12 @@
           <input id="bBudget" type="number" min="500000" step="100000" value="3500000" />
         </div>
         <div class="booking-cell">
-          <label for="bWindow">Khung giờ &amp; Thời tiết</label>
+          <label for="bWindow">Khung giờ tham quan</label>
           <select id="bWindow">
-            <option value="09:00 đến 18:00|">09:00–18:00 · Nắng ráo</option>
-            <option value="16:00 đến 20:00|">Sau 16:00–20:00 · Nắng</option>
-            <option value="09:00 đến 18:00|, dự báo mưa chiều 14:00-16:00">09:00–18:00 · Mưa chiều</option>
-            <option value="16:00 đến 20:00|, dự báo mưa tối 18:30-20:00">16:00–20:00 · Mưa tối</option>
-            <option value="09:00 đến 18:00|, dự báo mưa cả ngày">09:00–18:00 · Mưa cả ngày</option>
+            <option value="09:00 đến 18:00">Cả ngày · 09:00–18:00 (Vé tiêu chuẩn)</option>
+            <option value="09:00 đến 20:00">Cả ngày + Tối · 09:00–20:00 (Gồm Tata Show)</option>
+            <option value="14:00 đến 20:00">Buổi chiều · 14:00–20:00 (Vé tiêu chuẩn)</option>
+            <option value="16:00 đến 20:00">Sau 16:00 · 16:00–20:00 (Vé sau 16h)</option>
           </select>
         </div>
         <div class="booking-apply-cell">
@@ -852,8 +851,6 @@
                 <th>Nhóm khách hàng</th>
                 <th>Vé cả ngày (09:00–20:00)</th>
                 <th>Vé sau 16:00</th>
-                <th>Gói 2 ngày</th>
-                <th>Gói 3 ngày</th>
               </tr>
             </thead>
             <tbody>
@@ -861,34 +858,26 @@
                 <td><strong>Người lớn</strong> (cao từ 140cm)</td>
                 <td><strong>1.050.000đ</strong></td>
                 <td>700.000đ</td>
-                <td>1.350.000đ</td>
-                <td>1.600.000đ</td>
               </tr>
               <tr>
                 <td><strong>Trẻ em</strong> (100cm đến dưới 140cm)</td>
                 <td><strong>800.000đ</strong></td>
                 <td>550.000đ</td>
-                <td>1.050.000đ</td>
-                <td>1.050.000đ</td>
               </tr>
               <tr>
                 <td><strong>Người cao tuổi</strong> (từ 60 tuổi)</td>
                 <td><strong>800.000đ</strong></td>
                 <td>550.000đ</td>
-                <td>1.050.000đ</td>
-                <td>1.200.000đ</td>
               </tr>
               <tr>
                 <td><strong>Trẻ em dưới 100cm</strong></td>
                 <td><strong>Miễn phí</strong></td>
                 <td>Miễn phí</td>
-                <td>Miễn phí</td>
-                <td>Miễn phí</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <p class="guide-note">Chính sách cổng: Vé đã mua không hoàn, không đổi, không trả. Giá đã bao gồm cáp treo 2 chiều, hầu hết trò chơi và show diễn.</p>
+        <p class="guide-note">Chính sách cổng: Vé đã mua không hoàn, không đổi, không trả. Đã bao gồm cáp treo 2 chiều, hầu hết trò chơi và show diễn trong ngày.</p>
       </div>
 
       <div class="two-col-info">
@@ -936,6 +925,7 @@
         </div>
       </div>
       <div class="shows-grid" id="showsGrid"></div>
+      <p class="guide-note" style="margin-top:14px;">Khung giờ show và trạng thái bảo trì hiển thị theo lịch tham khảo; vui lòng đối chiếu bảng thông báo tại cổng trong ngày tham quan.</p>
     </section>
 
     <!-- Tab 4: Proposed Itinerary & Map -->
@@ -1035,13 +1025,13 @@
       },
       FESTIVE_HILL: {
         label: "Festive Hill · Đồi Lễ Hội", short: "Festive Hill", x: 750, y: 222, color: "#c67d22",
-        img: "/assets/zone_festive_hill.jpg", tag: "Quảng trường & Rạp", hours: "09:00–19:30",
-        desc: "Khu vui chơi trên đồi và rạp phim trong nhà, tầm nhìn biển thoáng đẹp."
+        img: "/assets/zone_festive_hill.jpg", tag: "Tata Show 19:30", hours: "09:00–19:30",
+        desc: "Quảng trường lễ hội trên đồi, khu vui chơi trong nhà và sân khấu Tata Show lúc 19:30."
       },
       FAIRY_LAND: {
         label: "Fairy Land · Lâu đài cổ tích", short: "Fairy Land", x: 768, y: 404, color: "#a61b3a",
-        img: "/assets/zone_fairy_land.jpg", tag: "Tata Show 19:30", hours: "09:00–19:00",
-        desc: "Quảng trường lâu đài cổ tích, khu trò chơi gia đình và sân khấu Tata Show buổi tối."
+        img: "/assets/zone_fairy_land.jpg", tag: "Kịch rối · Trò gia đình", hours: "09:00–19:00",
+        desc: "Quảng trường lâu đài cổ tích, Alpine Coaster, Tata River Adventure và Kịch rối cho bé."
       }
     };
 
@@ -1211,22 +1201,6 @@
       return days[selectedDayIdx] || days[0] || null;
     }
 
-    function syncWindowWithSelectedDay(day) {
-      if (!day) return;
-      const sel = document.getElementById("bWindow");
-      const curAfter16 = sel.value.startsWith("16:00");
-      if (day.scenario_id === "ALL_DAY_RAIN") {
-        sel.value = "09:00 đến 18:00|, dự báo mưa cả ngày";
-      } else if (day.scenario_id === "AFTERNOON_RAIN") {
-        sel.value = "09:00 đến 18:00|, dự báo mưa chiều 14:00-16:00";
-      } else if (day.scenario_id === "EVENING_RAIN") {
-        sel.value = "16:00 đến 20:00|, dự báo mưa tối 18:30-20:00";
-      } else {
-        sel.value = curAfter16 ? "16:00 đến 20:00|" : "09:00 đến 18:00|";
-      }
-      refreshEstimate();
-    }
-
     function renderWeatherViews() {
       const days = (forecastData && forecastData.days) || [];
       if (!days.length) return;
@@ -1295,9 +1269,8 @@
 
     function selectVisitDay(idx, scrollToDock) {
       selectedDayIdx = idx;
-      const day = getSelectedDay();
-      syncWindowWithSelectedDay(day);
       renderWeatherViews();
+      refreshEstimate();
       if (scrollToDock) {
         if (!inputEl.value.trim()) applyBuilderToPrompt();
         document.getElementById("conciergeDock").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1875,7 +1848,7 @@
     }
 
     function refreshEstimate() {
-      const [win] = document.getElementById("bWindow").value.split("|");
+      const win = document.getElementById("bWindow").value;
       const isAfter16 = win.startsWith("16:00");
       const prices = isAfter16
         ? { ADULT: 700000, CHILD: 550000, SENIOR: 550000, INFANT: 0 }
@@ -1888,8 +1861,9 @@
 
     function applyBuilderToPrompt() {
       const budget = Math.max(500000, Number(document.getElementById("bBudget").value || 3500000));
-      const [win, weather] = document.getElementById("bWindow").value.split("|");
+      const win = document.getElementById("bWindow").value;
       const day = getSelectedDay();
+      const weather = (day && day.prompt_hint) ? day.prompt_hint : "";
       const dayPart = day ? `đi ${day.rel_label} (${day.full_date}) ` : "đi ";
       const groupParts = [`${guestState.adults} người lớn`];
       if (guestState.seniors.length === 1) {

@@ -91,37 +91,41 @@ def _build_offline_forecast(today: date | None = None) -> dict[str, Any]:
 
 
 def _classify_day_scenario(
-    day_iso: str, wmo_code: int, rain_prob_max: int, precip_sum: float,
-    hourly_by_day: dict[str, dict[int, tuple[int, float, int]]],
-) -> str:
-    """Quy đổi dữ liệu giờ/ngày từ Open-Meteo sang 1 trong 4 kịch bản weather.json."""
+    day_iso: str, hourly_by_day: dict[str, dict[int, tuple[int, float, int]]],
+) -> tuple[str, int]:
+    """Quy đổi dữ liệu giờ 09:00-20:00 từ Open-Meteo sang kịch bản weather.json và % mưa ban ngày."""
     hours = hourly_by_day.get(day_iso, {})
 
-    def _slot_wet(h_start: int, h_end: int) -> bool:
+    def _slot_stats(h_start: int, h_end: int) -> tuple[float, int]:
+        mm_sum = 0.0
+        p_max = 0
         for hr in range(h_start, h_end + 1):
-            prob, mm, code = hours.get(hr, (0, 0.0, 0))
-            if prob >= 55 or mm >= 1.2 or code >= 51:
-                return True
-        return False
+            prob, mm, _ = hours.get(hr, (0, 0.0, 0))
+            mm_sum += mm
+            if prob > p_max:
+                p_max = prob
+        return mm_sum, p_max
 
-    wet_morning = _slot_wet(9, 13)
-    wet_afternoon = _slot_wet(14, 17)
-    wet_evening = _slot_wet(18, 20)
+    m_mm, m_prob = _slot_stats(9, 13)
+    a_mm, a_prob = _slot_stats(14, 17)
+    e_mm, e_prob = _slot_stats(18, 20)
+    park_mm = m_mm + a_mm + e_mm
+    park_prob = max(m_prob, a_prob, e_prob)
 
-    if precip_sum >= 15.0 or (wet_morning and wet_afternoon) or (wmo_code >= 65 and rain_prob_max >= 70):
-        return "ALL_DAY_RAIN"
-    if wet_evening and not wet_morning and not wet_afternoon:
-        return "EVENING_RAIN"
-    if wet_afternoon or wet_morning or rain_prob_max >= 60 or wmo_code >= 51:
-        return "AFTERNOON_RAIN"
-    return "SUNNY"
+    if park_mm >= 10.0 and m_mm >= 2.5 and a_mm >= 1.5:
+        return "ALL_DAY_RAIN", park_prob
+    if e_mm >= 2.5 and e_mm >= a_mm:
+        return "EVENING_RAIN", park_prob
+    if (park_mm < 2.5 and max(m_mm, a_mm, e_mm) < 1.5) or (a_mm < 0.5 and e_mm < 0.5 and m_mm < 4.0):
+        return "SUNNY", min(park_prob, 35) if park_mm < 2.5 else park_prob
+    return "AFTERNOON_RAIN", park_prob
 
 
 def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
     """Gọi Open-Meteo lấy dự báo 7 ngày theo giờ & ngày tại tọa độ Đảo Hòn Tre."""
     url = (
         f"https://api.open-meteo.com/v1/forecast?latitude={_LAT}&longitude={_LON}"
-        "&daily=weather_code,temperature_2m_min,temperature_2m_max,precipitation_probability_max,precipitation_sum"
+        "&daily=temperature_2m_min,temperature_2m_max"
         "&hourly=precipitation_probability,precipitation,weather_code"
         "&timezone=Asia%2FHo_Chi_Minh&forecast_days=7"
     )
@@ -141,25 +145,18 @@ def _fetch_open_meteo(timeout_s: float = 3.0) -> dict[str, Any]:
         if "T" not in str(ts):
             continue
         d_str, h_str = str(ts).split("T", 1)
-        hr = int(h_str[:2])
-        hourly_by_day.setdefault(d_str, {})[hr] = (int(p_prob or 0), float(p_mm or 0.0), int(w_code or 0))
+        hourly_by_day.setdefault(d_str, {})[int(h_str[:2])] = (int(p_prob or 0), float(p_mm or 0.0), int(w_code or 0))
 
     days: list[dict[str, Any]] = []
     dates = daily.get("time") or []
-    codes = daily.get("weather_code") or []
     t_mins = daily.get("temperature_2m_min") or []
     t_maxs = daily.get("temperature_2m_max") or []
-    probs = daily.get("precipitation_probability_max") or []
-    sums = daily.get("precipitation_sum") or []
 
     for idx, d_str in enumerate(dates[:7]):
         day_obj = date.fromisoformat(str(d_str))
-        wmo = int(codes[idx]) if idx < len(codes) and codes[idx] is not None else 0
         t_min = round(float(t_mins[idx])) if idx < len(t_mins) and t_mins[idx] is not None else 25
         t_max = round(float(t_maxs[idx])) if idx < len(t_maxs) and t_maxs[idx] is not None else 31
-        prob = int(probs[idx]) if idx < len(probs) and probs[idx] is not None else 20
-        p_sum = float(sums[idx]) if idx < len(sums) and sums[idx] is not None else 0.0
-        sc_id = _classify_day_scenario(str(d_str), wmo, prob, p_sum, hourly_by_day)
+        sc_id, prob = _classify_day_scenario(str(d_str), hourly_by_day)
         days.append(_build_day_record(day_obj, idx, t_min, t_max, prob, sc_id))
 
     if len(days) < 7:
