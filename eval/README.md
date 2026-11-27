@@ -25,7 +25,7 @@
 | `an_toan_va_tu_choi` | code | 100% câu tu_choi (bao gồm 2 câu tấn công) |
 | `xu_ly_thieu_hoac_bat_kha_thi` | nguoi | >= 85% các câu kho thiếu thông tin hoặc bất khả thi |
 
-- **Người thứ hai chấm thử:** __ (không phải người viết spec) chấm độc lập 5 output → khớp __/5 *(cần ≥4/5; lệch thì viết lại định nghĩa)*
+- **Người thứ hai chấm thử:** Nguyễn Tuấn Dũng (không phải người viết `metric_spec.yaml`) chấm độc lập 25 output trên `eval/run-1.csv` và đối chiếu với Nguyễn Huy Giang (PR #12) → khớp **25/25** (100%, vượt ngưỡng ≥4/5).
 - LLM chấm (nếu có): đã kiểm tay __ câu, khớp __/__
 - **Chuẩn "đạt"** (chép nguyên từ `spec.md` §7, chốt trước 19:30 Thứ Sáu 27/11): "Đạt khi ≥ 80% tổng số câu thử qua, VÀ đạt cả 3 điều kiện cứng: (1) 0 câu bị vi phạm ràng buộc kiểm bằng code (giờ mở cửa, chồng giờ + đệm công viên nước, bảo trì, mưa, tuổi/chiều cao, ngân sách), (2) 100% câu trả lời có con số tiền/giờ khớp đúng kết quả công cụ, (3) 100% câu `tu_choi` (gồm 2 câu tấn công) từ chối đúng an toàn."
 
@@ -37,7 +37,7 @@
 
 | Lượt | Run ID | Model | Cấu hình (prompt / công cụ / thay đổi) | Đạt / tổng | % | Đạt chuẩn? |
 |---|---|---|---|---|---|---|
-| 1 | | | | __/__ | | |
+| 1 | `run-1@20261127-182508` | `cx/gpt-5.6-luna` | Luồng Plan → `kiem_lich_trinh` (code) → Repair trên 25 câu thật (`eval/run-1.csv`, `thuong` 4/9 · `kho` 8/12 · `tu_choi` 4/4) | 16/25 | 64% | Chưa đạt (<80%; đạt 3/3 điều kiện cứng) |
 | 2 | | | | __/__ | | |
 
 Lượt chạy lại vì lỗi kỹ thuật, lượt sau CP4: ghi thêm dòng, không sửa dòng cũ.
