@@ -18,15 +18,25 @@ _CACHE: dict[str, Any] = {"ts": 0.0, "data": None}
 _WEEKDAY_VI = ("Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật")
 _WEEKDAY_SHORT = ("T2", "T3", "T4", "T5", "T6", "T7", "CN")
 
-_SCENARIO_META: dict[str, dict[str, str]] = {
+_WEATHER_STYLES: dict[str, dict[str, str]] = {
     "SUNNY": {
+        "scenario_id": "SUNNY",
         "label": "Nắng ráo",
         "short": "Nắng ráo",
         "icon": "sun",
         "hint": "",
         "advice": "Thuận lợi cả Công viên nước, cáp treo lẫn Tata Show 19:30.",
     },
+    "MORNING_RAIN": {
+        "scenario_id": "AFTERNOON_RAIN",
+        "label": "Mưa sáng (09:00–12:00)",
+        "short": "Mưa sáng",
+        "icon": "rain_afternoon",
+        "hint": ", dự báo mưa sáng 09:00-12:00",
+        "advice": "Buổi sáng ưu tiên Thủy cung Sea World tránh mưa; chiều và tối tạnh ráo chơi ngoài trời.",
+    },
     "AFTERNOON_RAIN": {
+        "scenario_id": "AFTERNOON_RAIN",
         "label": "Mưa rào chiều 14:00–16:00",
         "short": "Mưa chiều",
         "icon": "rain_afternoon",
@@ -34,6 +44,7 @@ _SCENARIO_META: dict[str, dict[str, str]] = {
         "advice": "Nên chơi ngoài trời buổi sáng; 14:00–16:00 chuyển vào Thủy cung Sea World tránh mưa.",
     },
     "EVENING_RAIN": {
+        "scenario_id": "EVENING_RAIN",
         "label": "Mưa tối 18:30–20:00",
         "short": "Mưa tối",
         "icon": "rain_evening",
@@ -41,6 +52,7 @@ _SCENARIO_META: dict[str, dict[str, str]] = {
         "advice": "Ban ngày tạnh ráo; buổi tối có mưa có thể ảnh hưởng Tata Show 19:30.",
     },
     "ALL_DAY_RAIN": {
+        "scenario_id": "ALL_DAY_RAIN",
         "label": "Mưa cả ngày",
         "short": "Mưa cả ngày",
         "icon": "rain_heavy",
@@ -63,27 +75,27 @@ def _day_labels(day_obj: date, idx: int) -> tuple[str, str]:
 
 
 def _build_day_record(
-    day_obj: date, idx: int, temp_min: int, temp_max: int, rain_prob: int, scenario_id: str,
+    day_obj: date, idx: int, temp_min: int, temp_max: int, rain_prob: int, style_key: str,
 ) -> dict[str, Any]:
     """Đóng gói thông tin chuẩn hóa cho 1 ngày dùng chung giữa online và offline."""
     rel_label, weekday_vi = _day_labels(day_obj, idx)
-    meta = _SCENARIO_META.get(scenario_id, _SCENARIO_META["SUNNY"])
+    meta = _WEATHER_STYLES.get(style_key, _WEATHER_STYLES["SUNNY"])
     return {
         "date": day_obj.isoformat(), "display_date": day_obj.strftime("%d/%m"),
         "full_date": day_obj.strftime("%d/%m/%Y"), "weekday_vi": weekday_vi, "rel_label": rel_label,
         "temp_min": int(temp_min), "temp_max": int(temp_max),
         "rain_prob": max(0, min(100, int(rain_prob))), "icon": meta["icon"],
-        "scenario_id": scenario_id, "weather_label": meta["label"], "short_label": meta["short"],
+        "scenario_id": meta["scenario_id"], "weather_label": meta["label"], "short_label": meta["short"],
         "advice": meta["advice"], "prompt_hint": meta["hint"],
     }
 
 
 def _build_offline_forecast(today: date | None = None) -> dict[str, Any]:
-    """Tạo dự báo 7 ngày tham khảo theo khí hậu Nha Trang khi mất mạng hoặc chạy test."""
+    """Tạo dự báo 7 ngày tham khảo đủ sắc thái nắng/mưa theo khung giờ khi chạy offline."""
     base = today or datetime.now(_VN_TZ).date()
     pattern = [
-        ("SUNNY", 25, 31, 15), ("SUNNY", 25, 32, 20), ("AFTERNOON_RAIN", 24, 30, 65),
-        ("SUNNY", 25, 31, 10), ("EVENING_RAIN", 24, 30, 60), ("SUNNY", 25, 31, 15),
+        ("SUNNY", 25, 31, 15), ("SUNNY", 25, 32, 20), ("MORNING_RAIN", 24, 30, 60),
+        ("AFTERNOON_RAIN", 24, 30, 65), ("EVENING_RAIN", 24, 30, 60), ("SUNNY", 25, 31, 15),
         ("ALL_DAY_RAIN", 23, 28, 85),
     ]
     days = [_build_day_record(base + timedelta(days=i), i, mn, mx, p, sc) for i, (sc, mn, mx, p) in enumerate(pattern)]
@@ -93,7 +105,7 @@ def _build_offline_forecast(today: date | None = None) -> dict[str, Any]:
 def _classify_day_scenario(
     day_iso: str, hourly_by_day: dict[str, dict[int, tuple[int, float, int]]],
 ) -> tuple[str, int]:
-    """Quy đổi dữ liệu giờ 09:00-20:00 từ Open-Meteo sang kịch bản weather.json và % mưa ban ngày."""
+    """Quy đổi dữ liệu giờ 09:00-20:00 từ Open-Meteo sang sắc thái thời tiết & % mưa ban ngày."""
     hours = hourly_by_day.get(day_iso, {})
 
     def _slot_stats(h_start: int, h_end: int) -> tuple[float, int]:
@@ -118,6 +130,8 @@ def _classify_day_scenario(
         return "EVENING_RAIN", park_prob
     if (park_mm < 2.5 and max(m_mm, a_mm, e_mm) < 1.5) or (a_mm < 0.5 and e_mm < 0.5 and m_mm < 4.0):
         return "SUNNY", min(park_prob, 35) if park_mm < 2.5 else park_prob
+    if m_mm >= 2.5 and a_mm < 1.0:
+        return "MORNING_RAIN", park_prob
     return "AFTERNOON_RAIN", park_prob
 
 
