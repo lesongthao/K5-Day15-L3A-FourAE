@@ -12,13 +12,8 @@ from typing import Any
 
 from tracing import tool
 
-PARK_DIR = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    "data",
-    "park",
-)
-WATERPARK_ZONE = "TROPICAL_PARADISE"
-WATERPARK_BUFFER_MIN = 20
+PARK_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "park")
+WATERPARK_ZONE, WATERPARK_BUFFER_MIN = "TROPICAL_PARADISE", 20
 
 
 @functools.lru_cache(maxsize=1)
@@ -113,6 +108,7 @@ def tra_diem_choi(
         "diem_choi": items,
         "bang_gia_ve": b["tickets"]["ticket_types"],
         "dich_vu_le": b["services"]["services"],
+        "ma_tran_di_chuyen": {"cung_khu_phut": b["travel_times"]["same_zone_min"], "dem_roi_cong_vien_nuoc_phut": WATERPARK_BUFFER_MIN, "khu_cong_vien_nuoc": WATERPARK_ZONE, "giua_cac_khu_phut": b["travel_times"]["minutes"]},
     }
 
 

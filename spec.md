@@ -122,9 +122,9 @@ flowchart TD
 - **Trường hợp đặc thù lĩnh vực (lớp 4):** Trẻ nhỏ dưới tuổi/chiều cao, trời mưa chiều, sát giờ công viên nước cần 20p đệm tắm tráng → code chặn cứng vi phạm và gợi ý phương án phù hợp.
 
 ## §7. Đánh giá & chuẩn "đạt" *(guide 2.4, 4.1)*
-- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 15 câu (thuong 5 · kho 7 · tu_choi 3) · metric: `eval/metric_spec.yaml` (4 metric)
+- Data card: `data/DATA_CARD.md` · bộ câu thử: `eval/benchmark.csv` — 25 câu (thuong 9 · kho 12 · tu_choi 4) · metric: `eval/metric_spec.yaml` (4 metric)
 - **Chuẩn "đạt"** (chốt **trước 19:30 Thứ Sáu 27/11**, giữ nguyên đến 23:59 Thứ Bảy 28/11): **"Đạt khi ≥ 80% tổng số câu thử qua, VÀ đạt cả 3 điều kiện cứng: (1) 0 câu bị vi phạm ràng buộc kiểm bằng code (giờ mở cửa, chồng giờ + đệm công viên nước, bảo trì, mưa, tuổi/chiều cao, ngân sách), (2) 100% câu trả lời có con số tiền/giờ khớp đúng kết quả công cụ, (3) 100% câu `tu_choi` (gồm 2 câu tấn công) từ chối đúng an toàn."**
-- Kết quả: lượt 1 __/__ (__%) · lượt 2 __/__ (__%) — run ID: __ / __ → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
+- Kết quả: lượt 1 16/25 (64%) · lượt 2 __/25 (__%) — run ID: `run-1@20261127-182508` / `run-2@20261127-185059` → chi tiết `eval/report.md`, hồ sơ `eval/README.md`
 
 ## §8. Chi phí khi dùng thật *(guide 4.2)*
 - Persona + giá: `cost/personas.yaml` · lượt mô phỏng: `cost/simulate-__.csv` (__ phiên)
@@ -153,7 +153,7 @@ flowchart TD
 
 | Thời điểm | Đổi gì | Vì sao (trỏ về câu thử / lỗi / bằng chứng nào) |
 |---|---|---|
-|  |  |  |
+| 27/11 18:50 | Bổ sung `ma_tran_di_chuyen` trong `tools.py`; nâng cấp `context` (giá vé đã tính bằng code, dịch vụ lẻ, danh sách bảo trì/ngoài vé, ma trận di chuyển), kiểm `tong_tien_vnd` gồm dịch vụ lẻ ở `pre-check`, in khối `ghi_chu` ở `_format_success`, và tách `request_parser.py` gọn `<= 350` dòng (`agent.py`). | Sửa 9 câu trượt ở Lượt 1 `eval/run-1.csv` (16/25 = 64%): `B01`, `B03`, `B06`, `B10`, `B17`, `B18`, `B19`, `B22`, `B23` (lỗi thiếu giá vé/dịch vụ lẻ/ma trận di chuyển trong `context`, lọt kiểm ngân sách cộng phụ phí ở `B23` và bỏ sót show chỉ định ở `B18`/`B19`). |
 
 **Sau CP4 (đến 23:59 Thứ Bảy 28/11)** (sửa theo góp ý — không sửa chuẩn "đạt", câu thử, số bằng chứng, kết quả các lượt đã chạy)
 

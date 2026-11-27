@@ -10,6 +10,7 @@ import re
 from typing import Any
 
 from ai import call_model
+from request_parser import check_safety, parse_request
 from tools import (
     WATERPARK_BUFFER_MIN,
     WATERPARK_ZONE,
@@ -24,128 +25,16 @@ from tracing import note
 MAX_REPAIR_ROUNDS = 2
 SYSTEM = (
     "Bạn là trợ lý lập lịch trình 1 ngày tại VinWonders Nha Trang cho gia đình.\n"
-    "CHỈ dùng các mã trò chơi (A01-A18), show (S01-S06), giờ mở cửa, giờ suất diễn và giá vé trong CĂN CỨ.\n"
-    "KHÔNG tự bịa giá cho mục không có giá công khai (Zipline, Buggy, Combo/Buffet), KHÔNG chọn trò bảo trì (maintenance).\n"
-    "CHỈ trả về đúng 1 khối JSON hợp lệ dạng:\n"
+    "CHỈ dùng mã trò (A01-A18), show (S01-S06), giờ mở cửa, suat_hoat_dong và dữ liệu trong CĂN CỨ.\n"
+    "1) Chi phí vé và dịch vụ có giá đã được code tính và xác nhận đủ ngân sách tại chi_phi_code_da_tinh — KHÔNG tự báo thiếu giá vé hay từ chối vì giá.\n"
+    "2) Ưu tiên xếp đủ các điểm chơi và show hợp lệ khách yêu cầu; chọn tổng cộng 3–7 điểm hợp lý, không nhồi điểm phụ gây trễ giờ.\n"
+    "3) Nếu khách nhắc mục bảo trì (status=maintenance), quá tuổi/chiều cao, chưa có giá lẻ (price_vnd=null) hoặc show bị huỷ do mưa: loại khỏi items, vẫn lập lịch thay thế hợp lệ và giải thích rõ từng mục đó trong \"ghi_chu\".\n"
+    "4) Tuân thủ nghiêm di_chuyen_va_dem (cùng khu >=5p; khác khu theo giua_cac_khu_phut; rời TROPICAL_PARADISE sang khu khác cộng thêm 20p đệm) và đúng giờ suat_hoat_dong.\n"
+    "5) CHỈ đặt \"khong_xep_duoc\": true khi yêu cầu bắt buộc bất khả thi (điểm không tồn tại trong dữ liệu hoặc các điểm khách bắt buộc trực tiếp xung đột giờ/di chuyển), kèm giải thích số phút từ di_chuyen_va_dem trong \"goi_y\".\n"
+    "CHỈ trả về 1 JSON hợp lệ: "
     '{"items": [{"id": "A08", "start": "09:15", "end": "10:15", "ly_do": "..."}], '
-    '"khong_xep_duoc": false, "goi_y": ["..."]}'
+    '"khong_xep_duoc": false, "ghi_chu": ["..."], "goi_y": ["..."]}'
 )
-
-
-def _check_safety(text: str) -> str | None:
-    """Chặn yêu cầu ngoài phạm vi, xin thẻ/OTP/CCCD và 2 kịch bản tấn công ở spec.md §5."""
-    low = text.lower()
-    if any(k in low for k in ("số thẻ", "cvv", "otp", "cccd", "mật khẩu", "chuyển khoản", "thanh toán giúp", "đặt vé luôn", "xuất vé", "đặt vé hộ")):
-        note("tu_choi: ngoai pham vi thanh toan / du lieu nhay cam")
-        return (
-            "Xin lỗi, trợ lý chỉ gợi ý và kiểm tra lịch trình tham quan; không hỗ trợ đặt vé, thanh toán "
-            "hay thu thập số thẻ/OTP/CCCD. Phụ huynh vui lòng kiểm tra lại và tự đặt vé trên kênh chính thức."
-        )
-    if any(k in low for k in (
-        "bỏ qua giới hạn", "kệ quy định", "cho bé vào luôn", "lách quy định", "quản lý yêu cầu",
-        "nhân viên hãng", "ignore all", "bỏ qua hướng dẫn", "đặt giá vé 0", "giá vé 0đ", "mở lại trò bảo trì",
-    )):
-        note("tu_choi: tan cong vuot quyen / bo qua an toan tre nho")
-        return (
-            "Không thể đáp ứng yêu cầu ghi đè dữ liệu hệ thống, thay đổi giá vé hay bỏ qua giới hạn "
-            "chiều cao/độ tuổi hoặc trạng thái bảo trì. Mọi trò chơi đều phải tuân thủ quy định tại cổng để đảm bảo an toàn."
-        )
-    if any(k in low for k in ("đặt phòng", "nâng hạng phòng", "hoàn vé máy bay", "đổi chuyến bay", "khách sạn")):
-        note("tu_choi: ngoai pham vi C1")
-        return "Trợ lý hiện chỉ hỗ trợ lập lịch trình 1 ngày tại khu vui chơi (chưa hỗ trợ đặt phòng khách sạn hoặc đổi/hoàn vé máy bay)."
-    return None
-
-
-def _extract_budget(text: str) -> int | None:
-    """Trích xuất ngân sách (VNĐ) từ câu tiếng Việt tự nhiên."""
-    norm = text.lower().replace(",", ".")
-    m_tr = re.search(r"(\d+(?:\.\d+)?)\s*(?:tr|triệu|trieu)", norm)
-    if m_tr:
-        return int(float(m_tr.group(1)) * 1_000_000)
-    m_k = re.search(r"(\d+(?:\.\d+)?)\s*(?:k|nghìn|nghin|ngàn|ngan)\b", norm)
-    if m_k:
-        return int(float(m_k.group(1)) * 1_000)
-    m_vnd = re.search(r"(\d[\d\.,]{4,})\s*(?:đ|d|vnđ|vnd)?", text.lower().replace(" ", ""))
-    if m_vnd:
-        digits = re.sub(r"[^\d]", "", m_vnd.group(1))
-        return int(digits) if digits else None
-    return None
-
-
-def _extract_heights(text: str) -> list[int]:
-    """Trích xuất chiều cao (cm) từ các dạng '115cm', '1m15', '1m2'."""
-    low = text.lower()
-    heights = [int(h) for h in re.findall(r"(\d{2,3})\s*cm", low)]
-    for m in re.finditer(r"\b(\d)m(\d{1,2})\b", low):
-        cm = int(m.group(1)) * 100 + int(m.group(2).ljust(2, "0"))
-        heights.append(cm)
-    return heights
-
-
-def _parse_request(text: str) -> dict[str, Any]:
-    """Trích xuất thành phần đoàn khách, khung giờ, loại vé, thời tiết và dịch vụ lẻ."""
-    low = text.lower()
-    m_adults = re.search(r"(\d+)\s*(?:người lớn|nguoi lon|bố mẹ|ba mẹ|phụ huynh)", low)
-    adults = int(m_adults.group(1)) if m_adults else (2 if ("gia đình" in low or "vợ chồng" in low) else None)
-    m_seniors = re.search(r"(\d+)\s*(?:người cao tuổi|ông bà|cụ|người già)", low)
-    seniors = int(m_seniors.group(1)) if m_seniors else 0
-    senior_ages = [int(a) for a in re.findall(r"(?:ông|bà|cụ|người cao tuổi)[^\d]{0,12}(\d{2})\s*tuổi", low)]
-    if senior_ages and seniors == 0:
-        seniors = len(senior_ages)
-
-    child_heights = _extract_heights(text)
-    child_ages = [int(a) for a in re.findall(r"(?:bé|trẻ|con)\s*(?:gái|trai)?\s*(\d{1,2})\s*tuổi", low)]
-    has_child_mention = bool(child_heights or child_ages or re.search(r"\b(?:bé|trẻ nhỏ|trẻ em|con nhỏ)\b", low))
-
-    m_time = re.search(r"(\d{1,2})[:h](\d{0,2})\s*(?:-|đến|tới)\s*(\d{1,2})[:h](\d{0,2})", low)
-    if m_time:
-        start = f"{int(m_time.group(1)):02d}:{int(m_time.group(2) or 0):02d}"
-        end = f"{int(m_time.group(3)):02d}:{int(m_time.group(4) or 0):02d}"
-    elif "3 tiếng" in low or "ba tiếng" in low:
-        start, end = "14:00", "17:00"
-    elif "sau 16" in low or "sau 4h" in low or "buổi tối" in low:
-        start, end = "16:00", "20:00"
-    else:
-        start, end = "09:00", "20:00"
-
-    loai_ve = "AFTER_16H" if (start >= "16:00" or "after_16h" in low or "sau 16" in low) else "STANDARD"
-    kich_ban = "SUNNY"
-    if "mưa cả ngày" in low or "mưa to" in low or "all_day_rain" in low:
-        kich_ban = "ALL_DAY_RAIN"
-    elif "mưa tối" in low or "mưa buổi tối" in low or "evening_rain" in low:
-        kich_ban = "EVENING_RAIN"
-    elif "mưa" in low or "afternoon_rain" in low:
-        kich_ban = "AFTERNOON_RAIN"
-
-    services: list[dict[str, Any]] = []
-    if "cho thú ăn" in low:
-        services.append({"id": "SV01", "so_luong": 1})
-    if "tủ đồ" in low or "locker" in low:
-        services.append({"id": "SV03", "so_luong": 1})
-    if "áo mưa" in low:
-        services.append({"id": "SV04", "so_luong": 1})
-
-    nhom_khach: list[dict[str, Any]] = [{"tuoi": 32, "cao_cm": 165} for _ in range(adults or 0)]
-    for i in range(seniors):
-        nhom_khach.append({"tuoi": senior_ages[i] if i < len(senior_ages) else 65, "cao_cm": 160})
-    for idx, h in enumerate(child_heights):
-        t = child_ages[idx] if idx < len(child_ages) else 6
-        nhom_khach.append({"tuoi": t, "cao_cm": h})
-
-    return {
-        "ngan_sach_vnd": _extract_budget(text),
-        "adults": adults,
-        "has_child_mention": has_child_mention,
-        "child_heights": child_heights,
-        "nhom_khach": nhom_khach,
-        "loai_ve": loai_ve,
-        "gio_bat_dau": start,
-        "gio_ket_thuc": end,
-        "kich_ban": kich_ban,
-        "chi_trong_nha": "trong nhà" in low,
-        "dich_vu_le": services,
-        "asks_unpriced": any(k in low for k in ("combo", "buffet", "wonder15", "vip", "zipline", "buggy", "xe điện")),
-    }
 
 
 def _to_m(hhmm: str) -> int:
@@ -213,7 +102,14 @@ def _parse_json_reply(raw: str) -> dict[str, Any] | None:
         return None
 
 
-def _format_success(items: list[dict[str, Any]], check_res: dict[str, Any], catalog: dict[str, dict[str, Any]], weather: dict[str, Any], is_mock: bool) -> str:
+def _format_success(
+    items: list[dict[str, Any]],
+    check_res: dict[str, Any],
+    catalog: dict[str, dict[str, Any]],
+    weather: dict[str, Any],
+    is_mock: bool,
+    notes: list[str] | None = None,
+) -> str:
     """Định dạng lịch trình từng khung giờ kèm chi phí tính bằng code."""
     head = "[CHẾ ĐỘ KHUNG / AI GIẢ — chưa nối model thật]" if is_mock else "LỊCH TRÌNH ĐỀ XUẤT (VinWonders Nha Trang — đã kiểm bằng code):"
     lines = [head, f"- Kịch bản thời tiết ({weather['id']}): {weather['nhan']}"]
@@ -221,19 +117,55 @@ def _format_success(items: list[dict[str, Any]], check_res: dict[str, Any], cata
         meta = catalog.get(it["id"], {})
         loai = "Trong nhà" if meta.get("indoor") else "Ngoài trời"
         lines.append(f"• {it['start']}–{it['end']} | [{it['id']}] {meta.get('name', it['id'])} ({meta.get('zone', '')}, {loai}) — {it.get('ly_do', '')}")
+    clean_notes = [str(n).strip() for n in (notes or []) if str(n).strip()]
+    if clean_notes:
+        lines.append("- Ghi chú thêm: " + " | ".join(clean_notes))
     cost = check_res["chi_tiet_chi_phi"]
     lines.append(f"- Tổng chi phí (tính bằng code, vé {cost['loai_ve']}): {check_res['tong_tien_vnd']:,}đ (Vé cổng: {cost['ve_cong']:,}đ · Dịch vụ lẻ: {cost['phu_thu']:,}đ).")
     lines.append("- Lưu ý: Lịch trình mang tính gợi ý chờ phụ huynh duyệt và tự đặt vé; lịch show là dữ liệu mẫu tham khảo.")
     return "\n".join(lines)
 
 
+def _build_context(parsed: dict[str, Any], pre: dict[str, Any], weather: dict[str, Any], attrs: dict[str, Any], shows: dict[str, Any]) -> str:
+    """Tạo ngữ cảnh gọn nhưng đủ căn cứ giá vé, dịch vụ, bảo trì và ma trận di chuyển cho model."""
+    all_attrs = tra_diem_choi(bao_gom_bao_tri=True)
+    blocked_or_extra = [
+        {"id": a["id"], "name": a["name"], "zone": a["zone"], "status": a.get("status"),
+         "min_height_cm": a.get("min_height_cm"), "extra_fee_vnd": a.get("extra_fee_vnd"), "caveat": a.get("caveat", "")}
+        for a in all_attrs["diem_choi"]
+        if a.get("status") == "maintenance" or not a.get("included_in_ticket", True)
+    ]
+    compact_attrs = [
+        {k: a[k] for k in ("id", "name", "zone", "open", "close", "duration_min", "indoor", "closes_in_rain", "min_height_cm", "max_height_cm", "max_age", "caveat") if a.get(k) is not None}
+        for a in attrs["diem_choi"] if a.get("included_in_ticket", True)
+    ]
+    compact_shows = [
+        {k: s[k] for k in ("id", "name", "zone", "duration_min", "indoor", "suat_hoat_dong", "suat_bi_huy")}
+        for s in shows["shows"]
+    ]
+    cost = pre["chi_tiet_chi_phi"]
+    return json.dumps({
+        "yeu_cau": parsed,
+        "chi_phi_code_da_tinh": {
+            "loai_ve": cost["loai_ve"], "ve_cong": cost["ve_cong"], "phu_thu": cost["phu_thu"],
+            "tong_tien_vnd": pre["tong_tien_vnd"], "ngan_sach_vnd": parsed["ngan_sach_vnd"], "du_ngan_sach": True,
+        },
+        "dich_vu_le_bang_gia": [{"id": s["id"], "name": s["name"], "price_vnd": s["price_vnd"], "price_note": s.get("price_note", "")} for s in attrs["dich_vu_le"]],
+        "diem_bao_tri_va_ngoai_ve": blocked_or_extra,
+        "di_chuyen_va_dem": attrs["ma_tran_di_chuyen"],
+        "thoi_tiet": weather,
+        "diem_choi": compact_attrs,
+        "shows": compact_shows,
+    }, ensure_ascii=False)
+
+
 def answer(text: str) -> dict[str, str]:
     """Điểm vào chuẩn cho run.py, eval và simulate."""
-    blocked = _check_safety(text)
+    blocked = check_safety(text)
     if blocked:
         return {"output": blocked}
 
-    parsed = _parse_request(text)
+    parsed = parse_request(text)
     if parsed["asks_unpriced"] and parsed["ngan_sach_vnd"] is None:
         tra_diem_choi(bao_gom_bao_tri=True)
         note("dung: muc khong co gia cong khai (lop 1)")
@@ -269,18 +201,22 @@ def answer(text: str) -> dict[str, str]:
     catalog = {a["id"]: a for a in attrs["diem_choi"]} | {s["id"]: s for s in shows["shows"]}
 
     pre = kiem_lich_trinh([], parsed["ngan_sach_vnd"], parsed["nhom_khach"], parsed["kich_ban"], parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
-    if pre["chi_tiet_chi_phi"].get("ve_cong", 0) > parsed["ngan_sach_vnd"]:
-        note("dung: ngan sach thap hon ve cong toi thieu")
+    if pre["tong_tien_vnd"] > parsed["ngan_sach_vnd"]:
+        cost = pre["chi_tiet_chi_phi"]
+        vuot = pre["tong_tien_vnd"] - parsed["ngan_sach_vnd"]
+        note("dung: ngan sach thap hon tong chi phi toi thieu")
         return {
             "output": (
-                f"Không thể xếp lịch vì ngân sách {parsed['ngan_sach_vnd']:,}đ thấp hơn tiền vé cổng tối thiểu "
-                f"({pre['chi_tiet_chi_phi']['ve_cong']:,}đ).\nGợi ý: " + "; ".join(pre["goi_y_noi_rang_buoc"])
+                f"Không thể xếp lịch vì ngân sách {parsed['ngan_sach_vnd']:,}đ thấp hơn tổng chi phí tối thiểu "
+                f"{pre['tong_tien_vnd']:,}đ (Vé cổng: {cost['ve_cong']:,}đ · Dịch vụ lẻ: {cost['phu_thu']:,}đ; "
+                f"vượt {vuot:,}đ).\nGợi ý: " + "; ".join(pre["goi_y_noi_rang_buoc"])
             )
         }
 
-    context = json.dumps({"yeu_cau": parsed, "thoi_tiet": weather, "diem_choi": attrs["diem_choi"], "shows": shows["shows"]}, ensure_ascii=False)
+    context = _build_context(parsed, pre, weather, attrs, shows)
     prompt = f"Căn cứ dữ liệu công cụ:\n{context}\n\nYêu cầu người dùng:\n{text}"
     items: list[dict[str, Any]] = []
+    notes: list[str] = []
     check_res: dict[str, Any] = {"hop_le": False, "vi_pham": [], "goi_y_noi_rang_buoc": []}
     is_mock = False
 
@@ -300,11 +236,16 @@ def answer(text: str) -> dict[str, str]:
             note("dung: model bao khong xep duoc")
             return {"output": "Không xếp được lịch trình phù hợp.\nGợi ý: " + "; ".join(data_json.get("goi_y", []))}
         items = data_json.get("items", [])
+        notes = data_json.get("ghi_chu", []) if isinstance(data_json.get("ghi_chu"), list) else []
         check_res = kiem_lich_trinh(items, parsed["ngan_sach_vnd"], parsed["nhom_khach"], parsed["kich_ban"], parsed["loai_ve"], parsed["gio_bat_dau"], parsed["gio_ket_thuc"], parsed["dich_vu_le"])
         if check_res["hop_le"]:
             note(f"dung: lich hop le tai vong {round_idx + 1}")
             break
-        prompt = "Lịch vừa tạo có vi phạm:\n" + "\n".join("- " + v for v in check_res["vi_pham"]) + f"\nHãy sửa lại JSON.\nDữ liệu gốc:\n{context}"
+        prompt = (
+            "Lịch vừa tạo có vi phạm:\n" + "\n".join("- " + v for v in check_res["vi_pham"])
+            + f"\nHãy sửa lại giờ hoặc bỏ bớt điểm bạn tự thêm gây vi phạm, vẫn giữ đủ điểm hợp lệ khách mong muốn; "
+            f"KHÔNG đặt khong_xep_duoc=true nếu vẫn xếp được lịch hợp lệ.\nYêu cầu gốc: {text}\nDữ liệu gốc:\n{context}"
+        )
 
     if not check_res.get("hop_le"):
         note("dung: het vong sua van con vi pham")
@@ -315,4 +256,4 @@ def answer(text: str) -> dict[str, str]:
                 + "\nGợi ý nới ràng buộc: " + "; ".join(check_res.get("goi_y_noi_rang_buoc", []))
             )
         }
-    return {"output": _format_success(items, check_res, catalog, weather, is_mock)}
+    return {"output": _format_success(items, check_res, catalog, weather, is_mock, notes)}
