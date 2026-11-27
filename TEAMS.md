@@ -6,14 +6,15 @@
 
 - Tên nhóm: FourAE
 - Lớp: L3A
-- Track: ____
+- Track: C
 - Link repo: https://github.com/lesongthao/K5-Day15-L3A-FourAE
 
 | STT | Họ và tên | Mã học viên | Vai trò | Phần việc chính |
 |---|---|---|---|---|
-| 1 | ____ | ____ | Đội trưởng | ____ |
-| 2 | ____ | ____ | Thành viên | ____ |
-| 3 | ____ | ____ | Thành viên | ____ |
+| 1 | Lê Sông Thao | 2A202603534 | Đội trưởng | Điều phối nhóm, kiến trúc & code agent/tools, tổng hợp demo |
+| 2 | Nguyễn Tuấn Dũng | 2A202603559 | Thành viên | Phỏng vấn người dùng, phân tích impact, tài liệu spec |
+| 3 | Nguyễn Huy Giang | 2A202603543 | Thành viên | Đào dữ liệu review công khai, bộ câu thử benchmark & metric |
+| 4 | Trần Quốc Tuấn | 2A202603561 | Thành viên | Dữ liệu khu vui chơi mẫu, nối model thật & mô phỏng chi phí |
 
 **Quy tắc điền**
 - **Lớp:** `L3A` hoặc `L3B`. **Track:** một chữ `A` (EdTech), `B` (Y tế), `C` (Du lịch), `D` (Thương mại điện tử), `E` (Tài chính) hoặc `F` (Làn khác). **Link repo:** link GitHub công khai của nhóm.
