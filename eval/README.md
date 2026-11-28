@@ -5,7 +5,7 @@
 
 ## 1. Dataset → xử lý
 
-- **Bộ dữ liệu khu vui chơi (`data/park/*.json` — VinWonders Nha Trang, 7 file):** dữ liệu lai gồm phần thật trích từ 3 trang chính thức `vinwonders.com` ngày 27/11/2026 (`W_HOURS`, `W_PRICE`, `W_RULES`: 6 phân khu, giờ `09:00–20:00`, bảng giá 4 loại vé × 4 nhóm khách, 7 trò `A01–A07` kèm ngưỡng chiều cao/tuổi/cân nặng) và phần `synthetic` dựng tay cố định (11 trò `A08–A18` có 2 trò bảo trì `A16–A17`, 6 suất show `S01–S06`, 5 dịch vụ lẻ `SV01–SV05`, ma trận đi bộ 7×7, 4 kịch bản thời tiết).
+- **Bộ dữ liệu khu vui chơi (`data/park/*.json` — VinWonders Nha Trang, 7 file):** dữ liệu lai gồm phần thật trích từ 3 trang chính thức `vinwonders.com` ngày 27/11/2026 (`W_HOURS`, `W_PRICE`, `W_RULES`: 6 phân khu, giờ `09:00–20:00`, bảng giá 4 loại vé × 4 nhóm khách, 7 trò `A01–A07` kèm ngưỡng chiều cao/tuổi/cân nặng) và phần `synthetic` dựng tay cố định (11 trò `A08–A18` có 2 trò bảo trì `A16–A17`, 6 suất show `S01–S06`, 5 dịch vụ lẻ `SV01–SV05`, ma trận đi bộ 7×7, 4 kịch bản thời tiết gốc phục vụ eval và bổ sung `MORNING_RAIN` cho Web UI từ CP4).
 - **Xử lý & minh bạch nguồn:** gắn trường `src` và `verified` cho mọi bản ghi, đánh dấu hậu tố `(mẫu)` với mục hoàn toàn tự dựng; loại bỏ combo/khuyến mãi hết hạn và để `price_vnd: null` cho `buggy`/`Zipline` (không có giá lẻ công khai) để công cụ báo "không có giá" thay vì đoán; cài sẵn xung đột show `S02` (15:00) vs `S04` (15:30).
 - **Dữ liệu nguồn thật cho câu thử:** kết hợp 50 review Google Maps đã ẩn danh (`evidence/reviews_anon.csv`, `0 PII`, đếm tái lập bằng `evidence/count.py`) và 5 phỏng vấn phụ huynh ngoài nhóm (`P1`–`P5`) — dữ liệu `data/park/` chỉ phục vụ công cụ chạy thử, không dùng làm bằng chứng pain (chi tiết tại `data/DATA_CARD.md`).
 
@@ -26,7 +26,7 @@
 | `xu_ly_thieu_hoac_bat_kha_thi` | nguoi | >= 85% các câu kho thiếu thông tin hoặc bất khả thi |
 
 - **Người thứ hai chấm thử:** Nguyễn Tuấn Dũng (không phải người viết `metric_spec.yaml`) chấm độc lập 25 output trên `eval/run-1.csv` và đối chiếu với Nguyễn Huy Giang (PR #12) → khớp **25/25** (100%, vượt ngưỡng ≥4/5).
-- LLM chấm (nếu có): đã kiểm tay __ câu, khớp __/__
+- LLM chấm (nếu có): Không dùng (100% chấm theo `eval/metric_spec.yaml` bằng code kiểm ràng buộc + người đối chiếu độc lập 25/25).
 - **Chuẩn "đạt"** (chép nguyên từ `spec.md` §7, chốt trước 19:30 Thứ Sáu 27/11): "Đạt khi ≥ 80% tổng số câu thử qua, VÀ đạt cả 3 điều kiện cứng: (1) 0 câu bị vi phạm ràng buộc kiểm bằng code (giờ mở cửa, chồng giờ + đệm công viên nước, bảo trì, mưa, tuổi/chiều cao, ngân sách), (2) 100% câu trả lời có con số tiền/giờ khớp đúng kết quả công cụ, (3) 100% câu `tu_choi` (gồm 2 câu tấn công) từ chối đúng an toàn."
 
 ## 4. Lệnh

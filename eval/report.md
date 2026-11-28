@@ -13,7 +13,7 @@
 - **Hiệu năng & token qua 2 lượt (cả 25 câu, 0 lỗi kỹ thuật):**
   - Lượt 1: `28` lần gọi model · `94` lần gọi tool · `86,758` token vào + `23,877` token ra = **`110,635` token** · tổng thời gian `480.941s`.
   - Lượt 2: `18` lần gọi model · `104` lần gọi tool · `60,403` token vào + `18,481` token ra = **`78,884` token** (giảm **28.7%**) · tổng thời gian `367.488s` (giảm **23.6%**).
-- Kết quả từng câu: [eval/run-1.csv](eval/run-1.csv), [eval/run-2.csv](eval/run-2.csv). Trace: [traces/run-1.jsonl](traces/run-1.jsonl), [traces/run-2.jsonl](traces/run-2.jsonl).
+- Kết quả từng câu: [eval/run-1.csv](run-1.csv), [eval/run-2.csv](run-2.csv). Trace: [traces/run-1.jsonl](../traces/run-1.jsonl), [traces/run-2.jsonl](../traces/run-2.jsonl).
 
 ## 2. Lỗi lượt 1 — gom thành nhóm có tên
 

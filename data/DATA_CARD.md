@@ -101,8 +101,8 @@ Trò hoặc show hoàn toàn tự dựng có hậu tố **"(mẫu)"** trong tên
 |---|---|
 | Dùng để làm gì | Thử việc xếp lại lịch khi mưa: đóng trò ngoài trời, huỷ show ngoài trời |
 | Từ đâu | Nhóm tự dựng. Các trang đã đọc không có quy định khi mưa |
-| Xử lý những bước gì | 4 kịch bản: nắng · mưa chiều 14–16h · mưa tối 18:30–20h · mưa cả ngày |
-| Số dòng | 4 kịch bản |
+| Xử lý những bước gì | 4 kịch bản gốc dùng cho eval: nắng · mưa chiều 14–16h · mưa tối 18:30–20h · mưa cả ngày; bổ sung thêm kịch bản thứ 5 (`MORNING_RAIN` 09–12h) ở chặng CP4 để khớp lịch dự báo 8 ngày trên Web UI |
+| Số dòng | 5 kịch bản (4 gốc cho eval + 1 bổ sung cho Web UI) |
 | Phiên bản / ngày lấy | v1 · 27/11/2026 |
 | Nhãn | `synthetic` |
 | Giới hạn | Không phải dự báo thật. Quy tắc đóng trò khi mưa là giả định của nhóm |

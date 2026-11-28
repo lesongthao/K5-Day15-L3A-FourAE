@@ -358,7 +358,7 @@
 
     /* Segmented Hospitality Parameter Bar */
     .booking-strip {
-      display: grid; grid-template-columns: 1.45fr 1.15fr 1.35fr auto;
+      display: grid; grid-template-columns: 1.36fr 1.32fr 1.32fr auto;
       border: 1.5px solid #84a4b6; border-radius: 16px; overflow: visible;
       background: var(--surface); margin-bottom: 16px;
       box-shadow: var(--rim-light), 0 4px 12px rgba(4, 42, 54, 0.07);
@@ -366,7 +366,7 @@
     @media (max-width: 980px) { .booking-strip { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 580px) { .booking-strip { grid-template-columns: 1fr; } }
     .booking-cell {
-      position: relative; padding: 11px 15px; border-right: 1.5px solid #bfd2dd;
+      position: relative; padding: 11px 16px; border-right: 1.5px solid #bfd2dd;
       display: flex; align-items: center; gap: 11px;
       transition: background-color 0.15s ease; min-width: 0;
     }
@@ -386,12 +386,16 @@
       display: block; font-size: 0.74rem; font-weight: 800;
       color: var(--ink-soft); margin: 0; white-space: nowrap;
     }
-    .budget-pretty-pill {
-      padding: 1px 7px; border-radius: 999px;
-      background: var(--emerald-bg); color: var(--emerald);
-      font-size: 0.7rem; font-weight: 700; white-space: nowrap;
+    .budget-value-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0;
     }
-    .budget-pretty-pill.warn { background: var(--amber-bg); color: var(--amber); }
+    .budget-value-row input { flex: 1; min-width: 0; }
+    .budget-pretty-pill {
+      flex-shrink: 0; padding: 2px 9px; border-radius: 999px;
+      background: var(--emerald-bg); border: 1px solid var(--emerald-border); color: var(--emerald);
+      font-size: 0.72rem; font-weight: 800; white-space: nowrap; line-height: 1.3;
+    }
+    .budget-pretty-pill.warn { background: var(--amber-bg); border-color: var(--amber-border); color: var(--amber); }
     .budget-assist-pop {
       position: absolute; left: 0; top: calc(100% + 10px); z-index: 60;
       width: min(390px, calc(100vw - 36px));
@@ -563,36 +567,62 @@
     @keyframes spinAnim { to { transform: rotate(360deg); } }
     .spin-ico { animation: spinAnim 0.85s linear infinite; }
 
-    /* 2-Row Quick Scenarios */
+    /* 2-Row Quick Scenarios (Aligned 2x4 Grid) */
     .preset-strip {
-      display: grid; gap: 9px; margin-top: 14px;
-      padding: 12px 14px; border-radius: 14px;
-      background: #edf4f8; border: 1.5px solid #bed2de;
+      display: grid; gap: 8px; margin-top: 14px;
+      padding: 11px 14px; border-radius: 14px;
+      background: #eef4f8; border: 1.5px solid #bed2de;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
     }
-    .preset-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
-    .preset-caption { font-size: 0.79rem; font-weight: 800; color: var(--primary-deep); min-width: 142px; }
-    @media (max-width: 640px) { .preset-caption { min-width: 100%; } }
-    .preset-pill {
-      display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px;
-      border-radius: 999px; background: var(--surface); border: 1.5px solid #8fadbf;
-      color: var(--ink); font-size: 0.79rem; font-weight: 700;
-      box-shadow: var(--rim-light), var(--shadow-xs);
+    .preset-row {
+      display: grid; grid-template-columns: 122px minmax(0, 1fr);
+      align-items: center; gap: 10px;
     }
-    .preset-pill:hover {
+    .preset-row + .preset-row {
+      padding-top: 8px; border-top: 1px solid #d5e3ec;
+    }
+    .preset-caption {
+      font-size: 0.78rem; font-weight: 800; color: var(--primary-deep); white-space: nowrap;
+    }
+    .preset-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px; min-width: 0;
+    }
+    @media (max-width: 1160px) {
+      .preset-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .preset-row { align-items: start; }
+      .preset-caption { padding-top: 7px; }
+    }
+    @media (max-width: 680px) {
+      .preset-row { grid-template-columns: 1fr; gap: 6px; }
+      .preset-caption { padding-top: 0; }
+    }
+    @media (max-width: 480px) {
+      .preset-grid { grid-template-columns: 1fr; }
+    }
+    .preset-btn {
+      width: 100%; min-height: 34px; display: inline-flex; align-items: center; justify-content: center;
+      text-align: center; padding: 6px 8px; border-radius: 10px;
+      background: var(--surface); border: 1px solid #9ab5c5;
+      color: var(--ink-soft); font-size: 0.755rem; font-weight: 600;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      box-shadow: var(--rim-light), var(--shadow-xs);
+      transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease, box-shadow 0.16s ease;
+    }
+    .preset-btn:hover {
       background: var(--primary-soft); border-color: var(--primary); color: var(--primary-deep);
       transform: translateY(-1px); box-shadow: var(--shadow-sm);
     }
-    .preset-pill.edge {
-      background: #fdf6ea; border-style: dashed; border-color: #cfa45e; color: #6b3c07;
-      box-shadow: none;
+    .preset-btn.edge {
+      background: #fff9ef; border: 1px solid #deb875; color: #6e3e08;
+      box-shadow: var(--shadow-xs);
     }
-    .preset-pill.edge:hover {
-      background: var(--amber-bg); border-style: solid; border-color: var(--amber); color: var(--amber);
+    .preset-btn.edge:hover {
+      background: var(--amber-bg); border-color: var(--amber); color: var(--amber);
     }
-    .preset-pill.active,
-    .preset-pill.edge.active {
-      background: var(--primary-deep); border-style: solid; border-color: var(--primary-deep); color: #ffffff;
+    .preset-btn.active,
+    .preset-btn.edge.active {
+      background: var(--primary-deep); border-color: var(--primary-deep); color: #ffffff;
       box-shadow: inset 0 1px 0 rgba(255, 235, 184, 0.35), 0 5px 14px rgba(4, 45, 58, 0.28);
     }
 
@@ -1295,7 +1325,7 @@
         </span>
         <span class="hero-live-pill">
           <span class="hero-live-dot" aria-hidden="true"></span>
-          Mở cửa hằng ngày 09:00 – 20:00
+          Mở cửa hằng ngày 09:00–20:00
         </span>
       </div>
       <h1 class="display">Lên lịch một ngày <span>trọn vẹn từng phút</span> cho cả gia đình</h1>
@@ -1402,9 +1432,11 @@
           <div class="cell-main">
             <div class="cell-label-row">
               <label for="bBudget">Ngân sách tối đa (VNĐ)</label>
-              <span class="budget-pretty-pill nums" id="budgetPretty">3,5 triệu ₫</span>
             </div>
-            <input id="bBudget" class="nums" type="text" inputmode="text" autocomplete="off" value="3.500.000" placeholder="VD: 3.500.000 hoặc 3tr5" />
+            <div class="budget-value-row">
+              <input id="bBudget" class="nums" type="text" inputmode="text" autocomplete="off" value="3.500.000" placeholder="VD: 3.500.000 hoặc 3tr5" />
+              <span class="budget-pretty-pill nums" id="budgetPretty">3,5 triệu</span>
+            </div>
           </div>
           <div class="budget-assist-pop hidden" id="budgetAssistPop" role="region" aria-label="Gợi ý chuẩn hóa ngân sách">
             <div class="budget-assist-status" id="budgetAssistStatus"></div>
@@ -1466,17 +1498,21 @@
       <div class="preset-strip" aria-label="Các kịch bản gợi ý nhanh">
         <div class="preset-row">
           <span class="preset-caption">Gợi ý theo nhu cầu:</span>
-          <button type="button" class="preset-pill" data-preset="fullday">Cả ngày: Thủy cung &amp; Công viên nước</button>
-          <button type="button" class="preset-pill" data-preset="after16">Sau 16h: Bánh xe &amp; Tata Show</button>
-          <button type="button" class="preset-pill" data-preset="rain">Đi cùng ông bà, tránh mưa chiều</button>
-          <button type="button" class="preset-pill" data-preset="allrain">Mưa cả ngày: Bé dưới 1m, chơi trong nhà</button>
+          <div class="preset-grid">
+            <button type="button" class="preset-btn" data-preset="fullday">Cả ngày: Thủy cung &amp; Công viên nước</button>
+            <button type="button" class="preset-btn" data-preset="after16">Sau 16h: Bánh xe &amp; Tata Show</button>
+            <button type="button" class="preset-btn" data-preset="rain">Đi cùng ông bà, tránh mưa chiều</button>
+            <button type="button" class="preset-btn" data-preset="allrain">Mưa cả ngày: Bé &lt;1m, chơi trong nhà</button>
+          </div>
         </div>
         <div class="preset-row">
           <span class="preset-caption">Tình huống thực tế:</span>
-          <button type="button" class="preset-pill edge" data-preset="ask_height">Thiếu chiều cao bé (hỏi lại)</button>
-          <button type="button" class="preset-pill edge" data-preset="low_budget">Ngân sách thấp hơn vé cổng</button>
-          <button type="button" class="preset-pill edge" data-preset="unpriced">Hỏi giá Zipline &amp; Buffet ngoài vé</button>
-          <button type="button" class="preset-pill edge" data-preset="safety_block">Ép bỏ giới hạn chiều cao trẻ nhỏ</button>
+          <div class="preset-grid">
+            <button type="button" class="preset-btn edge" data-preset="ask_height">Thiếu chiều cao bé (hỏi lại)</button>
+            <button type="button" class="preset-btn edge" data-preset="low_budget">Ngân sách thấp hơn vé cổng</button>
+            <button type="button" class="preset-btn edge" data-preset="unpriced">Hỏi giá Zipline &amp; Buffet ngoài vé</button>
+            <button type="button" class="preset-btn edge" data-preset="safety_block">Ép bỏ giới hạn chiều cao trẻ nhỏ</button>
+          </div>
         </div>
       </div>
     </section>
@@ -1527,7 +1563,7 @@
           <h3>Bảng giá vé niêm yết &amp; Khung giờ vận hành</h3>
           <p>Áp dụng vé tham quan trọn gói trong 1 ngày, đã gồm thuế VAT và cáp treo vượt biển khứ hồi.</p>
         </div>
-        <span class="section-Included-badge nums">Toàn đảo: 09:00 – 20:00 hằng ngày</span>
+        <span class="section-Included-badge nums">Toàn đảo: 09:00–20:00 hằng ngày</span>
       </div>
 
       <div class="ticket-perks-grid">
@@ -1671,17 +1707,17 @@
                     <span class="kv-sub">Cộng thêm 20 phút tắm tráng, thay đồ khi rời khu</span>
                   </div>
                 </div>
-                <span class="kv-badge warn">10:00 – 17:30</span>
+                <span class="kv-badge warn">10:00–17:30</span>
               </li>
               <li class="kv-row">
                 <div class="kv-left">
                   <span class="kv-dot" style="background:#136f82"></span>
                   <div>
                     <span class="kv-title">Sea World (Thủy cung)</span>
-                    <span class="kv-sub">Rạp Phim Bay mở cửa 10:00 – 18:00</span>
+                    <span class="kv-sub">Rạp Phim Bay mở cửa 10:00–18:00</span>
                   </div>
                 </div>
-                <span class="kv-badge">09:00 – 19:00</span>
+                <span class="kv-badge">09:00–19:00</span>
               </li>
               <li class="kv-row">
                 <div class="kv-left">
@@ -1691,7 +1727,7 @@
                     <span class="kv-sub">Vườn bướm trong nhà mở tới 18:00</span>
                   </div>
                 </div>
-                <span class="kv-badge">09:00 – 17:30</span>
+                <span class="kv-badge">09:00–17:30</span>
               </li>
               <li class="kv-row">
                 <div class="kv-left">
@@ -1701,7 +1737,7 @@
                     <span class="kv-sub">Alpine Coaster đóng 18:30, Zipline đóng 17:00</span>
                   </div>
                 </div>
-                <span class="kv-badge">09:00 – 19:00</span>
+                <span class="kv-badge">09:00–19:00</span>
               </li>
               <li class="kv-row">
                 <div class="kv-left">
@@ -1711,17 +1747,17 @@
                     <span class="kv-sub">Nhà kính 5 châu &amp; Bánh xe bầu trời ngắm hoàng hôn</span>
                   </div>
                 </div>
-                <span class="kv-badge">09:00 – 20:00</span>
+                <span class="kv-badge">09:00–20:00</span>
               </li>
               <li class="kv-row">
                 <div class="kv-left">
                   <span class="kv-dot" style="background:#c67d22"></span>
                   <div>
                     <span class="kv-title">Festive Hill (Đồi Lễ Hội)</span>
-                    <span class="kv-sub">Quảng trường Tata Show biểu diễn 19:30 – 20:00</span>
+                    <span class="kv-sub">Quảng trường Tata Show biểu diễn 19:30–20:00</span>
                   </div>
                 </div>
-                <span class="kv-badge">09:00 – 19:30</span>
+                <span class="kv-badge">09:00–19:30</span>
               </li>
             </ul>
           </article>
@@ -1842,7 +1878,7 @@
     <div class="footer-inner">
       <div class="footer-brand display">
         <span style="width:10px;height:10px;border-radius:50%;background:var(--gold-light);box-shadow:0 0 8px rgba(251,225,166,0.6);display:inline-block;"></span>
-        VinWonders Nha Trang — Cẩm nang &amp; Trợ lý Lịch trình Gia đình (Đảo Hòn Tre)
+        VinWonders Nha Trang: Cẩm nang &amp; Trợ lý Lịch trình Gia đình (Đảo Hòn Tre)
       </div>
       <div class="footer-links">
         <a href="#mainTabs" data-jump-tab="explore">6 phân khu</a>
@@ -2089,10 +2125,10 @@
       if (val >= 1000000) {
         const tr = val / 1000000;
         const txt = Number.isInteger(tr) ? String(tr) : tr.toFixed(2).replace(/\.?0+$/, "").replace(".", ",");
-        return `${txt} triệu ₫`;
+        return `${txt} triệu`;
       }
-      if (val >= 1000) return `${Math.round(val / 1000).toLocaleString("vi-VN")} nghìn ₫`;
-      return `${val.toLocaleString("vi-VN")} ₫`;
+      if (val >= 1000) return `${Math.round(val / 1000).toLocaleString("vi-VN")} nghìn`;
+      return `${val.toLocaleString("vi-VN")}đ`;
     }
 
     function parseSmartBudget(raw) {
@@ -2323,7 +2359,7 @@
               <div class="wd-icon-box">${weatherIconSvg(d.icon)}</div>
             </div>
             <div class="wd-temp-row">
-              <span class="wd-temp nums">${d.temp_min}° – ${d.temp_max}°C</span>
+              <span class="wd-temp nums">${d.temp_min}°–${d.temp_max}°C</span>
               <span class="wd-prob nums">Mưa ${prob}%</span>
             </div>
             <div class="rain-meter" aria-hidden="true">
@@ -2677,7 +2713,7 @@
         const stopTxt = itemsHere.length
           ? "Chặng trong lịch: " + itemsHere.map((it) => `${it.start}–${it.end} ${humanizeUiText(it.name)}`).join("; ")
           : z.desc;
-        zoneInfoBar.innerHTML = `<strong>${esc(z.label)} (${esc(z.subtitle)})</strong> — cách cổng <strong class="nums">${fromGate} phút</strong> đi bộ. ${esc(stopTxt)}`;
+        zoneInfoBar.innerHTML = `<strong>${esc(z.label)} (${esc(z.subtitle)})</strong>: cách cổng <strong class="nums">${fromGate} phút</strong> đi bộ. ${esc(stopTxt)}`;
         renderParkMap(currentData && currentData.parsed ? currentData.parsed.items : [], zId);
       };
       parkMapSvg.querySelectorAll(".zone-node").forEach((el) => {
@@ -2715,9 +2751,9 @@
             <div class="receipt-rows">
               <div class="receipt-row"><span>Ngày tham quan</span><strong>${esc(dayTxt)}</strong></div>
               <div class="receipt-row"><span>Hạng vé áp dụng</span><strong>Chờ lập lịch</strong></div>
-              <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">—</strong></div>
-              <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">—</strong></div>
-              <div class="receipt-row"><span>Kịch bản thời tiết</span><strong>—</strong></div>
+              <div class="receipt-row"><span>Vé cổng đoàn khách</span><strong class="nums">Chưa tính</strong></div>
+              <div class="receipt-row"><span>Dịch vụ lẻ dự kiến</span><strong class="nums">Chưa tính</strong></div>
+              <div class="receipt-row"><span>Kịch bản thời tiết</span><strong>Chờ chọn</strong></div>
             </div>
           </div>
         `;
@@ -2753,9 +2789,9 @@
       const rows = (trace.events || []).map((ev) => `
         <tr>
           <td>${esc(ev.kind)}</td>
-          <td>${esc(ev.name || ev.text || "—")}</td>
+          <td>${esc(ev.name || ev.text || "Không có")}</td>
           <td class="nums">${esc(ev.t)}s</td>
-          <td class="nums">${ev.latency_s != null ? esc(ev.latency_s) + "s" : "—"}</td>
+          <td class="nums">${ev.latency_s != null ? esc(ev.latency_s) + "s" : "0s"}</td>
         </tr>
       `).join("");
       traceRoot.innerHTML = `
@@ -3014,11 +3050,11 @@
       });
     });
 
-    document.querySelectorAll(".preset-pill").forEach((btn) => {
+    document.querySelectorAll(".preset-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const cfg = PRESETS[btn.dataset.preset];
         if (!cfg) return;
-        document.querySelectorAll(".preset-pill").forEach((p) => p.classList.toggle("active", p === btn));
+        document.querySelectorAll(".preset-btn").forEach((p) => p.classList.toggle("active", p === btn));
         if (cfg.mode === "exact") {
           promptAutoSynced = false;
           inputEl.value = cfg.text;
@@ -3437,7 +3473,7 @@
       promptAutoSynced = false;
       inputEl.value = "";
       charCount.textContent = "0 / 2000";
-      document.querySelectorAll(".preset-pill.active").forEach((p) => p.classList.remove("active"));
+      document.querySelectorAll(".preset-btn.active").forEach((p) => p.classList.remove("active"));
       showEmptyResultState();
       switchTab("explore");
       inputEl.focus();
